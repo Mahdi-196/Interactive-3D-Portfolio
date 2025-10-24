@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, LegacyRef } from 'react';
+import { useRef, useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import { EnhancedCameraControls } from './EnhancedCameraControls';
@@ -18,11 +18,15 @@ interface CameraControlsRef {
 
 interface DetectiveOfficeProps {
   onInteraction: (type: string, data?: unknown) => void;
+  onBoardZoomComplete?: () => void;
 }
 
+export interface DetectiveOfficeRef {
+  zoomOutFromBoard: () => void;
+}
 
 // Main Detective Office Component
-export const DetectiveOffice = ({ onInteraction }: DetectiveOfficeProps) => {
+export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficeProps>(({ onInteraction, onBoardZoomComplete }, ref) => {
   const [detectiveVision, setDetectiveVision] = useState(false);
   const [lampOn, setLampOn] = useState(true);
   const [showBoardContent, setShowBoardContent] = useState(false);
@@ -35,9 +39,20 @@ export const DetectiveOffice = ({ onInteraction }: DetectiveOfficeProps) => {
   
   const cameraControlsRef = useRef<CameraControlsRef>(null);
 
+  // Expose zoomOutFromBoard method to parent via ref
+  useImperativeHandle(ref, () => ({
+    zoomOutFromBoard: () => {
+      handleBoardContentClose();
+    }
+  }));
+
   // Board transition functions
   const handleBoardClick = async () => {
-    if (isTransitioning) return;
+    console.log('handleBoardClick called!');
+    if (isTransitioning) {
+      console.log('Already transitioning, returning...');
+      return;
+    }
 
     setWasPointerLocked(!!document.pointerLockElement);
     
@@ -64,17 +79,20 @@ export const DetectiveOffice = ({ onInteraction }: DetectiveOfficeProps) => {
         // Smooth zoom to board - position to see full board
         const boardPosition = new THREE.Vector3(0, 4.5, 4.5); // Further back to see board and wall
         const boardTarget = new THREE.Vector3(0, 4.5, 9.9); // Board center
-        
+
         await cameraControls.setLookAt(
           boardPosition.x, boardPosition.y, boardPosition.z,
           boardTarget.x, boardTarget.y, boardTarget.z,
           true // enable smooth transition
         );
-        
+
         // Show content on board after zoom
         setShowBoardContent(true);
         setIsTransitioning(false);
-        
+
+        // Notify parent that zoom is complete so overlay can be shown
+        onBoardZoomComplete?.();
+
       } catch (error) {
         console.error('Camera transition failed:', error);
         setIsTransitioning(false);
@@ -204,4 +222,6 @@ export const DetectiveOffice = ({ onInteraction }: DetectiveOfficeProps) => {
 
     </div>
   );
-};
+});
+
+DetectiveOffice.displayName = 'DetectiveOffice';
