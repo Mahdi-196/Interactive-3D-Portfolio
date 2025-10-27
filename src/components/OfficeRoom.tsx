@@ -1,7 +1,11 @@
 import * as THREE from 'three';
+import { useLoader } from '@react-three/fiber';
 
 // Complete Detective Office Room with wood paneling and bookshelves
 export const OfficeRoom = () => {
+  // Load Sherlock Holmes map texture
+  const mapTexture = useLoader(THREE.TextureLoader, '/map.png');
+
   return (
     <group>
       {/* Hardwood Floor */}
@@ -29,9 +33,9 @@ export const OfficeRoom = () => {
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
       
-      {/* Top section above window (adjusted for lower ceiling) */}
-      <mesh position={[0, 6.75, -10]}>
-        <planeGeometry args={[15.6, 4.5]} />
+      {/* Top section above window - positioned higher to not cut off window */}
+      <mesh position={[0, 7.85, -10]}>
+        <planeGeometry args={[15.6, 2.3]} />
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
       
@@ -52,7 +56,22 @@ export const OfficeRoom = () => {
         <planeGeometry args={[20, 9]} />
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
-      
+
+      {/* Sherlock Holmes Map of Europe - Framed on Left Wall */}
+      {/* Dark wooden frame */}
+      <mesh position={[-9.9, 3, -1]} rotation={[0, Math.PI / 2, 0]}>
+        <planeGeometry args={[3.2, 2.6]} />
+        <meshStandardMaterial color="#1a0d00" roughness={0.4} />
+      </mesh>
+      {/* Map */}
+      <mesh position={[-9.85, 3, -1]} rotation={[0, Math.PI / 2, 0]}>
+        <planeGeometry args={[3, 2.4]} />
+        <meshStandardMaterial
+          map={mapTexture}
+          roughness={0.5}
+        />
+      </mesh>
+
 
       {/* Ceiling with wooden beams - 10% lower */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 9, 0]}>

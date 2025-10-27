@@ -1,10 +1,12 @@
 import { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
+import { CubeCamera } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Enhanced Window with Dynamic Cityscape and Animated Rain - Centered on back wall
 export const OfficeWindow = () => {
   const rainRef = useRef<THREE.Group>(null);
+  const { scene } = useThree();
   
   useFrame(() => {
     if (rainRef.current) {
@@ -62,35 +64,108 @@ export const OfficeWindow = () => {
         <meshStandardMaterial color="#4a3728" roughness={0.7} />
       </mesh>
       
-      {/* Window Glass Panes - 6 panes across 2 rows */}
-      {[-5.85, -1.95, 1.95, 5.85].map((x, i) => (
-        <>
-          <mesh key={`top-${i}`} position={[x, 2.4, 0.05]}>
-            <planeGeometry args={[3.6, 1.4]} />
-            <meshStandardMaterial 
-              color="#1a1a2e"
-              transparent
-              opacity={0.6}
-            />
-          </mesh>
-          <mesh key={`bottom-${i}`} position={[x, 0.8, 0.05]}>
-            <planeGeometry args={[3.6, 1.4]} />
-            <meshStandardMaterial 
-              color="#1a1a2e"
-              transparent
-              opacity={0.6}
-            />
-          </mesh>
-          <mesh key={`lower-${i}`} position={[x, -0.8, 0.05]}>
-            <planeGeometry args={[3.6, 1.4]} />
-            <meshStandardMaterial 
-              color="#1a1a2e"
-              transparent
-              opacity={0.6}
-            />
-          </mesh>
-        </>
-      ))}
+      {/* CubeCamera for real-time reflections - positioned to capture room reflection */}
+      <CubeCamera resolution={256} frames={1} position={[0, 0, 0.15]}>
+        {(texture) => (
+          <>
+            {/* Window Glass Panes - Properly sized to fit frame sections */}
+            {/* Outer columns (left and right) - slightly narrower */}
+            {[-5.8125, 5.8125].map((x, i) => (
+              <group key={`outer-pane-group-${i}`}>
+                {/* Top row pane */}
+                <mesh position={[x, 2.3625, 0.1]}>
+                  <planeGeometry args={[3.675, 1.375]} />
+                  <meshStandardMaterial
+                    envMap={texture}
+                    color="#505060"
+                    transparent
+                    opacity={0.7}
+                    roughness={0.05}
+                    metalness={0.9}
+                    envMapIntensity={3.0}
+                    side={THREE.DoubleSide}
+                  />
+                </mesh>
+                {/* Middle row pane - taller */}
+                <mesh position={[x, 0, 0.1]}>
+                  <planeGeometry args={[3.675, 3.05]} />
+                  <meshStandardMaterial
+                    envMap={texture}
+                    color="#505060"
+                    transparent
+                    opacity={0.7}
+                    roughness={0.05}
+                    metalness={0.9}
+                    envMapIntensity={3.0}
+                    side={THREE.DoubleSide}
+                  />
+                </mesh>
+                {/* Bottom row pane */}
+                <mesh position={[x, -2.3625, 0.1]}>
+                  <planeGeometry args={[3.675, 1.375]} />
+                  <meshStandardMaterial
+                    envMap={texture}
+                    color="#505060"
+                    transparent
+                    opacity={0.7}
+                    roughness={0.05}
+                    metalness={0.9}
+                    envMapIntensity={3.0}
+                    side={THREE.DoubleSide}
+                  />
+                </mesh>
+              </group>
+            ))}
+            {/* Inner columns (center-left and center-right) */}
+            {[-1.95, 1.95].map((x, i) => (
+              <group key={`inner-pane-group-${i}`}>
+                {/* Top row pane */}
+                <mesh position={[x, 2.3625, 0.1]}>
+                  <planeGeometry args={[3.75, 1.375]} />
+                  <meshStandardMaterial
+                    envMap={texture}
+                    color="#505060"
+                    transparent
+                    opacity={0.7}
+                    roughness={0.05}
+                    metalness={0.9}
+                    envMapIntensity={3.0}
+                    side={THREE.DoubleSide}
+                  />
+                </mesh>
+                {/* Middle row pane - taller */}
+                <mesh position={[x, 0, 0.1]}>
+                  <planeGeometry args={[3.75, 3.05]} />
+                  <meshStandardMaterial
+                    envMap={texture}
+                    color="#505060"
+                    transparent
+                    opacity={0.7}
+                    roughness={0.05}
+                    metalness={0.9}
+                    envMapIntensity={3.0}
+                    side={THREE.DoubleSide}
+                  />
+                </mesh>
+                {/* Bottom row pane */}
+                <mesh position={[x, -2.3625, 0.1]}>
+                  <planeGeometry args={[3.75, 1.375]} />
+                  <meshStandardMaterial
+                    envMap={texture}
+                    color="#505060"
+                    transparent
+                    opacity={0.7}
+                    roughness={0.05}
+                    metalness={0.9}
+                    envMapIntensity={3.0}
+                    side={THREE.DoubleSide}
+                  />
+                </mesh>
+              </group>
+            ))}
+          </>
+        )}
+      </CubeCamera>
       
       {/* Simple Night Sky */}
       <mesh position={[0, 0, -5]}>

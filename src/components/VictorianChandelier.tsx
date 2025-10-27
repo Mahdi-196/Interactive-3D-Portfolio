@@ -164,19 +164,19 @@ export const VictorianChandelier = ({
               key={`light-${i}`}
               position={[Math.cos(angle) * 1.2, -1.35, Math.sin(angle) * 1.2]}
               color="#ffcc77"
-              intensity={0.9}
-              distance={9}
-              decay={2}
+              intensity={4.5}
+              distance={25}
+              decay={1.5}
             />
           ))}
-          
-          {/* Central ambient light - 1.5x original */}
+
+          {/* Central ambient light - Much stronger */}
           <pointLight
             position={[0, -2.4, 0]}
             color="#ffcc77"
-            intensity={1.5}
-            distance={15}
-            decay={2}
+            intensity={8.0}
+            distance={30}
+            decay={1.5}
           />
         </>
       )}

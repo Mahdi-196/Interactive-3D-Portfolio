@@ -1,12 +1,11 @@
 import { useState, useRef } from 'react';
 import { DetectiveOffice, DetectiveOfficeRef } from '@/components/DetectiveOffice';
 import { ResumeOverlay } from '@/components/ResumeOverlay';
-import { BoardOverlay } from '@/components/BoardOverlay';
 import { DetectiveErrorBoundary } from '@/components/DetectiveErrorBoundary';
 
 const Index = () => {
   const [activeOverlay, setActiveOverlay] = useState<string | null>(null);
-  const [isBoardOpen, setIsBoardOpen] = useState(false);
+  const [selectedCaseFile, setSelectedCaseFile] = useState<'about' | 'education' | 'skills' | 'projects' | null>(null);
   const detectiveOfficeRef = useRef<DetectiveOfficeRef>(null);
 
   const handleInteraction = (type: string, data?: any) => {
@@ -30,17 +29,10 @@ const Index = () => {
     setActiveOverlay(null);
   };
 
-  // Called when camera zoom to board completes
-  const handleBoardZoomComplete = () => {
-    console.log('Board zoom complete! Opening overlay...');
-    setIsBoardOpen(true);
-  };
-
-  // Called when user closes the board overlay
-  const handleCloseBoardOverlay = () => {
-    setIsBoardOpen(false);
-    // Trigger camera zoom out in DetectiveOffice
-    detectiveOfficeRef.current?.zoomOutFromBoard();
+  // Called when user clicks on a case file on the 3D board (or back button)
+  const handleCaseFileClick = (caseFile: 'about' | 'education' | 'skills' | 'projects' | null) => {
+    console.log('Case file clicked:', caseFile);
+    setSelectedCaseFile(caseFile);
   };
 
   return (
@@ -49,11 +41,12 @@ const Index = () => {
         <DetectiveOffice
           ref={detectiveOfficeRef}
           onInteraction={handleInteraction}
-          onBoardZoomComplete={handleBoardZoomComplete}
+          onCaseFileClick={handleCaseFileClick}
+          selectedCaseFile={selectedCaseFile}
+          overlayVisible={selectedCaseFile !== null}
         />
       </DetectiveErrorBoundary>
       <ResumeOverlay content={activeOverlay} onClose={handleCloseOverlay} />
-      <BoardOverlay isOpen={isBoardOpen} onClose={handleCloseBoardOverlay} />
     </div>
   );
 };

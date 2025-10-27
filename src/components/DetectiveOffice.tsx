@@ -18,7 +18,9 @@ interface CameraControlsRef {
 
 interface DetectiveOfficeProps {
   onInteraction: (type: string, data?: unknown) => void;
-  onBoardZoomComplete?: () => void;
+  onCaseFileClick?: (caseFile: 'about' | 'education' | 'skills' | 'projects' | null) => void;
+  selectedCaseFile?: 'about' | 'education' | 'skills' | 'projects' | null;
+  overlayVisible?: boolean;
 }
 
 export interface DetectiveOfficeRef {
@@ -26,18 +28,19 @@ export interface DetectiveOfficeRef {
 }
 
 // Main Detective Office Component
-export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficeProps>(({ onInteraction, onBoardZoomComplete }, ref) => {
-  const [detectiveVision, setDetectiveVision] = useState(false);
+export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficeProps>(({ onInteraction, onCaseFileClick, selectedCaseFile, overlayVisible = false }, ref) => {
   const [lampOn, setLampOn] = useState(true);
   const [showBoardContent, setShowBoardContent] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isDetectiveMode, setIsDetectiveMode] = useState(false);
   const [originalCameraState, setOriginalCameraState] = useState<{
     position: THREE.Vector3;
     target: THREE.Vector3;
   } | null>(null);
   const [wasPointerLocked, setWasPointerLocked] = useState(false);
-  
+
   const cameraControlsRef = useRef<CameraControlsRef>(null);
+  const detectivePosition = new THREE.Vector3(-2, 1.7, 3); // Detective eye height position
 
   // Expose zoomOutFromBoard method to parent via ref
   useImperativeHandle(ref, () => ({
@@ -89,9 +92,6 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
         // Show content on board after zoom
         setShowBoardContent(true);
         setIsTransitioning(false);
-
-        // Notify parent that zoom is complete so overlay can be shown
-        onBoardZoomComplete?.();
 
       } catch (error) {
         console.error('Camera transition failed:', error);
@@ -151,11 +151,56 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
     }
   };
 
+  const handleToggleDetectiveMode = async () => {
+    if (isTransitioning || showBoardContent) return;
+
+    setIsTransitioning(true);
+
+    if (!isDetectiveMode) {
+      // Entering detective mode - snap to detective position
+      if (cameraControlsRef.current) {
+        const currentPosition = cameraControlsRef.current.camera.position.clone();
+        const currentTarget = new THREE.Vector3();
+        cameraControlsRef.current.getTarget(currentTarget);
+
+        setOriginalCameraState({
+          position: currentPosition,
+          target: currentTarget
+        });
+
+        // Snap camera to detective position
+        await cameraControlsRef.current.setLookAt(
+          detectivePosition.x, detectivePosition.y, detectivePosition.z,
+          detectivePosition.x, detectivePosition.y, detectivePosition.z - 1,
+          true // smooth transition
+        );
+      }
+      setIsDetectiveMode(true);
+    } else {
+      // Exiting detective mode - return to previous position
+      if (originalCameraState && cameraControlsRef.current) {
+        await cameraControlsRef.current.setLookAt(
+          originalCameraState.position.x,
+          originalCameraState.position.y,
+          originalCameraState.position.z,
+          originalCameraState.target.x,
+          originalCameraState.target.y,
+          originalCameraState.target.z,
+          true
+        );
+        setOriginalCameraState(null);
+      }
+      setIsDetectiveMode(false);
+    }
+
+    setIsTransitioning(false);
+  };
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === 'Tab') {
         event.preventDefault();
-        setDetectiveVision(prev => !prev);
+        handleToggleDetectiveMode();
       } else if (event.key === 'r' || event.key === 'R') {
         // Only handle R if not in pointer lock mode
         if (!document.pointerLockElement) {
@@ -174,7 +219,7 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [showBoardContent, isTransitioning, originalCameraState]);
+  }, [showBoardContent, isTransitioning, originalCameraState, isDetectiveMode]);
 
   return (
     <div className="w-full h-screen bg-noir-shadow">
@@ -185,26 +230,31 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
           gl.domElement.style.cursor = 'crosshair';
         }}
       >
-        <EnhancedCameraControls 
+        <EnhancedCameraControls
           ref={cameraControlsRef as unknown as React.Ref<CameraControlsRef>}
           isTransitioning={isTransitioning}
           showBoardContent={showBoardContent}
+          isDetectiveMode={isDetectiveMode}
         />
-        <Lighting lampOn={lampOn} detectiveVision={detectiveVision} />
-        <DetectiveOfficeScene 
-          onInteraction={handleInteraction} 
+        <Lighting lampOn={lampOn} />
+        <DetectiveOfficeScene
+          onInteraction={handleInteraction}
           lampOn={lampOn}
           cameraControlsRef={cameraControlsRef}
           onBoardClick={handleBoardClick}
+          onCaseFileClick={onCaseFileClick}
           showBoardContent={showBoardContent}
+          selectedCaseFile={selectedCaseFile}
+          overlayVisible={overlayVisible}
           onBoardContentClose={handleBoardContentClose}
+          isDetectiveMode={isDetectiveMode}
         />
       </Canvas>
 
-      {/* Detective Vision Indicator */}
-      {detectiveVision && (
+      {/* Detective Mode Indicator */}
+      {isDetectiveMode && (
         <div className="absolute top-4 left-4 text-detective-glow text-lg font-bold animate-detective-glow">
-          DETECTIVE VISION ACTIVE
+          DETECTIVE MODE
         </div>
       )}
 
@@ -215,9 +265,8 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
 
       {/* Enhanced Controls Hint */}
       <div className="absolute bottom-4 left-4 text-detective-paper text-sm space-y-1">
-        <p>WASD - Move • Click Empty Area - Enable Mouse Look • Space/Shift - Up/Down</p>
-        <p>Tab - Detective Vision • R - Resume Board • Click Board - Open Resume</p>
-        <p>ESC - Close Modal • Click Floor - Move Detective</p>
+        <p>WASD - Move • Click Empty Area - Enable Mouse Look • {!isDetectiveMode && 'Space/Shift - Up/Down • '}Tab - Toggle Detective Mode</p>
+        <p>R - Resume Board • Click Board - Open Resume • ESC - Close Modal</p>
       </div>
 
     </div>

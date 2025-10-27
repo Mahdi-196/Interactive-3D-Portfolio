@@ -1,104 +1,47 @@
-import { useRef } from 'react';
 import * as THREE from 'three';
-import { DetectiveCharacter } from './DetectiveCharacter';
-import { CharacterController, useCharacterController } from './CharacterController';
 import { OfficeRoom } from './OfficeRoom';
 import { ExecutiveDesk } from './ExecutiveDesk';
 import { OfficeWindow } from './OfficeWindow';
 import { VictorianChair } from './VictorianChair';
 import { InteractiveDetectiveBoard } from './InteractiveDetectiveBoard';
 import { Bookshelf } from './Bookshelf';
-
 import { VictorianDoor } from './VictorianDoor';
 import { VictorianChandelier } from './VictorianChandelier';
-import { ThreeEvent } from '../types/three';
+import { FirstPersonDetectiveBody } from './FirstPersonDetectiveBody';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
   lampOn: boolean;
   cameraControlsRef: React.RefObject<any>;
   onBoardClick: () => void;
+  onCaseFileClick?: (caseFile: 'about' | 'education' | 'skills' | 'projects' | null) => void;
   showBoardContent?: boolean;
+  selectedCaseFile?: 'about' | 'education' | 'skills' | 'projects' | null;
+  overlayVisible?: boolean;
   onBoardContentClose?: () => void;
+  isDetectiveMode?: boolean;
 }
 
-export const DetectiveOfficeScene = ({ 
-  onInteraction, 
-  lampOn, 
+export const DetectiveOfficeScene = ({
+  onInteraction,
+  lampOn,
   cameraControlsRef,
   onBoardClick,
+  onCaseFileClick,
   showBoardContent = false,
-  onBoardContentClose
+  selectedCaseFile = null,
+  overlayVisible = false,
+  onBoardContentClose,
+  isDetectiveMode = false
 }: DetectiveOfficeSceneProps) => {
-  const detectiveRef = useRef<THREE.Group>(null);
-  
-  // Character movement bounds (keep detective within office)
-  const characterBounds = {
-    minX: -8,
-    maxX: 8,
-    minZ: -8,
-    maxZ: 8
-  };
-
-  const characterController = useCharacterController({
-    character: detectiveRef,
-    bounds: characterBounds
-  });
-
-  // Handle floor clicks for detective movement
-  const handleFloorClick = (event: ThreeEvent) => {
-    // Don't handle clicks near the board area
-    const boardArea = {
-      minX: -7, maxX: 7,
-      minZ: 8, maxZ: 10
-    };
-    
-    if (event.point.x >= boardArea.minX && event.point.x <= boardArea.maxX &&
-        event.point.z >= boardArea.minZ && event.point.z <= boardArea.maxZ) {
-      return; // Let board handle its own clicks
-    }
-    
-    event.stopPropagation();
-    const clickPosition = new THREE.Vector3(
-      event.point.x,
-      0.1, // Slightly above floor
-      event.point.z
-    );
-    characterController.moveToPosition(clickPosition);
-  };
-
   return (
     <>
-      {/* Clickable floor for character movement */}
-      <mesh 
-        rotation={[-Math.PI / 2, 0, 0]} 
-        position={[0, 0.001, 0]}
-        onClick={handleFloorClick}
-        visible={false} // Invisible but clickable
-      >
-        <planeGeometry args={[18, 18]} />
-        <meshBasicMaterial transparent opacity={0} />
-      </mesh>
-
       {/* Office room structure (walls, floor, ceiling) */}
       <OfficeRoom />
-      
+
       {/* Central desk only */}
       <ExecutiveDesk onInteraction={onInteraction} />
-      
-      {/* Detective Character */}
-      <DetectiveCharacter 
-        ref={detectiveRef}
-        position={[-2, 0.1, 3]} 
-        onInteraction={onInteraction}
-      />
-      
-      {/* Character Controller */}
-      <CharacterController 
-        character={detectiveRef}
-        bounds={characterBounds}
-      />
-      
+
       {/* Window filling the wall opening */}
       <OfficeWindow />
       
@@ -106,10 +49,13 @@ export const DetectiveOfficeScene = ({
       <VictorianChair position={[0, 0, -3]} rotation={[0, 0, 0]} />
       
       {/* Interactive Detective Board */}
-      <InteractiveDetectiveBoard 
-        onInteraction={onInteraction} 
+      <InteractiveDetectiveBoard
+        onInteraction={onInteraction}
         onBoardClick={onBoardClick}
+        onCaseFileClick={onCaseFileClick}
         showContent={showBoardContent}
+        selectedCaseFile={selectedCaseFile}
+        overlayVisible={overlayVisible}
         onContentClose={onBoardContentClose}
       />
       
@@ -127,14 +73,14 @@ export const DetectiveOfficeScene = ({
       
       {/* Victorian Door on right wall */}
       <VictorianDoor position={[9.5, 0, 8]} rotation={[0, -Math.PI / 2, 0]} onInteraction={onInteraction} />
-      
+
       {/* Victorian Chandelier - lowered 10% for smaller room */}
       <VictorianChandelier position={[0, 8.1, 2]} isLit={lampOn} />
-      
 
-      
+      {/* First-person detective body view (visible when in detective mode) */}
+      {isDetectiveMode && <FirstPersonDetectiveBody />}
 
-      
+
 
 
     </>

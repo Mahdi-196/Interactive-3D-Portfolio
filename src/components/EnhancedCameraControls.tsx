@@ -5,6 +5,7 @@ import * as THREE from 'three';
 interface EnhancedCameraControlsProps {
   isTransitioning: boolean;
   showBoardContent?: boolean;
+  isDetectiveMode?: boolean;
 }
 
 interface CameraControlsRef {
@@ -19,7 +20,7 @@ interface CameraControlsRef {
 }
 
 export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCameraControlsProps>(
-  ({ isTransitioning, showBoardContent = false }, ref) => {
+  ({ isTransitioning, showBoardContent = false, isDetectiveMode = false }, ref) => {
     const { camera, gl } = useThree();
     const moveState = useRef({
       forward: false,
@@ -133,12 +134,16 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
             break;
           case 'Space':
             event.preventDefault();
-            moveState.current.up = true;
-            requestPointerLockOnMovement();
+            if (!isDetectiveMode) {
+              moveState.current.up = true;
+              requestPointerLockOnMovement();
+            }
             break;
           case 'ShiftLeft':
-            moveState.current.down = true;
-            requestPointerLockOnMovement();
+            if (!isDetectiveMode) {
+              moveState.current.down = true;
+              requestPointerLockOnMovement();
+            }
             break;
         }
       };
@@ -256,7 +261,7 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
         gl.domElement.removeEventListener('click', handleClick);
         document.removeEventListener('pointerlockchange', handlePointerLockChange);
       };
-    }, [camera, gl, isTransitioning]);
+    }, [camera, gl, isTransitioning, isDetectiveMode]);
 
     useFrame(() => {
       if (isTransitioning || showBoardContent) return;
@@ -276,10 +281,10 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       if (moveState.current.right) {
         direction.x += speed;
       }
-      if (moveState.current.up) {
+      if (moveState.current.up && !isDetectiveMode) {
         direction.y += speed;
       }
-      if (moveState.current.down) {
+      if (moveState.current.down && !isDetectiveMode) {
         direction.y -= speed;
       }
 
@@ -288,11 +293,18 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
         const euler = new THREE.Euler(0, yaw.current, 0);
         direction.applyEuler(euler);
       }
-      
+
       // Add bounds to keep camera within reasonable limits
       const newPosition = camera.position.clone().add(direction);
       newPosition.x = Math.max(-50, Math.min(50, newPosition.x));
-      newPosition.y = Math.max(0.5, Math.min(30, newPosition.y));
+
+      // In detective mode, lock Y to ground level (eye height)
+      if (isDetectiveMode) {
+        newPosition.y = 1.7;
+      } else {
+        newPosition.y = Math.max(0.5, Math.min(30, newPosition.y));
+      }
+
       newPosition.z = Math.max(-50, Math.min(50, newPosition.z));
       
       camera.position.copy(newPosition);
