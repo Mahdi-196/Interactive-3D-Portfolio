@@ -2,7 +2,7 @@ import { OfficeRoom } from './OfficeRoom';
 import { ExecutiveDesk } from './ExecutiveDesk';
 import { OfficeWindow } from './OfficeWindow';
 import { VictorianChair } from './VictorianChair';
-import { InteractiveDetectiveBoard } from './InteractiveDetectiveBoard';
+import { InteractiveDetectiveBoard } from './board';
 import { Bookshelf } from './Bookshelf';
 import { VictorianDoor } from './VictorianDoor';
 import { VictorianChandelier } from './VictorianChandelier';
