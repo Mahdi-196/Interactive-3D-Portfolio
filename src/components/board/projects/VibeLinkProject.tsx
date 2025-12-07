@@ -3,9 +3,9 @@ import { PushPin } from '../shared/PushPin';
 import { COLORS } from '../constants';
 
 /**
- * MedeSense Project - Simple view with single paper
+ * VibeLink Project - Simple view with single paper
  */
-export const MedeSenseProject = () => {
+export const VibeLinkProject = () => {
   return (
     <>
       {/* Single Paper */}
@@ -31,63 +31,63 @@ export const MedeSenseProject = () => {
           <meshStandardMaterial color={COLORS.primaryText} roughness={0.7} />
         </mesh>
         <Text position={[0, 1.9, 0.002]} fontSize={0.22} color={COLORS.antiquePaper} anchorX="center" anchorY="middle">
-          AI Healthcare Platform
+          Social Media Platform
         </Text>
 
         <Line points={[[-2.5, 1.65, 0.002], [2.5, 1.65, 0.002]]} color={COLORS.brass} lineWidth={2} />
 
         <Text position={[0, 1.35, 0.002]} fontSize={0.13} color={COLORS.primaryText} anchorX="center" anchorY="middle">
-          FastAPI • React • AWS • OpenAI
+          React • Node.js • MongoDB • JWT • AWS
         </Text>
 
         <Text position={[0, 1.0, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Built HIPAA-compliant healthcare chatbot with infinite
+          • Built full-stack social media platform with real-time
         </Text>
         <Text position={[0, 0.85, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          memory using Supermemory RAG API for context retention
+          updates using WebSocket connections for live messaging
         </Text>
         <Text position={[0, 0.65, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Integrated AWS Textract for medical document OCR and
+          • Implemented secure authentication system with JWT
         </Text>
         <Text position={[0, 0.5, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          AWS Comprehend Medical for PHI detection and removal
+          tokens and bcrypt password hashing for user security
         </Text>
         <Text position={[0, 0.30, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Deployed serverless FastAPI backend on AWS Lambda
+          • Designed MongoDB schema with user profiles, posts,
         </Text>
         <Text position={[0, 0.15, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          with API Gateway for auto-scaling and cost efficiency
+          comments, and relationships using Mongoose ODM
         </Text>
         <Text position={[0, -0.05, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Implemented per-user document isolation with tagged
+          • Integrated AWS S3 for scalable media storage with
         </Text>
         <Text position={[0, -0.20, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          storage in Supermemory for complete data separation
+          CloudFront CDN for optimized global content delivery
         </Text>
         <Text position={[0, -0.40, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Architected React TypeScript frontend with Vite for
+          • Created responsive React UI with custom hooks for
         </Text>
         <Text position={[0, -0.55, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          fast builds and deployed on CloudFront CDN
+          state management and infinite scroll functionality
         </Text>
         <Text position={[0, -0.75, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Secured with JWT authentication and PostgreSQL for
+          • Built RESTful API with Express.js featuring CRUD
         </Text>
         <Text position={[0, -0.90, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          user management with bcrypt password hashing
+          operations and advanced query filtering capabilities
         </Text>
 
         <Line points={[[-3.3, -1.15, 0.002], [3.3, -1.15, 0.002]]} color={COLORS.tan} lineWidth={1} />
 
         <Text position={[0, -1.40, 0.002]} fontSize={0.095} color={COLORS.brownText} anchorX="center" anchorY="middle">
-          24-Hour Hackathon Project • VillageHacks 2025
+          Personal Project • Full-Stack Development
         </Text>
 
         <group
           position={[0, -1.85, 0.002]}
           onClick={(e) => {
             e.stopPropagation();
-            window.open('https://github.com/Mahdi-196/VillageHacks', '_blank');
+            window.open('https://github.com/Mahdi-196/VibeLink', '_blank');
           }}
           onPointerEnter={() => (document.body.style.cursor = 'pointer')}
           onPointerLeave={() => (document.body.style.cursor = 'auto')}

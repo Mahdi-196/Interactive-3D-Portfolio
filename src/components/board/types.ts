@@ -2,7 +2,7 @@
  * Type definitions for the Interactive Detective Board
  */
 
-export type CaseFile = 'about' | 'education' | 'skills' | 'projects' | null;
+export type CaseFile = 'about' | 'skillseducation' | 'projects' | null;
 export type ProjectDetail = 'refocused' | 'respawnroom' | 'sideprojects' | null;
 export type SideProject = 'medesense' | 'popuptrivia' | 'vibelink' | 'graphibooks' | null;
 export type ZoomedPaper = 'frontend' | 'backend' | 'ai' | null;

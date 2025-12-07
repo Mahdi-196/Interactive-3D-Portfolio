@@ -35,13 +35,21 @@ export const ProjectsDetail = ({
 
   return (
     <>
-      {/* Back Button - Top Left */}
-      <BackButton
-        onClick={() => {
-          onProjectSelect(null); // Reset project detail if any
-          onBack(); // Go back to case files
-        }}
-      />
+      {/* Back Button - Top Left - Hide when viewing side projects (they have their own) */}
+      {selectedProject !== 'sideprojects' && (
+        <BackButton
+          onClick={() => {
+            if (selectedProject) {
+              // If viewing a project, go back to projects list
+              onProjectSelect(null);
+              onSideProjectSelect(null);
+            } else {
+              // If viewing projects list, go back to case files
+              onBack();
+            }
+          }}
+        />
+      )}
 
       {/* Header - Hidden when project selected */}
       {!selectedProject && (
@@ -67,6 +75,7 @@ export const ProjectsDetail = ({
         <SideProjectsWrapper
           selectedSideProject={selectedSideProject}
           onSideProjectSelect={onSideProjectSelect}
+          onBack={() => onProjectSelect(null)}
         />
       ) : null}
     </>

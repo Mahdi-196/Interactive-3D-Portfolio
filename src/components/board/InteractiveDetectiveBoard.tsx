@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { BoardPreview } from './preview/BoardPreview';
 import { AboutDetail } from './details/AboutDetail';
-import { EducationDetail } from './details/EducationDetail';
-import { SkillsDetail } from './details/SkillsDetail';
+import { SkillsEducationDetail } from './details/SkillsEducationDetail';
 import { ProjectsDetail } from './details/ProjectsDetail';
 import { useFadeAnimation } from './hooks/useFadeAnimation';
 import { BOARD_CONFIG } from './constants';
@@ -53,11 +52,8 @@ export const InteractiveDetectiveBoard = ({
           {/* About Me Detail */}
           {selectedCaseFile === 'about' && <AboutDetail onBack={() => onCaseFileClick?.(null)} />}
 
-          {/* Education Detail */}
-          {selectedCaseFile === 'education' && <EducationDetail onBack={() => onCaseFileClick?.(null)} />}
-
-          {/* Skills Detail */}
-          {selectedCaseFile === 'skills' && <SkillsDetail onBack={() => onCaseFileClick?.(null)} />}
+          {/* Skills & Education Detail */}
+          {selectedCaseFile === 'skillseducation' && <SkillsEducationDetail onBack={() => onCaseFileClick?.(null)} />}
 
           {/* Projects Detail (with nested navigation) */}
           {selectedCaseFile === 'projects' && (

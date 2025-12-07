@@ -3,9 +3,9 @@ import { PushPin } from '../shared/PushPin';
 import { COLORS } from '../constants';
 
 /**
- * MedeSense Project - Simple view with single paper
+ * PopUpTrivia Project - Simple view with single paper
  */
-export const MedeSenseProject = () => {
+export const PopUpTriviaProject = () => {
   return (
     <>
       {/* Single Paper */}
@@ -31,63 +31,66 @@ export const MedeSenseProject = () => {
           <meshStandardMaterial color={COLORS.primaryText} roughness={0.7} />
         </mesh>
         <Text position={[0, 1.9, 0.002]} fontSize={0.22} color={COLORS.antiquePaper} anchorX="center" anchorY="middle">
-          AI Healthcare Platform
+          Interactive Trivia Game
         </Text>
 
         <Line points={[[-2.5, 1.65, 0.002], [2.5, 1.65, 0.002]]} color={COLORS.brass} lineWidth={2} />
 
         <Text position={[0, 1.35, 0.002]} fontSize={0.13} color={COLORS.primaryText} anchorX="center" anchorY="middle">
-          FastAPI • React • AWS • OpenAI
+          Python • Pygame • REST APIs • JSON
         </Text>
 
         <Text position={[0, 1.0, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Built HIPAA-compliant healthcare chatbot with infinite
+          • Built interactive trivia game using Pygame with custom
         </Text>
         <Text position={[0, 0.85, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          memory using Supermemory RAG API for context retention
+          sprite system for smooth animations and transitions
         </Text>
         <Text position={[0, 0.65, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Integrated AWS Textract for medical document OCR and
+          • Integrated Open Trivia Database API for dynamic
         </Text>
         <Text position={[0, 0.5, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          AWS Comprehend Medical for PHI detection and removal
+          question fetching across multiple categories and
         </Text>
-        <Text position={[0, 0.30, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Deployed serverless FastAPI backend on AWS Lambda
+        <Text position={[0, 0.35, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
+          difficulty levels with real-time content updates
         </Text>
         <Text position={[0, 0.15, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          with API Gateway for auto-scaling and cost efficiency
+          • Implemented scoring system with streak multipliers,
         </Text>
-        <Text position={[0, -0.05, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Implemented per-user document isolation with tagged
+        <Text position={[0, 0.0, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
+          time-based bonuses, and persistent high score tracking
         </Text>
         <Text position={[0, -0.20, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          storage in Supermemory for complete data separation
+          • Designed responsive UI with custom button controls,
         </Text>
-        <Text position={[0, -0.40, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Architected React TypeScript frontend with Vite for
+        <Text position={[0, -0.35, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
+          progress bars, and visual feedback for user actions
         </Text>
         <Text position={[0, -0.55, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          fast builds and deployed on CloudFront CDN
+          • Created modular game state management system for
         </Text>
-        <Text position={[0, -0.75, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          • Secured with JWT authentication and PostgreSQL for
+        <Text position={[0, -0.70, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
+          seamless navigation between menus and gameplay modes
         </Text>
         <Text position={[0, -0.90, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
-          user management with bcrypt password hashing
+          • Optimized rendering pipeline with sprite caching and
+        </Text>
+        <Text position={[0, -1.05, 0.002]} fontSize={0.10} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={6.5}>
+          efficient event handling for smooth 60 FPS gameplay
         </Text>
 
-        <Line points={[[-3.3, -1.15, 0.002], [3.3, -1.15, 0.002]]} color={COLORS.tan} lineWidth={1} />
+        <Line points={[[-3.3, -1.30, 0.002], [3.3, -1.30, 0.002]]} color={COLORS.tan} lineWidth={1} />
 
-        <Text position={[0, -1.40, 0.002]} fontSize={0.095} color={COLORS.brownText} anchorX="center" anchorY="middle">
-          24-Hour Hackathon Project • VillageHacks 2025
+        <Text position={[0, -1.55, 0.002]} fontSize={0.095} color={COLORS.brownText} anchorX="center" anchorY="middle">
+          Personal Project • Interactive Learning Tool
         </Text>
 
         <group
-          position={[0, -1.85, 0.002]}
+          position={[0, -2.0, 0.002]}
           onClick={(e) => {
             e.stopPropagation();
-            window.open('https://github.com/Mahdi-196/VillageHacks', '_blank');
+            window.open('https://github.com/Mahdi-196/PopUpTrivia', '_blank');
           }}
           onPointerEnter={() => (document.body.style.cursor = 'pointer')}
           onPointerLeave={() => (document.body.style.cursor = 'auto')}

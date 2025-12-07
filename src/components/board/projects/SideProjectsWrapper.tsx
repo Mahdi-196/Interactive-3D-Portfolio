@@ -1,6 +1,10 @@
 import { Text, Line } from '@react-three/drei';
+import { BackButton } from '../shared/BackButton';
 import { SideProjectsSelection } from './SideProjectsSelection';
 import { MedeSenseProject } from './MedeSenseProject';
+import { PopUpTriviaProject } from './PopUpTriviaProject';
+import { VibeLinkProject } from './VibeLinkProject';
+import { GraphiBooksProject } from './GraphiBooksProject';
 import { COLORS } from '../constants';
 import type { SideProject } from '../types';
 
@@ -10,14 +14,27 @@ import type { SideProject } from '../types';
 interface SideProjectsWrapperProps {
   selectedSideProject: SideProject;
   onSideProjectSelect: (project: SideProject) => void;
+  onBack: () => void;
 }
 
 export const SideProjectsWrapper = ({
   selectedSideProject,
-  onSideProjectSelect
+  onSideProjectSelect,
+  onBack
 }: SideProjectsWrapperProps) => {
   return (
     <>
+      {/* Back Button - Always visible with smart behavior */}
+      <BackButton
+        onClick={() => {
+          if (selectedSideProject) {
+            onSideProjectSelect(null);
+          } else {
+            onBack();
+          }
+        }}
+      />
+
       {/* Header - Always visible */}
       <mesh position={[0, 2.7, 0.03]}>
         <planeGeometry args={[10.5, 0.8]} />
@@ -52,6 +69,12 @@ export const SideProjectsWrapper = ({
         <SideProjectsSelection onProjectSelect={onSideProjectSelect} />
       ) : selectedSideProject === 'medesense' ? (
         <MedeSenseProject />
+      ) : selectedSideProject === 'popuptrivia' ? (
+        <PopUpTriviaProject />
+      ) : selectedSideProject === 'vibelink' ? (
+        <VibeLinkProject />
+      ) : selectedSideProject === 'graphibooks' ? (
+        <GraphiBooksProject />
       ) : null}
     </>
   );

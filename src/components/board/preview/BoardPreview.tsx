@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { Text } from '@react-three/drei';
 import { CaseFileCard } from './CaseFileCard';
+import { PushPin } from '../shared/PushPin';
 import { BOARD_CONFIG, COLORS, CASE_FILE_POSITIONS } from '../constants';
 import type { CaseFile, ProjectDetail } from '../types';
 
@@ -101,53 +102,138 @@ export const BoardPreview = ({
           CASE FILE: MAHDI GHALEB
         </Text>
 
-        {/* Case File 1 - ABOUT ME (Top Left) */}
-        <CaseFileCard
-          position={CASE_FILE_POSITIONS.aboutMe}
-          title="ABOUT ME"
-          fileNumber="#001"
-          items={['Full-Stack Dev', '3D Enthusiast', 'Problem Solver']}
-          showContent={showContent}
-          selectedCaseFile={selectedCaseFile}
-          onClick={() => onCaseFileClick?.('about')}
-          labelColor={COLORS.darkRed}
-        />
+        {/* Case File 1 - ABOUT ME (Left - Standard Size) */}
+        <group
+          onClick={(e) => {
+            if (!showContent || selectedCaseFile) return;
+            e.stopPropagation();
+            onCaseFileClick?.('about');
+          }}
+          onPointerEnter={() => {
+            if (showContent && !selectedCaseFile) document.body.style.cursor = 'pointer';
+          }}
+          onPointerLeave={() => (document.body.style.cursor = 'auto')}
+          visible={!selectedCaseFile}
+        >
+          <mesh position={[-4.5, 0, 0.03]}>
+            <boxGeometry args={[2.8, 1.6, 0.04]} />
+            <meshStandardMaterial color={COLORS.manila} roughness={0.9} />
+          </mesh>
+          <mesh position={[-4.5, 0.8, 0.046]}>
+            <boxGeometry args={[2.8, 0.25, 0.03]} />
+            <meshStandardMaterial color={COLORS.manilaTab} roughness={0.9} />
+          </mesh>
+          <mesh position={[-5.65, 0.8, 0.062]}>
+            <planeGeometry args={[0.55, 0.28]} />
+            <meshStandardMaterial color={COLORS.darkRed} />
+          </mesh>
+          <Text position={[-5.65, 0.8, 0.072]} fontSize={0.16} color="#FFFFFF" anchorX="center" anchorY="middle">
+            #001
+          </Text>
+          <Text position={[-4.5, 0.3, 0.05]} fontSize={0.22} color={COLORS.darkBrown} anchorX="center" anchorY="middle">
+            ABOUT ME
+          </Text>
+          <Text position={[-4.5, -0.05, 0.05]} fontSize={0.11} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.5}>
+            Full-Stack Dev
+          </Text>
+          <Text position={[-4.5, -0.25, 0.05]} fontSize={0.11} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.5}>
+            3D Enthusiast
+          </Text>
+          <Text position={[-4.5, -0.45, 0.05]} fontSize={0.11} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.5}>
+            Problem Solver
+          </Text>
+          <PushPin position={[-4.5, 0.8, 0.08]} radius={0.11} />
+        </group>
 
-        {/* Case File 2 - EDUCATION (Top Right) */}
-        <CaseFileCard
-          position={CASE_FILE_POSITIONS.education}
-          title="EDUCATION"
-          fileNumber="#002"
-          items={['Computer Science', 'Self-Taught Dev', 'Lifelong Learner']}
-          showContent={showContent}
-          selectedCaseFile={selectedCaseFile}
-          onClick={() => onCaseFileClick?.('education')}
-          labelColor={COLORS.darkRed}
-        />
+        {/* Case File 2 - PROJECTS (Right - Medium-Large) */}
+        <group
+          onClick={(e) => {
+            if (!showContent || selectedCaseFile) return;
+            e.stopPropagation();
+            onCaseFileClick?.('projects');
+          }}
+          onPointerEnter={() => {
+            if (showContent && !selectedCaseFile) document.body.style.cursor = 'pointer';
+          }}
+          onPointerLeave={() => (document.body.style.cursor = 'auto')}
+          visible={!selectedCaseFile}
+        >
+          <mesh position={[4, 0, 0.03]}>
+            <boxGeometry args={[3.5, 2.0, 0.04]} />
+            <meshStandardMaterial color={COLORS.manila} roughness={0.9} />
+          </mesh>
+          <mesh position={[4, 1.0, 0.046]}>
+            <boxGeometry args={[3.5, 0.28, 0.03]} />
+            <meshStandardMaterial color={COLORS.manilaTab} roughness={0.9} />
+          </mesh>
+          <mesh position={[2.4, 1.0, 0.062]}>
+            <planeGeometry args={[0.6, 0.32]} />
+            <meshStandardMaterial color={COLORS.darkRed} />
+          </mesh>
+          <Text position={[2.4, 1.0, 0.072]} fontSize={0.17} color="#FFFFFF" anchorX="center" anchorY="middle">
+            #003
+          </Text>
+          <Text position={[4, 0.45, 0.05]} fontSize={0.26} color={COLORS.darkBrown} anchorX="center" anchorY="middle">
+            PROJECTS
+          </Text>
+          <Text position={[4, 0.05, 0.05]} fontSize={0.12} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+            MedeSense
+          </Text>
+          <Text position={[4, -0.18, 0.05]} fontSize={0.12} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+            RespawnRoom
+          </Text>
+          <Text position={[4, -0.41, 0.05]} fontSize={0.12} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+            VibeLink & More
+          </Text>
+          <PushPin position={[4, 1.0, 0.08]} radius={0.12} />
+        </group>
 
-        {/* Case File 3 - SKILLS (Bottom Left) */}
-        <CaseFileCard
-          position={CASE_FILE_POSITIONS.skills}
-          title="SKILLS"
-          fileNumber="#003"
-          items={['React • TypeScript', 'Three.js • Node.js', 'AWS • Docker']}
-          showContent={showContent}
-          selectedCaseFile={selectedCaseFile}
-          onClick={() => onCaseFileClick?.('skills')}
-          labelColor={COLORS.darkBrown}
-        />
+        {/* Case File 3 - SKILLS & EDUCATION (Center - LARGEST) */}
+        <group
+          onClick={(e) => {
+            if (!showContent || selectedCaseFile) return;
+            e.stopPropagation();
+            onCaseFileClick?.('skillseducation');
+          }}
+          onPointerEnter={() => {
+            if (showContent && !selectedCaseFile) document.body.style.cursor = 'pointer';
+          }}
+          onPointerLeave={() => (document.body.style.cursor = 'auto')}
+          visible={!selectedCaseFile}
+        >
+          <mesh position={[-0.5, -0.8, 0.03]}>
+            <boxGeometry args={[4.5, 2.8, 0.04]} />
+            <meshStandardMaterial color={COLORS.manila} roughness={0.9} />
+          </mesh>
+          <mesh position={[-0.5, 0.6, 0.046]}>
+            <boxGeometry args={[4.5, 0.35, 0.03]} />
+            <meshStandardMaterial color={COLORS.manilaTab} roughness={0.9} />
+          </mesh>
+          <mesh position={[-2.85, 0.6, 0.062]}>
+            <planeGeometry args={[0.7, 0.38]} />
+            <meshStandardMaterial color={COLORS.darkRed} />
+          </mesh>
+          <Text position={[-2.85, 0.6, 0.072]} fontSize={0.19} color="#FFFFFF" anchorX="center" anchorY="middle">
+            #002
+          </Text>
+          <Text position={[-0.5, 0.0, 0.05]} fontSize={0.30} color={COLORS.darkBrown} anchorX="center" anchorY="middle">
+            SKILLS & EDUCATION
+          </Text>
+          <Text position={[-0.5, -0.45, 0.05]} fontSize={0.14} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={4.2}>
+            Computer Science
+          </Text>
+          <Text position={[-0.5, -0.70, 0.05]} fontSize={0.14} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={4.2}>
+            React • TypeScript • Three.js
+          </Text>
+          <Text position={[-0.5, -0.95, 0.05]} fontSize={0.14} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={4.2}>
+            Node.js • AWS • Docker
+          </Text>
+          <Text position={[-0.5, -1.20, 0.05]} fontSize={0.14} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={4.2}>
+            Full-Stack Development
+          </Text>
+          <PushPin position={[-0.5, 0.6, 0.08]} radius={0.14} />
+        </group>
 
-        {/* Case File 4 - PROJECTS (Bottom Right) */}
-        <CaseFileCard
-          position={CASE_FILE_POSITIONS.projects}
-          title="PROJECTS"
-          fileNumber="#004"
-          items={['E-Commerce', 'Chat Application', 'Analytics Dashboard']}
-          showContent={showContent}
-          selectedCaseFile={selectedCaseFile}
-          onClick={() => onCaseFileClick?.('projects')}
-          labelColor={COLORS.darkRed}
-        />
       </group>
     </group>
   );

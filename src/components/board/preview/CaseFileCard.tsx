@@ -34,26 +34,26 @@ export const CaseFileCard = ({
       onPointerLeave={() => (document.body.style.cursor = 'auto')}
       visible={!selectedCaseFile}
     >
-      {/* Folder body - manila envelope */}
+      {/* Folder body - manila envelope (40% bigger) */}
       <mesh position={position}>
-        <boxGeometry args={[2.2, 1.3, 0.03]} />
+        <boxGeometry args={[3.1, 1.8, 0.04]} />
         <meshStandardMaterial color={COLORS.manila} roughness={0.9} />
       </mesh>
 
       {/* Folder tab at top */}
-      <mesh position={[position[0], position[1] + tabYOffset, position[2] + 0.015]}>
-        <boxGeometry args={[2.2, 0.2, 0.025]} />
+      <mesh position={[position[0], position[1] + tabYOffset + 0.25, position[2] + 0.015]}>
+        <boxGeometry args={[3.1, 0.28, 0.03]} />
         <meshStandardMaterial color={COLORS.manilaTab} roughness={0.9} />
       </mesh>
 
       {/* File identifier label */}
-      <mesh position={[position[0] + labelXOffset, position[1] + tabYOffset - 0.05, position[2] + 0.03]}>
-        <planeGeometry args={[0.45, 0.25]} />
+      <mesh position={[position[0] + labelXOffset - 0.2, position[1] + tabYOffset + 0.25, position[2] + 0.04]}>
+        <planeGeometry args={[0.6, 0.32]} />
         <meshStandardMaterial color={labelColor} />
       </mesh>
       <Text
-        position={[position[0] + labelXOffset, position[1] + tabYOffset - 0.05, position[2] + 0.04]}
-        fontSize={0.14}
+        position={[position[0] + labelXOffset - 0.2, position[1] + tabYOffset + 0.25, position[2] + 0.05]}
+        fontSize={0.17}
         color="#FFFFFF"
         anchorX="center"
         anchorY="middle"
@@ -63,8 +63,8 @@ export const CaseFileCard = ({
 
       {/* Title */}
       <Text
-        position={[position[0], position[1] + 0.2, position[2] + 0.02]}
-        fontSize={0.18}
+        position={[position[0], position[1] + 0.35, position[2] + 0.02]}
+        fontSize={0.24}
         color={COLORS.darkBrown}
         anchorX="center"
         anchorY="middle"
@@ -76,18 +76,19 @@ export const CaseFileCard = ({
       {items.map((item, index) => (
         <Text
           key={index}
-          position={[position[0], position[1] - 0.15 - index * 0.15, position[2] + 0.02]}
-          fontSize={0.09}
+          position={[position[0], position[1] - 0.1 - index * 0.22, position[2] + 0.02]}
+          fontSize={0.12}
           color={COLORS.tertiaryText}
           anchorX="center"
           anchorY="middle"
+          maxWidth={2.8}
         >
           {item}
         </Text>
       ))}
 
       {/* Push pin */}
-      <PushPin position={[position[0], position[1] + tabYOffset, position[2] + 0.03]} />
+      <PushPin position={[position[0], position[1] + tabYOffset + 0.25, position[2] + 0.06]} radius={0.12} />
     </group>
   );
 };
