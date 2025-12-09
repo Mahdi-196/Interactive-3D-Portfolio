@@ -8,6 +8,9 @@ import { VictorianDoor } from './VictorianDoor';
 import { VictorianChandelier } from './VictorianChandelier';
 import { FirstPersonDetectiveBody } from './FirstPersonDetectiveBody';
 import { DetectiveCharacter } from './DetectiveCharacter';
+import { VictorianCouch } from './VictorianCouch';
+import { VictorianSideTable } from './VictorianSideTable';
+import { VictorianArmchair } from './VictorianArmchair';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -21,6 +24,7 @@ interface DetectiveOfficeSceneProps {
   onBoardContentClose?: () => void;
   isDetectiveMode?: boolean;
   showIntroDetective?: boolean;
+  playerCharacterRef?: React.RefObject<any>;
 }
 
 export const DetectiveOfficeScene = ({
@@ -34,12 +38,13 @@ export const DetectiveOfficeScene = ({
   overlayVisible = false,
   onBoardContentClose,
   isDetectiveMode = false,
-  showIntroDetective = false
+  showIntroDetective = false,
+  playerCharacterRef
 }: DetectiveOfficeSceneProps) => {
   return (
     <>
       {/* Office room structure (walls, floor, ceiling) */}
-      <OfficeRoom />
+      <OfficeRoom onMapClick={() => onInteraction('map')} />
 
       {/* Central desk only */}
       <ExecutiveDesk onInteraction={onInteraction} />
@@ -48,21 +53,38 @@ export const DetectiveOfficeScene = ({
       <OfficeWindow />
       
       {/* Desk Chair */}
-      <VictorianChair position={[0, 0, -3]} rotation={[0, 0, 0]} />
+      <VictorianChair position={[0, 0, -6]} rotation={[0, 0, 0]} />
       
-      {/* Click-off plane - positioned at walls to catch background clicks */}
+      {/* Click-off plane for board - positioned at walls to catch background clicks */}
       {showBoardContent && (
-        <mesh
-          position={[0, 4.5, 9.95]} // Just behind the board surface
-          rotation={[0, Math.PI, 0]} // Face the camera
-          onClick={(e) => {
-            console.log('Click-off activated - closing board');
-            onBoardContentClose?.();
-          }}
-        >
-          <planeGeometry args={[100, 100]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        </mesh>
+        <>
+          <mesh
+            position={[0, 4.5, 9.95]} // Just behind the board surface
+            rotation={[0, Math.PI, 0]} // Face the camera
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log('Click-off activated - closing board/map');
+              onBoardContentClose?.();
+            }}
+          >
+            <planeGeometry args={[100, 100]} />
+            <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+          </mesh>
+
+          {/* Click-off plane for map - positioned behind map on left wall */}
+          <mesh
+            position={[-9.95, 4.5, 0]} // Just behind the map surface (left wall)
+            rotation={[0, Math.PI / 2, 0]} // Face the camera from left wall
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log('Map click-off activated - closing map');
+              onBoardContentClose?.();
+            }}
+          >
+            <planeGeometry args={[100, 100]} />
+            <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+          </mesh>
+        </>
       )}
 
       {/* Interactive Detective Board */}
@@ -75,6 +97,17 @@ export const DetectiveOfficeScene = ({
         overlayVisible={overlayVisible}
         onContentClose={onBoardContentClose}
       />
+
+      {/* Victorian Seating - Main couch and side armchair */}
+      <group scale={[1.6, 1, 1.3]}>
+        <VictorianCouch position={[0, 0, 1.5]} rotation={[0, 0, 0]} />
+      </group>
+      <VictorianArmchair position={[-3.5, 0, 3.5]} rotation={[0, Math.PI / 2, 0]} />
+
+      {/* Victorian Side Tables */}
+      <VictorianSideTable position={[-3, 0, 2]} rotation={[0, 0, 0]} />
+      <VictorianSideTable position={[-1, 0, 4]} rotation={[0, 0, 0]} />
+      <VictorianSideTable position={[-5.5, 0, 4]} rotation={[0, 0, 0]} />
       
       {/* Asymmetrical Bookshelves - Left wall (3 bookshelves with gaps) */}
       <Bookshelf position={[-9.0, 0, -6]} rotation={[0, Math.PI / 2, 0]} variant={1} />
@@ -116,23 +149,16 @@ export const DetectiveOfficeScene = ({
         </group>
       )}
 
-      {/* Detective character - always visible for customization */}
+      {/* Detective character - player controlled (hidden in first-person) */}
       {!showIntroDetective && (
-        <group>
+        <group visible={false}>
           <DetectiveCharacter
+            ref={playerCharacterRef}
             position={[0, 0, 3]}
             onInteraction={onInteraction}
-            scale={2}
-            autoRotate={true}
-          />
-          {/* Spotlight to make character more visible */}
-          <spotLight
-            position={[2, 4, 5]}
-            target-position={[0, 2, 3]}
-            intensity={2}
-            angle={0.5}
-            penumbra={0.5}
-            color="#ffffff"
+            scale={0.8}
+            autoRotate={false}
+            isPlayerControlled={true}
           />
         </group>
       )}

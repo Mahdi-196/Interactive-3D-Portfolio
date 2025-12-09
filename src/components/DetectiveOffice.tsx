@@ -38,6 +38,7 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
   const [showBoardContent, setShowBoardContent] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isDetectiveMode, setIsDetectiveMode] = useState(true); // Default ON
+  const [isViewingMap, setIsViewingMap] = useState(false);
   const [originalCameraState, setOriginalCameraState] = useState<{
     position: THREE.Vector3;
     target: THREE.Vector3;
@@ -51,7 +52,8 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
   const hasPlayedIntro = useRef(false);
 
   const cameraControlsRef = useRef<CameraControlsRef>(null);
-  const detectivePosition = new THREE.Vector3(0, 2.3, 0); // Detective eye height position
+  const playerCharacterRef = useRef<THREE.Group>(null);
+  const detectivePosition = new THREE.Vector3(0, 2.645, 0); // Detective eye height position (15% taller)
 
   // Mobile controls state
   const [isMobile, setIsMobile] = useState(isMobileDevice());
@@ -96,8 +98,10 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
       });
       
       try {
-        // Smooth zoom to board - less zoomed for better view
-        const boardPosition = new THREE.Vector3(0, 4.5, 4.5); // Further back for less zoom
+        // Smooth zoom to board - closer on mobile for better readability
+        const boardPosition = isMobile
+          ? new THREE.Vector3(0, 4.5, 3.5) // Closer for mobile devices
+          : new THREE.Vector3(0, 4.5, 4.5); // Further back for desktop
         const boardTarget = new THREE.Vector3(0, 4.5, 9.9); // Board center
 
         await cameraControls.setLookAt(
@@ -121,8 +125,31 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
     // Don't close case files or board content - just exit zoom mode
     // This keeps the board state exactly as it is
 
-    // Simply exit the zoomed board view without resetting anything
+    if (isTransitioning) return;
+
+    setIsTransitioning(true);
+
+    // Smoothly transition camera back to original position
+    const cameraControls = cameraControlsRef.current;
+    if (cameraControls && originalCameraState) {
+      try {
+        await cameraControls.setLookAt(
+          originalCameraState.position.x,
+          originalCameraState.position.y,
+          originalCameraState.position.z,
+          originalCameraState.target.x,
+          originalCameraState.target.y,
+          originalCameraState.target.z,
+          true // enable smooth transition
+        );
+      } catch (error) {
+        console.error('Camera transition back failed:', error);
+      }
+    }
+
+    // Reset state after transition completes
     setShowBoardContent(false);
+    setIsViewingMap(false);
     setIsTransitioning(false);
     setOriginalCameraState(null);
 
@@ -135,6 +162,55 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
     }
   };
 
+  const handleMapClick = async () => {
+    if (isTransitioning) return;
+
+    setWasPointerLocked(!!document.pointerLockElement);
+
+    // Exit pointer lock immediately when opening map
+    if (document.pointerLockElement) {
+      document.exitPointerLock();
+    }
+
+    setIsTransitioning(true);
+
+    // Store current camera state
+    const cameraControls = cameraControlsRef.current;
+    if (cameraControls) {
+      // Reset map zoom to default distance
+      cameraControls.resetMapZoom();
+
+      const currentPosition = cameraControls.camera.position.clone();
+      const currentTarget = new THREE.Vector3();
+      cameraControls.getTarget(currentTarget);
+
+      setOriginalCameraState({
+        position: currentPosition,
+        target: currentTarget
+      });
+
+      try {
+        // Smooth zoom to map on wall - zoom in close like the board
+        const mapPosition = new THREE.Vector3(-7.5, 3, -1); // Closer to map for better view
+        const mapTarget = new THREE.Vector3(-9.85, 3, -1); // Map location
+
+        await cameraControls.setLookAt(
+          mapPosition.x, mapPosition.y, mapPosition.z,
+          mapTarget.x, mapTarget.y, mapTarget.z,
+          true // enable smooth transition
+        );
+
+        setIsViewingMap(true);
+        setShowBoardContent(true);
+        setIsTransitioning(false);
+
+      } catch (error) {
+        console.error('Camera transition to map failed:', error);
+        setIsTransitioning(false);
+      }
+    }
+  };
+
   const handleInteraction = (type: string, data?: unknown) => {
     if (type === 'lamp') {
       setLampOn(prev => !prev);
@@ -142,6 +218,8 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
     } else if (type === 'detective') {
       console.log('Detective character clicked');
       // Add detective interaction logic here
+    } else if (type === 'map') {
+      handleMapClick();
     } else {
       onInteraction(type, data);
     }
@@ -367,6 +445,7 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
           showBoardContent={showBoardContent}
           isDetectiveMode={isDetectiveMode}
           introComplete={introComplete}
+          playerCharacterRef={playerCharacterRef}
           touchMovementRef={isMobile ? touchMovementRef : undefined}
           touchLookRef={isMobile ? touchLookRef : undefined}
         />
@@ -383,6 +462,7 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
           onBoardContentClose={handleBoardContentClose}
           isDetectiveMode={isDetectiveMode}
           showIntroDetective={showIntroDetective}
+          playerCharacterRef={playerCharacterRef}
         />
       </Canvas>
 

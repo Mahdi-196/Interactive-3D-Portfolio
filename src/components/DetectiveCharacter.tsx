@@ -8,26 +8,140 @@ interface DetectiveCharacterProps {
   onInteraction: (type: string, data?: unknown) => void;
   scale?: number;
   autoRotate?: boolean;
+  isPlayerControlled?: boolean;
 }
 
 export const DetectiveCharacter = forwardRef<THREE.Group, DetectiveCharacterProps>(
-  ({ 
-    position = [0, 0, 0], 
-    onInteraction, 
-    scale = 1, 
-    autoRotate = false 
+  ({
+    position = [0, 0, 0],
+    onInteraction,
+    scale = 1,
+    autoRotate = false,
+    isPlayerControlled = false
   }, ref) => {
-  
+
   const groupRef = useRef<THREE.Group>(null);
   const [isWalking, setIsWalking] = useState(false);
   const [rotationY, setRotationY] = useState(0);
+  const moveState = useRef({
+    forward: false,
+    backward: false,
+    left: false,
+    right: false
+  });
 
-  // Auto rotation or walking animation
+  // Mouse look state for first-person camera
+  const mouseLook = useRef({ yaw: 0, pitch: 0 });
+
+  // Player movement controls
+  useEffect(() => {
+    if (!isPlayerControlled) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.code) {
+        case 'KeyW':
+          moveState.current.forward = true;
+          break;
+        case 'KeyS':
+          moveState.current.backward = true;
+          break;
+        case 'KeyA':
+          moveState.current.left = true;
+          break;
+        case 'KeyD':
+          moveState.current.right = true;
+          break;
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      switch (event.code) {
+        case 'KeyW':
+          moveState.current.forward = false;
+          break;
+        case 'KeyS':
+          moveState.current.backward = false;
+          break;
+        case 'KeyA':
+          moveState.current.left = false;
+          break;
+        case 'KeyD':
+          moveState.current.right = false;
+          break;
+      }
+    };
+
+    const handleMouseMove = (event: MouseEvent) => {
+      // Only handle mouse look when pointer is locked
+      if (document.pointerLockElement) {
+        const sensitivity = 0.002;
+        mouseLook.current.yaw -= event.movementX * sensitivity;
+        mouseLook.current.pitch -= event.movementY * sensitivity;
+
+        // Clamp pitch to prevent flipping
+        mouseLook.current.pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, mouseLook.current.pitch));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [isPlayerControlled]);
+
+  // Auto rotation, walking animation, or player movement
   useFrame((state) => {
     const currentRef = ref && 'current' in ref ? ref.current : groupRef.current;
-    
+
     if (currentRef) {
-      if (autoRotate) {
+      if (isPlayerControlled) {
+        // Player-controlled movement with mouse look
+        const speed = 0.1;
+        const direction = new THREE.Vector3();
+
+        // Get movement relative to camera yaw
+        const yaw = mouseLook.current.yaw;
+
+        if (moveState.current.forward) {
+          direction.x -= Math.sin(yaw) * speed;
+          direction.z -= Math.cos(yaw) * speed;
+        }
+        if (moveState.current.backward) {
+          direction.x += Math.sin(yaw) * speed;
+          direction.z += Math.cos(yaw) * speed;
+        }
+        if (moveState.current.left) {
+          direction.x -= Math.cos(yaw) * speed;
+          direction.z += Math.sin(yaw) * speed;
+        }
+        if (moveState.current.right) {
+          direction.x += Math.cos(yaw) * speed;
+          direction.z -= Math.sin(yaw) * speed;
+        }
+
+        // Apply movement
+        if (direction.length() > 0) {
+          currentRef.position.add(direction);
+
+          // Rotate character to face camera yaw direction
+          currentRef.rotation.y = yaw;
+
+          // Walking animation - bob up and down
+          currentRef.position.y = position[1] + Math.sin(state.clock.elapsedTime * 8) * 0.02;
+        } else {
+          // Reset to base height when not moving
+          currentRef.position.y = position[1];
+        }
+
+        // Store yaw and pitch for camera to use
+        (currentRef as any).userData.yaw = mouseLook.current.yaw;
+        (currentRef as any).userData.pitch = mouseLook.current.pitch;
+      } else if (autoRotate) {
         currentRef.rotation.y += 0.01;
       } else if (isWalking) {
         // Simple walking animation - bob up and down
@@ -36,9 +150,9 @@ export const DetectiveCharacter = forwardRef<THREE.Group, DetectiveCharacterProp
     }
   });
 
-  // Simple patrol behavior when not auto-rotating
+  // Simple patrol behavior when not auto-rotating and not player controlled
   useEffect(() => {
-    if (autoRotate) return;
+    if (autoRotate || isPlayerControlled) return;
     
     const interval = setInterval(() => {
       setIsWalking(true);

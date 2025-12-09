@@ -1,8 +1,12 @@
 import * as THREE from 'three';
 import { useLoader } from '@react-three/fiber';
 
+interface OfficeRoomProps {
+  onMapClick?: () => void;
+}
+
 // Complete Detective Office Room with wood paneling and bookshelves
-export const OfficeRoom = () => {
+export const OfficeRoom = ({ onMapClick }: OfficeRoomProps) => {
   // Load Sherlock Holmes map texture
   const mapTexture = useLoader(THREE.TextureLoader, '/map.png');
 
@@ -15,7 +19,7 @@ export const OfficeRoom = () => {
       </mesh>
 
       {/* Ornate Rug in center */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, -2]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, -5]}>
         <planeGeometry args={[6, 4]} />
         <meshStandardMaterial color="#8b0000" roughness={0.8} />
       </mesh>
@@ -63,8 +67,23 @@ export const OfficeRoom = () => {
         <planeGeometry args={[3.2, 2.6]} />
         <meshStandardMaterial color="#1a0d00" roughness={0.4} />
       </mesh>
-      {/* Map */}
-      <mesh position={[-9.85, 3, -1]} rotation={[0, Math.PI / 2, 0]}>
+      {/* Map - Interactive */}
+      <mesh
+        position={[-9.85, 3, -1]}
+        rotation={[0, Math.PI / 2, 0]}
+        onClick={(e) => {
+          e.stopPropagation();
+          onMapClick?.();
+        }}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={(e) => {
+          e.stopPropagation();
+          document.body.style.cursor = 'auto';
+        }}
+      >
         <planeGeometry args={[3, 2.4]} />
         <meshStandardMaterial
           map={mapTexture}

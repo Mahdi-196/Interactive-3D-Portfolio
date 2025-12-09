@@ -6,7 +6,9 @@ interface EnhancedCameraControlsProps {
   isTransitioning: boolean;
   showBoardContent?: boolean;
   isDetectiveMode?: boolean;
+  isViewingMap?: boolean;
   introComplete?: boolean;
+  playerCharacterRef?: React.RefObject<THREE.Group>;
   // Mobile touch controls
   touchMovementRef?: React.MutableRefObject<{ x: number; y: number }>;
   touchLookRef?: React.MutableRefObject<{ deltaX: number; deltaY: number }>;
@@ -21,10 +23,11 @@ interface CameraControlsRef {
   ) => Promise<void>;
   getTarget: (target: THREE.Vector3) => void;
   lock: () => void;
+  resetMapZoom: () => void;
 }
 
 export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCameraControlsProps>(
-  ({ isTransitioning, showBoardContent = false, isDetectiveMode = false, introComplete = false, touchMovementRef, touchLookRef }, ref) => {
+  ({ isTransitioning, showBoardContent = false, isDetectiveMode = false, isViewingMap = false, introComplete = false, playerCharacterRef, touchMovementRef, touchLookRef }, ref) => {
     const { camera, gl } = useThree();
     const moveState = useRef({
       forward: false,
@@ -52,6 +55,9 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
             }
           }, 50);
         }
+      },
+      resetMapZoom: () => {
+        // No longer needed but keep for compatibility
       },
       camera,
       setLookAt: async (posX: number, posY: number, posZ: number, targetX: number, targetY: number, targetZ: number, enableTransition?: boolean) => {
@@ -102,7 +108,7 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       if (isTransitioning || showBoardContent) return;
 
       // Set initial camera position and rotation
-      camera.position.set(0, 2, 5);
+      camera.position.set(0, 2.3, 5);
       camera.rotation.set(0, 0, 0);
       
       const handleKeyDown = (event: KeyboardEvent) => {
@@ -268,7 +274,46 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
     }, [camera, gl, isTransitioning, isDetectiveMode, introComplete, showBoardContent]);
 
     useFrame(() => {
-      if (isTransitioning || showBoardContent) return;
+      if (isTransitioning) return;
+      if (showBoardContent) return; // Block all movement when viewing map or board
+
+      // Follow player character in first-person if ref exists
+      if (playerCharacterRef?.current) {
+        const character = playerCharacterRef.current;
+        const characterPos = character.position;
+
+        // Get yaw and pitch from character's userData
+        const yaw = (character as any).userData.yaw || 0;
+        const pitch = (character as any).userData.pitch || 0;
+
+        // Position camera at character's eye level (first-person view)
+        const eyeHeight = 2.3; // Eye height (2.0 * 1.15 = 2.3 for 15% taller)
+
+        const targetCameraPos = new THREE.Vector3(
+          characterPos.x,
+          characterPos.y + eyeHeight,
+          characterPos.z
+        );
+
+        // Set camera position to character's head
+        camera.position.copy(targetCameraPos);
+
+        // Calculate look direction based on yaw and pitch for 360-degree view
+        const lookDirection = new THREE.Vector3(
+          -Math.sin(yaw) * Math.cos(pitch),
+          Math.sin(pitch),
+          -Math.cos(yaw) * Math.cos(pitch)
+        );
+
+        const lookAtTarget = new THREE.Vector3().addVectors(
+          targetCameraPos,
+          lookDirection.multiplyScalar(10)
+        );
+
+        camera.lookAt(lookAtTarget);
+
+        return; // Skip normal movement when following character
+      }
 
       // Apply touch look controls and consume deltas
       if (touchLookRef && (touchLookRef.current.deltaX !== 0 || touchLookRef.current.deltaY !== 0)) {
@@ -337,7 +382,7 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
 
       // In detective mode, lock Y to eye level height
       if (isDetectiveMode) {
-        newPosition.y = 2.3;
+        newPosition.y = 2.645;
       } else {
         newPosition.y = Math.max(0.5, Math.min(10, newPosition.y));
       }
