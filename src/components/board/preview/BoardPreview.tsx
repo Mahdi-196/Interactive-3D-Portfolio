@@ -31,12 +31,18 @@ export const BoardPreview = ({
 
   const handleClick = (e: any) => {
     e.stopPropagation();
-    onBoardClick?.();
+    // Only zoom into board when it's closed (not already showing content)
+    if (!showContent) {
+      onBoardClick?.();
+    }
   };
 
   const handlePointerDown = (e: any) => {
     e.stopPropagation();
-    onBoardClick?.();
+    // Only zoom into board when it's closed (not already showing content)
+    if (!showContent) {
+      onBoardClick?.();
+    }
   };
 
   return (
@@ -55,10 +61,11 @@ export const BoardPreview = ({
 
       {/* Main Wooden Board Background */}
       <mesh
-        onClick={selectedProject === 'refocused' ? undefined : handleClick}
-        onPointerDown={selectedProject === 'refocused' ? undefined : handlePointerDown}
+        onClick={handleClick}
+        onPointerDown={handlePointerDown}
         onPointerEnter={() => {
-          if (selectedProject !== 'refocused') {
+          // Only show pointer cursor when board is closed and can be clicked to zoom
+          if (!showContent) {
             document.body.style.cursor = 'pointer';
           }
         }}
@@ -79,8 +86,8 @@ export const BoardPreview = ({
       {/* Top border */}
       <mesh
         position={[0, 3.25, 0.02]}
-        onClick={selectedProject === 'refocused' ? undefined : handleClick}
-        onPointerDown={selectedProject === 'refocused' ? undefined : handlePointerDown}
+        onClick={handleClick}
+        onPointerDown={handlePointerDown}
       >
         <boxGeometry args={[13, 0.25, 0.08]} />
         <meshStandardMaterial color={COLORS.darkWood} roughness={0.8} metalness={0.1} side={THREE.DoubleSide} />
@@ -89,8 +96,8 @@ export const BoardPreview = ({
       {/* Bottom border */}
       <mesh
         position={[0, -3.25, 0.02]}
-        onClick={selectedProject === 'refocused' ? undefined : handleClick}
-        onPointerDown={selectedProject === 'refocused' ? undefined : handlePointerDown}
+        onClick={handleClick}
+        onPointerDown={handlePointerDown}
       >
         <boxGeometry args={[13, 0.25, 0.08]} />
         <meshStandardMaterial color={COLORS.darkWood} roughness={0.8} metalness={0.1} side={THREE.DoubleSide} />
@@ -99,8 +106,8 @@ export const BoardPreview = ({
       {/* Left border */}
       <mesh
         position={[-6.25, 0, 0.02]}
-        onClick={selectedProject === 'refocused' ? undefined : handleClick}
-        onPointerDown={selectedProject === 'refocused' ? undefined : handlePointerDown}
+        onClick={handleClick}
+        onPointerDown={handlePointerDown}
       >
         <boxGeometry args={[0.25, 6.5, 0.08]} />
         <meshStandardMaterial color={COLORS.darkWood} roughness={0.8} metalness={0.1} side={THREE.DoubleSide} />
@@ -109,8 +116,8 @@ export const BoardPreview = ({
       {/* Right border */}
       <mesh
         position={[6.25, 0, 0.02]}
-        onClick={selectedProject === 'refocused' ? undefined : handleClick}
-        onPointerDown={selectedProject === 'refocused' ? undefined : handlePointerDown}
+        onClick={handleClick}
+        onPointerDown={handlePointerDown}
       >
         <boxGeometry args={[0.25, 6.5, 0.08]} />
         <meshStandardMaterial color={COLORS.darkWood} roughness={0.8} metalness={0.1} side={THREE.DoubleSide} />

@@ -77,54 +77,56 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
     }
 
     setWasPointerLocked(!!document.pointerLockElement);
-    
+
     // Exit pointer lock immediately when opening board
     if (document.pointerLockElement) {
       document.exitPointerLock();
     }
-    
+
     setIsTransitioning(true);
-    
+
     // Store current camera state
     const cameraControls = cameraControlsRef.current;
-    if (cameraControls) {
-      const currentPosition = cameraControls.camera.position.clone();
-      const currentTarget = new THREE.Vector3();
-      cameraControls.getTarget(currentTarget);
-      
-      setOriginalCameraState({
-        position: currentPosition,
-        target: currentTarget
-      });
-      
-      try {
-        // Smooth zoom to board - closer on mobile for better readability
-        const boardPosition = isMobile
-          ? new THREE.Vector3(0, 4.5, 3.5) // Closer for mobile devices
-          : new THREE.Vector3(0, 4.5, 4.5); // Further back for desktop
-        const boardTarget = new THREE.Vector3(0, 4.5, 9.9); // Board center
+    if (!cameraControls) {
+      console.error('Camera controls not available');
+      setIsTransitioning(false);
+      return;
+    }
 
-        await cameraControls.setLookAt(
-          boardPosition.x, boardPosition.y, boardPosition.z,
-          boardTarget.x, boardTarget.y, boardTarget.z,
-          true // enable smooth transition
-        );
+    const currentPosition = cameraControls.camera.position.clone();
+    const currentTarget = new THREE.Vector3();
+    cameraControls.getTarget(currentTarget);
 
-        // Show content on board after zoom
-        setShowBoardContent(true);
-        setIsTransitioning(false);
+    setOriginalCameraState({
+      position: currentPosition,
+      target: currentTarget
+    });
 
-      } catch (error) {
-        console.error('Camera transition failed:', error);
-        setIsTransitioning(false);
-      }
+    try {
+      // Smooth zoom to board - closer on mobile for better readability
+      const boardPosition = isMobile
+        ? new THREE.Vector3(0, 4.5, 3.5) // Closer for mobile devices
+        : new THREE.Vector3(0, 4.5, 4.5); // Further back for desktop
+      const boardTarget = new THREE.Vector3(0, 4.5, 9.9); // Board center
+
+      await cameraControls.setLookAt(
+        boardPosition.x, boardPosition.y, boardPosition.z,
+        boardTarget.x, boardTarget.y, boardTarget.z,
+        true // enable smooth transition
+      );
+
+      // Show content on board after zoom
+      setShowBoardContent(true);
+      setIsTransitioning(false);
+
+    } catch (error) {
+      console.error('Camera transition failed:', error);
+      setIsTransitioning(false);
     }
   };
 
   const handleBoardContentClose = async () => {
-    // Don't close case files or board content - just exit zoom mode
-    // This keeps the board state exactly as it is
-
+    // Close board zoom
     if (isTransitioning) return;
 
     setIsTransitioning(true);
@@ -147,7 +149,7 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
       }
     }
 
-    // Reset state after transition completes
+    // Always reset state after transition completes (even if camera controls failed)
     setShowBoardContent(false);
     setIsViewingMap(false);
     setIsTransitioning(false);

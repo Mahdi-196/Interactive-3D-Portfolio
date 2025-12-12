@@ -104,7 +104,7 @@ export const DetectiveOfficeScene = ({
       </group>
       <VictorianArmchair position={[-3.5, 0, 3.5]} rotation={[0, Math.PI / 2, 0]} />
 
-      {/* Asymmetrical Bookshelves - Left wall (3 bookshelves with gaps) */}}
+      {/* Asymmetrical Bookshelves - Left wall (3 bookshelves with gaps) */}
       <Bookshelf position={[-9.0, 0, -6]} rotation={[0, Math.PI / 2, 0]} variant={1} />
       <Bookshelf position={[-9.0, 0, 6]} rotation={[0, Math.PI / 2, 0]} variant={3} />
       

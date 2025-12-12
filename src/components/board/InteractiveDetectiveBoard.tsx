@@ -54,33 +54,35 @@ export const InteractiveDetectiveBoard = ({
           position={BOARD_CONFIG.position}
           rotation={BOARD_CONFIG.rotation}
         >
-          {/* Invisible click blocker - prevents clicks on board area from closing board */}
-          <mesh
-            position={[0, 0, -0.5]}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <planeGeometry args={[BOARD_CONFIG.size.width + 1, BOARD_CONFIG.size.height + 1]} />
-            <meshBasicMaterial transparent opacity={0} />
-          </mesh>
+          {/* Invisible click blocker - only active when board is zoomed in */}
+          {showContent && (
+            <mesh
+              position={[0, 0, -0.5]}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <planeGeometry args={[BOARD_CONFIG.size.width + 1, BOARD_CONFIG.size.height + 1]} />
+              <meshBasicMaterial transparent opacity={0} />
+            </mesh>
+          )}
 
           {/* About Me Detail */}
-          {selectedCaseFile === 'about' && <AboutDetail onBack={() => onCaseFileClick?.(null)} />}
+          {selectedCaseFile === 'about' && <AboutDetail onBack={() => showContent && onCaseFileClick?.(null)} />}
 
           {/* Skills & Education Detail */}
-          {selectedCaseFile === 'skillseducation' && <SkillsEducationDetail onBack={() => onCaseFileClick?.(null)} />}
+          {selectedCaseFile === 'skillseducation' && <SkillsEducationDetail onBack={() => showContent && onCaseFileClick?.(null)} />}
 
           {/* Projects Detail (with nested navigation) */}
           {selectedCaseFile === 'projects' && (
             <ProjectsDetail
-              onBack={() => onCaseFileClick?.(null)}
+              onBack={() => showContent && onCaseFileClick?.(null)}
               selectedProject={selectedProject}
-              onProjectSelect={setSelectedProject}
+              onProjectSelect={(project) => showContent && setSelectedProject(project)}
               zoomedPaper={zoomedPaper}
-              onPaperZoom={setZoomedPaper}
+              onPaperZoom={(paper) => showContent && setZoomedPaper(paper)}
               respawnPaper={respawnPaper}
-              onRespawnPaperZoom={setRespawnPaper}
+              onRespawnPaperZoom={(paper) => showContent && setRespawnPaper(paper)}
               selectedSideProject={selectedSideProject}
-              onSideProjectSelect={setSelectedSideProject}
+              onSideProjectSelect={(project) => showContent && setSelectedSideProject(project)}
             />
           )}
         </group>
