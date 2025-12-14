@@ -1,7 +1,7 @@
 // Executive Desk Component - Cleared
 export const ExecutiveDesk = ({ onInteraction }: { onInteraction: (type: string) => void }) => {
   return (
-    <group position={[0, 0, -4.5]} rotation={[0, Math.PI, 0]}>
+    <group position={[-8, 0, -4.5]} rotation={[0, -Math.PI / 2, 0]}>
       {/* Desk Surface */}
       <mesh position={[0, 1, 0]}>
         <boxGeometry args={[4, 0.1, 2]} />

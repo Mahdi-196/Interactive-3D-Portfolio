@@ -193,8 +193,8 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
 
       try {
         // Smooth zoom to map on wall - zoom in close like the board
-        const mapPosition = new THREE.Vector3(-7.5, 3, -1); // Closer to map for better view
-        const mapTarget = new THREE.Vector3(-9.85, 3, -1); // Map location
+        const mapPosition = new THREE.Vector3(7.85, 3, 0); // Closer to map for better view (right wall) - zoomed 15% more
+        const mapTarget = new THREE.Vector3(9.85, 3, 0); // Map location (right wall)
 
         await cameraControls.setLookAt(
           mapPosition.x, mapPosition.y, mapPosition.z,

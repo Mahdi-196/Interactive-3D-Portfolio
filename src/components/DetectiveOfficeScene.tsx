@@ -11,6 +11,7 @@ import { DetectiveCharacter } from './DetectiveCharacter';
 import { VictorianCouch } from './VictorianCouch';
 import { VictorianArmchair } from './VictorianArmchair';
 import { CoatRack } from './CoatRack';
+import { FilingCabinet } from './FilingCabinet';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -46,15 +47,44 @@ export const DetectiveOfficeScene = ({
       {/* Office room structure (walls, floor, ceiling) */}
       <OfficeRoom onMapClick={() => onInteraction('map')} />
 
-      {/* Central desk only */}
-      <ExecutiveDesk onInteraction={onInteraction} />
+
+      {/* Filing Cabinets - Strategically placed for authentic office layout */}
+
+      {/* Classic Vertical Metal Cabinet - Right wall, near desk for active case files */}
+      <FilingCabinet
+        position={[8.5, 0, -5]}
+        rotation={[0, -Math.PI / 2, 0]}
+        variant="classic"
+      />
+
+      {/* Lateral Wood Cabinet - Under map on right wall, wider along wall */}
+      <group
+        scale={[1, 1, 3]}
+        onClick={(e) => e.stopPropagation()}
+        onPointerOver={(e) => e.stopPropagation()}
+        onPointerOut={(e) => e.stopPropagation()}
+        raycast={() => null}
+      >
+        <FilingCabinet
+          position={[9.4, 0, 0]}
+          rotation={[0, -Math.PI / 2, 0]}
+          variant="lateral"
+        />
+      </group>
+
+      {/* Spotlight for map on right wall */}
+      <spotLight
+        position={[6, 4, 0]}
+        target-position={[9.85, 3, 0]}
+        intensity={2}
+        angle={0.5}
+        penumbra={0.3}
+        color="#ffd700"
+      />
 
       {/* Window filling the wall opening */}
       <OfficeWindow />
-      
-      {/* Desk Chair */}
-      <VictorianChair position={[0, 0, -6]} rotation={[0, 0, 0]} />
-      
+
       {/* Click-off plane for board - positioned at walls to catch background clicks */}
       {showBoardContent && (
         <>
@@ -71,10 +101,10 @@ export const DetectiveOfficeScene = ({
             <meshBasicMaterial transparent opacity={0} depthWrite={false} />
           </mesh>
 
-          {/* Click-off plane for map - positioned behind map on left wall */}
+          {/* Click-off plane for map - positioned behind map on right wall */}
           <mesh
-            position={[-9.95, 4.5, 0]} // Just behind the map surface (left wall)
-            rotation={[0, Math.PI / 2, 0]} // Face the camera from left wall
+            position={[9.95, 4.5, 0]} // Just behind the map surface (right wall)
+            rotation={[0, -Math.PI / 2, 0]} // Face the camera from right wall
             onClick={(e) => {
               e.stopPropagation();
               console.log('Map click-off activated - closing map');
@@ -104,18 +134,10 @@ export const DetectiveOfficeScene = ({
       </group>
       <VictorianArmchair position={[-3.5, 0, 3.5]} rotation={[0, Math.PI / 2, 0]} />
 
-      {/* Asymmetrical Bookshelves - Left wall (3 bookshelves with gaps) */}
-      <Bookshelf position={[-9.0, 0, -6]} rotation={[0, Math.PI / 2, 0]} variant={1} />
-      <Bookshelf position={[-9.0, 0, 6]} rotation={[0, Math.PI / 2, 0]} variant={3} />
-      
-      {/* Right wall (3 touching bookshelves) */}
+      {/* Right wall (2 bookshelves with gap) */}
       <Bookshelf position={[9.0, 0, -3]} rotation={[0, -Math.PI / 2, 0]} variant={5} />
-      <Bookshelf position={[9.0, 0, 0]} rotation={[0, -Math.PI / 2, 0]} variant={3} />
       <Bookshelf position={[9.0, 0, 3]} rotation={[0, -Math.PI / 2, 0]} variant={6} />
-      
-      {/* Corner bookshelf - L-shaped arrangement */}
-      <Bookshelf position={[-8, 0, -9]} rotation={[0, 0, 0]} variant={7} />
-      
+
       {/* Victorian Door on right wall */}
       <VictorianDoor position={[9.95, 0, 7.5]} rotation={[0, -Math.PI / 2, 0]} onInteraction={onInteraction} />
 

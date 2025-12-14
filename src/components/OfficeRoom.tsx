@@ -18,59 +18,53 @@ export const OfficeRoom = ({ onMapClick }: OfficeRoomProps) => {
         <meshStandardMaterial color="#8b4513" roughness={0.3} metalness={0.1} />
       </mesh>
 
-      {/* Ornate Rug in center */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, -5]}>
-        <planeGeometry args={[6, 4]} />
-        <meshStandardMaterial color="#8b0000" roughness={0.8} />
-      </mesh>
-
       {/* Back Wall (North) - Dark wood paneling with window cutout - 10% shorter */}
       {/* Left section of back wall (narrow strip) */}
       <mesh position={[-8.8, 4.5, -10]}>
         <planeGeometry args={[2.4, 9]} />
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
-      
+
       {/* Right section of back wall (narrow strip) */}
       <mesh position={[8.8, 4.5, -10]}>
         <planeGeometry args={[2.4, 9]} />
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
-      
+
       {/* Top section above window - positioned higher to not cut off window */}
       <mesh position={[0, 7.85, -10]}>
         <planeGeometry args={[15.6, 2.3]} />
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
-      
+
       {/* Front Wall (South) - Wood paneling - 10% shorter */}
       <mesh position={[0, 4.5, 10]} rotation={[0, Math.PI, 0]}>
         <planeGeometry args={[20, 9]} />
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
-      
+
       {/* Left Wall (West) - Wood paneling - 10% shorter */}
       <mesh position={[-10, 4.5, 0]} rotation={[0, Math.PI / 2, 0]}>
         <planeGeometry args={[20, 9]} />
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
-      
+
       {/* Right Wall (East) - Wood paneling - 10% shorter */}
       <mesh position={[10, 4.5, 0]} rotation={[0, -Math.PI / 2, 0]}>
         <planeGeometry args={[20, 9]} />
         <meshStandardMaterial color="#2a1810" roughness={0.6} />
       </mesh>
 
-      {/* Sherlock Holmes Map of Europe - Framed on Left Wall */}
+      {/* Sherlock Holmes Map of Europe - Framed on Right Wall */}
       {/* Dark wooden frame */}
-      <mesh position={[-9.9, 3, -1]} rotation={[0, Math.PI / 2, 0]}>
+      <mesh position={[9.9, 3, 0]} rotation={[0, -Math.PI / 2, 0]}>
         <planeGeometry args={[3.2, 2.6]} />
         <meshStandardMaterial color="#1a0d00" roughness={0.4} />
       </mesh>
       {/* Map - Interactive */}
       <mesh
-        position={[-9.85, 3, -1]}
-        rotation={[0, Math.PI / 2, 0]}
+        position={[9.85, 3, 0]}
+        rotation={[0, -Math.PI / 2, 0]}
         onClick={(e) => {
           e.stopPropagation();
           onMapClick?.();
@@ -88,6 +82,9 @@ export const OfficeRoom = ({ onMapClick }: OfficeRoomProps) => {
         <meshStandardMaterial
           map={mapTexture}
           roughness={0.5}
+          side={THREE.DoubleSide}
+          emissive="#d4c5a0"
+          emissiveIntensity={0.05}
         />
       </mesh>
 
@@ -97,7 +94,7 @@ export const OfficeRoom = ({ onMapClick }: OfficeRoomProps) => {
         <planeGeometry args={[20, 20]} />
         <meshStandardMaterial color="#1a1006" roughness={0.8} />
       </mesh>
-      
+
       {/* Wooden ceiling beams - 10% lower */}
       {[-6, -2, 2, 6].map((z, i) => (
         <mesh key={i} position={[0, 8.8, z]} rotation={[0, 0, Math.PI / 2]}>

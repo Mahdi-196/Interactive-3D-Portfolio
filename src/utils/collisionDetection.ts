@@ -35,15 +35,6 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     isStatic: true
   },
 
-  // Executive desk at [0, 0, -4.5], 4 units wide × 2 units deep
-  {
-    id: 'desk',
-    minX: -2, maxX: 2,
-    minY: 0, maxY: 1.1,
-    minZ: -5.5, maxZ: -3.5,
-    isStatic: true
-  },
-
   // Couch at [0, 0, 1.5], scaled 1.6x width (3.2 units wide × 1.3 deep)
   {
     id: 'couch',
@@ -117,15 +108,6 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     minX: -8.98, maxX: -7.02,
     minY: 0, maxY: 5,
     minZ: -9.88, maxZ: -8.12,
-    isStatic: true
-  },
-
-  // Victorian desk chair at [0, 0, -6] (0.8 × 0.8 seat)
-  {
-    id: 'desk_chair',
-    minX: -0.5, maxX: 0.5,
-    minY: 0, maxY: 1.6,
-    minZ: -6.5, maxZ: -5.5,
     isStatic: true
   },
 

@@ -65,48 +65,51 @@ export const PaperCarousel = ({ zoomedPaper, onPaperZoom }: PaperCarouselProps) 
           <meshStandardMaterial color={COLORS.primaryText} roughness={0.7} />
         </mesh>
         <Text position={[0, 1.35, 0.002]} fontSize={0.2 * textScale} color={COLORS.antiquePaper} anchorX="center" anchorY="middle" letterSpacing={0.04}>
-          FRONTEND
+          AWS CLOUD
         </Text>
 
         {/* Decorative underline */}
         <Line points={[[-1.0, 1.17, 0.002], [1.0, 1.17, 0.002]]} color={COLORS.brass} lineWidth={2} />
 
         {/* Tech stack */}
-
         <Text position={[0, 0.98, 0.002]} fontSize={0.11 * textScale} color={COLORS.primaryText} anchorX="center" anchorY="middle" letterSpacing={0.02}>
-          Next.js 15 • React 19 • TypeScript
+          Amplify • App Runner • Lambda • VPC
         </Text>
 
         {/* Content */}
-        <Text position={[0, 0.55, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Developed responsive web app using
+        <Text position={[0, 0.65, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • Engineered high-availability hybrid serverless
         </Text>
-        <Text position={[0, 0.4, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          Next.js 15, React 19, strict TypeScript
+        <Text position={[0, 0.5, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          and container architecture hosted on AWS
         </Text>
-        <Text position={[0, 0.2, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Designed scalable state with TanStack
+
+        <Text position={[0, 0.25, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • Frontend on AWS Amplify with Route 53;
         </Text>
-        <Text position={[0, 0.05, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          Query + React Context, no prop-drilling
+        <Text position={[0, 0.1, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          backend on App Runner sourcing images from ECR
         </Text>
+
         <Text position={[0, -0.15, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Engineered secure auth with silent token
+          • Refocused-VPC isolates PostgreSQL RDS +
         </Text>
         <Text position={[0, -0.3, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          refresh, dual-strategy (Cookies/JWT)
+          ElastiCache behind NAT/IGW for private layers
         </Text>
-        <Text position={[0, -0.5, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Built 67+ reusable components: Quill.js
+
+        <Text position={[0, -0.55, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • Serverless microservices (Lambda + Gateway)
         </Text>
-        <Text position={[0, -0.65, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          editor w/ encryption, SVG meditation tool
+        <Text position={[0, -0.7, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          drive email, feedback, and AI inference flows
         </Text>
-        <Text position={[0, -0.85, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Implemented multi-layer caching with
+
+        <Text position={[0, -0.95, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • AI handler loads models from S3/ECR and
         </Text>
-        <Text position={[0, -1.0, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          React Query + localStorage for sub-second UI
+        <Text position={[0, -1.1, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          persists prompts/history in DynamoDB
         </Text>
 
         {/* GitHub Link */}
