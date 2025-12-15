@@ -44,6 +44,29 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     isStatic: true
   },
 
+  // Detective Desk at [-8.84, 0, -4.25] rotated 270° (scaled 1.7x)
+  // Original dimensions: 2.4 (width) × 1.3 (depth) scaled to 4.08 × 2.21
+  // When rotated 270°: width becomes Z-axis (4.08), depth becomes X-axis (2.21)
+  // Positioned against left wall
+  {
+    id: 'detective_desk',
+    minX: -9.95, maxX: -7.73,
+    minY: 0, maxY: 1.53,
+    minZ: -6.29, maxZ: -2.21,
+    isStatic: true
+  },
+
+  // Detective Office Chair at [-6.46, 0, -4.25] rotated ~288° (scaled 1.7x)
+  // Dimensions: ~1.19 diameter (circular base, scaled from 0.7)
+  // Moved east and rotated more north
+  {
+    id: 'detective_chair',
+    minX: -7.06, maxX: -5.86,
+    minY: 0, maxY: 2.72,
+    minZ: -4.845, maxZ: -3.655,
+    isStatic: true
+  },
+
   // Victorian armchair at [-3.5, 0, 3.5] rotated π/2
   {
     id: 'armchair',
@@ -126,6 +149,27 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     minX: 7.7, maxX: 8.3,
     minY: 0, maxY: 2,
     minZ: 8.2, maxZ: 8.8,
+    isStatic: true
+  },
+
+  // Art Deco Bookshelf - left wall at [-9.0, 0, 2] rotated π/2 (with 10% padding)
+  // Original: width 2.0 (becomes Z), depth 0.95 (becomes X) when rotated
+  // Moved further along the left wall
+  {
+    id: 'artdeco_bookshelf',
+    minX: -9.57, maxX: -8.43,
+    minY: 0, maxY: 5.5,
+    minZ: 0.9, maxZ: 3.1,
+    isStatic: true
+  },
+
+  // Library Ladder Bookshelf - back wall at [5, 0, 9.2] rotated π (with 10% padding)
+  // Original: width 2.2 in X, depth 1.0 in Z (180° rotation keeps same axes)
+  {
+    id: 'library_ladder_bookshelf',
+    minX: 3.79, maxX: 6.21,
+    minY: 0, maxY: 7.0,
+    minZ: 8.65, maxZ: 9.75,
     isStatic: true
   },
 ];

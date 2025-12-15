@@ -1,6 +1,8 @@
+import { RealisticBook, generateRealisticBook } from './RealisticBook';
+
 // Bookshelf Component - Realistic library style with varied books
-export const Bookshelf = ({ position, rotation = [0, 0, 0], variant = 0 }: { 
-  position: [number, number, number]; 
+export const Bookshelf = ({ position, rotation = [0, 0, 0], variant = 0 }: {
+  position: [number, number, number];
   rotation?: [number, number, number];
   variant?: number;
 }) => {
@@ -21,15 +23,11 @@ export const Bookshelf = ({ position, rotation = [0, 0, 0], variant = 0 }: {
   const generateShelfBooks = (shelfIndex: number) => {
     const books = [];
     const bookCount = 25 + Math.floor(seededRandom(variant * 100 + shelfIndex * 10) * 15); // 25-40 books per shelf
-    
+
     for (let i = 0; i < bookCount; i++) {
       const seed = variant * 1000 + shelfIndex * 100 + i;
-      books.push({
-        height: 0.2 + seededRandom(seed) * 0.3, // 0.2 to 0.5 (better size range, no tiny books)
-        thickness: 0.02 + seededRandom(seed + 1) * 0.03, // 0.02 to 0.05 (more substantial thickness)
-        color: Math.floor(seededRandom(seed + 2) * bookColors.length),
-        lean: 0 // Keep disabled for now
-      });
+      const config = generateRealisticBook(seed, bookColors, 'standard');
+      books.push(config);
     }
     return books;
   };
@@ -74,40 +72,37 @@ export const Bookshelf = ({ position, rotation = [0, 0, 0], variant = 0 }: {
       {[0.8, 1.6, 2.4, 3.2, 4.0].map((shelfY, shelfIndex) => {
         const shelfBooks = generateShelfBooks(shelfIndex);
         let currentX = -0.75; // Start from left
-        
+
         return (
           <group key={`books-${shelfIndex}`}>
             {shelfBooks.map((book, bookIndex) => {
               // Pack books tightly with very small gaps
               const xPos = currentX + book.thickness/2;
               currentX += book.thickness + 0.005; // Very small gap between books
-              
+
               // Stop if we've filled the shelf, but allow more books
               if (currentX > 0.8) return null;
-              
+
               // Clamp book height to stay within shelf compartment (0.8 units between shelves)
-              const maxHeight = 0.5; // Reduced max height since books are now larger by default
+              const maxHeight = 0.5;
               const clampedHeight = Math.min(book.height, maxHeight);
-              
-              // Position book so bottom sits ON the shelf top surface  
-              const shelfTop = shelfY + 0.025; // shelf center + half thickness = top surface
-              const bookCenterY = shelfTop + clampedHeight/2; // shelf top + half book height
-              
+
+              // Position book so bottom sits ON the shelf top surface
+              const shelfTop = shelfY + 0.025;
+              const bookCenterY = shelfTop + clampedHeight/2;
+
               return (
-                <mesh 
-                  key={`book-${shelfIndex}-${bookIndex}`} 
+                <RealisticBook
+                  key={`book-${shelfIndex}-${bookIndex}`}
+                  config={{
+                    ...book,
+                    height: clampedHeight // Use clamped height
+                  }}
                   position={[xPos, bookCenterY, -0.2]}
-                  rotation={[0, 0, book.lean]}
-                >
-                  <boxGeometry args={[book.thickness, clampedHeight, 0.12]} />
-                  <meshStandardMaterial 
-                    color={bookColors[book.color]} 
-                    roughness={0.8} 
-                  />
-                </mesh>
+                />
               );
             })}
-            
+
           </group>
         );
       })}

@@ -105,15 +105,6 @@ export const VictorianArmchair = ({
             metalness={0.0}
           />
         </mesh>
-        {/* Arm padding/top */}
-        <mesh position={[0, 0.35, 0]} castShadow receiveShadow scale={[0.28, 1, 0.9]}>
-          <capsuleGeometry args={[0.12, 0.6, 12, 24]} rotation={[Math.PI / 2, 0, 0]} />
-          <meshStandardMaterial
-            color={cushionColor}
-            roughness={0.9}
-            metalness={0.0}
-          />
-        </mesh>
         {/* Wooden arm cap */}
         <mesh position={[0, 0.45, 0]} castShadow rotation={[Math.PI / 2, 0, 0]}>
           <capsuleGeometry args={[0.06, 0.7, 10, 20]} />
@@ -133,15 +124,6 @@ export const VictorianArmchair = ({
           <meshStandardMaterial
             color={velvetColor}
             roughness={0.88}
-            metalness={0.0}
-          />
-        </mesh>
-        {/* Arm padding/top */}
-        <mesh position={[0, 0.35, 0]} castShadow receiveShadow scale={[0.28, 1, 0.9]}>
-          <capsuleGeometry args={[0.12, 0.6, 12, 24]} rotation={[Math.PI / 2, 0, 0]} />
-          <meshStandardMaterial
-            color={cushionColor}
-            roughness={0.9}
             metalness={0.0}
           />
         </mesh>

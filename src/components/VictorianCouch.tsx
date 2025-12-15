@@ -44,9 +44,9 @@ export const VictorianCouch = ({
         />
       </mesh>
 
-      {/* Single large seat cushion - like a traditional sofa */}
-      <mesh position={[0, 0.85, 0.02]} castShadow receiveShadow scale={[2.8, 0.6, 0.88]}>
-        <boxGeometry args={[1, 0.4, 1]} />
+      {/* Left edge circular cushion against backrest */}
+      <mesh position={[-0.9, 0.85, -0.15]} castShadow receiveShadow>
+        <sphereGeometry args={[0.35, 24, 24]} />
         <meshStandardMaterial
           color={cushionColor}
           roughness={0.92}
@@ -54,9 +54,19 @@ export const VictorianCouch = ({
         />
       </mesh>
 
-      {/* Cushion top rounded effect */}
-      <mesh position={[0, 1.0, 0.02]} castShadow receiveShadow scale={[2.7, 0.35, 0.85]}>
-        <capsuleGeometry args={[0.2, 2.3, 20, 32]} rotation={[0, 0, Math.PI / 2]} />
+      {/* Center circular cushion (smaller) against backrest */}
+      <mesh position={[0, 0.85, -0.15]} castShadow receiveShadow>
+        <sphereGeometry args={[0.28, 24, 24]} />
+        <meshStandardMaterial
+          color={cushionColor}
+          roughness={0.92}
+          metalness={0.0}
+        />
+      </mesh>
+
+      {/* Right edge circular cushion against backrest */}
+      <mesh position={[0.9, 0.85, -0.15]} castShadow receiveShadow>
+        <sphereGeometry args={[0.35, 24, 24]} />
         <meshStandardMaterial
           color={cushionColor}
           roughness={0.92}
@@ -94,7 +104,7 @@ export const VictorianCouch = ({
         />
       </mesh>
 
-      {/* Left armrest - proper sofa arm */}
+      {/* Left armrest */}
       <group position={[-1.5, 0.75, 0]}>
         {/* Arm main body */}
         <mesh castShadow receiveShadow>
@@ -102,15 +112,6 @@ export const VictorianCouch = ({
           <meshStandardMaterial
             color={velvetColor}
             roughness={0.88}
-            metalness={0.0}
-          />
-        </mesh>
-        {/* Arm padding/top */}
-        <mesh position={[0, 0.35, 0]} castShadow receiveShadow scale={[0.28, 1, 0.9]}>
-          <capsuleGeometry args={[0.12, 0.6, 12, 24]} rotation={[Math.PI / 2, 0, 0]} />
-          <meshStandardMaterial
-            color={cushionColor}
-            roughness={0.9}
             metalness={0.0}
           />
         </mesh>
@@ -125,7 +126,7 @@ export const VictorianCouch = ({
         </mesh>
       </group>
 
-      {/* Right armrest - proper sofa arm */}
+      {/* Right armrest */}
       <group position={[1.5, 0.75, 0]}>
         {/* Arm main body */}
         <mesh castShadow receiveShadow>
@@ -133,15 +134,6 @@ export const VictorianCouch = ({
           <meshStandardMaterial
             color={velvetColor}
             roughness={0.88}
-            metalness={0.0}
-          />
-        </mesh>
-        {/* Arm padding/top */}
-        <mesh position={[0, 0.35, 0]} castShadow receiveShadow scale={[0.28, 1, 0.9]}>
-          <capsuleGeometry args={[0.12, 0.6, 12, 24]} rotation={[Math.PI / 2, 0, 0]} />
-          <meshStandardMaterial
-            color={cushionColor}
-            roughness={0.9}
             metalness={0.0}
           />
         </mesh>

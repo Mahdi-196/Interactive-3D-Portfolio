@@ -1,9 +1,14 @@
 import { OfficeRoom } from './OfficeRoom';
 import { ExecutiveDesk } from './ExecutiveDesk';
+import { DetectiveDesk } from './DetectiveDesk';
+import { DetectiveOfficeChair } from './DetectiveOfficeChair';
 import { OfficeWindow } from './OfficeWindow';
 import { VictorianChair } from './VictorianChair';
 import { InteractiveDetectiveBoard } from './board';
 import { Bookshelf } from './Bookshelf';
+import { VictorianBookshelf } from './VictorianBookshelf';
+import { ArtDecoBookshelf } from './ArtDecoBookshelf';
+import { LibraryLadderBookshelf } from './LibraryLadderBookshelf';
 import { VictorianDoor } from './VictorianDoor';
 import { VictorianChandelier } from './VictorianChandelier';
 import { FirstPersonDetectiveBody } from './FirstPersonDetectiveBody';
@@ -56,6 +61,22 @@ export const DetectiveOfficeScene = ({
         rotation={[0, -Math.PI / 2, 0]}
         variant="classic"
       />
+
+      {/* Detective Desk - Executive style with drawers (1.7x scale) - Against left wall */}
+      <group scale={1.7}>
+        <DetectiveDesk
+          position={[-5.2, 0, -2.5]}
+          rotation={[0, Math.PI / 2 + Math.PI, 0]}
+        />
+      </group>
+
+      {/* Detective Office Chair - Moved east and rotated more north (1.7x scale) */}
+      <group scale={1.7}>
+        <DetectiveOfficeChair
+          position={[-3.8, 0, -2.5]}
+          rotation={[0, Math.PI / 2 + Math.PI + Math.PI / 10, 0]}
+        />
+      </group>
 
       {/* Lateral Wood Cabinet - Under map on right wall, wider along wall */}
       <group
@@ -132,11 +153,17 @@ export const DetectiveOfficeScene = ({
       <group scale={[1.6, 1, 1.3]}>
         <VictorianCouch position={[0, 0, 1.5]} rotation={[0, 0, 0]} />
       </group>
-      <VictorianArmchair position={[-3.5, 0, 3.5]} rotation={[0, Math.PI / 2, 0]} />
+      <VictorianArmchair position={[-4.0, 0, 3.5]} rotation={[0, Math.PI / 2 - Math.PI * 0.30, 0]} />
 
-      {/* Right wall (2 bookshelves with gap) */}
+      {/* Right wall (2 original bookshelves with gap) */}
       <Bookshelf position={[9.0, 0, -3]} rotation={[0, -Math.PI / 2, 0]} variant={5} />
       <Bookshelf position={[9.0, 0, 3]} rotation={[0, -Math.PI / 2, 0]} variant={6} />
+
+      {/* Left wall - Art Deco Bookshelf (1930s geometric with chrome and black frame) - Further along wall */}
+      <ArtDecoBookshelf position={[-9.0, 0, 2]} rotation={[0, Math.PI / 2, 0]} variant={2} />
+
+      {/* Back wall - Library Ladder Bookshelf (tall vintage with ladder) */}
+      <LibraryLadderBookshelf position={[5, 0, 9.2]} rotation={[0, Math.PI, 0]} variant={3} />
 
       {/* Victorian Door on right wall */}
       <VictorianDoor position={[9.95, 0, 7.5]} rotation={[0, -Math.PI / 2, 0]} onInteraction={onInteraction} />
