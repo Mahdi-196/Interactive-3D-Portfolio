@@ -21,6 +21,7 @@ import { WoodenCoffeeTable } from './WoodenCoffeeTable';
 import { WoodenEndTable } from './WoodenEndTable';
 import { SquareWoodenTable } from './SquareWoodenTable';
 import { CoffeeTableItems } from './CoffeeTableItems';
+import { PersianRug } from './PersianRug';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -186,6 +187,9 @@ export const DetectiveOfficeScene = ({
         <VictorianCouch position={[0, 0, 1.5]} rotation={[0, 0, 0]} />
       </group>
       <VictorianArmchair position={[-4.0, 0, 3.5]} rotation={[0, Math.PI / 2 - Math.PI * 0.30, 0]} />
+
+      {/* Persian Rug - Vintage oriental rug anchoring the seating area */}
+      <PersianRug position={[0, 0.01, 0.5]} rotation={[0, Math.PI / 2, 0]} />
 
       {/* Right wall (2 original bookshelves with gap) */}
       <Bookshelf position={[9.0, 0, -3]} rotation={[0, -Math.PI / 2, 0]} variant={5} />
