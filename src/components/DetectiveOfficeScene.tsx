@@ -20,6 +20,7 @@ import { FilingCabinet } from './FilingCabinet';
 import { WoodenCoffeeTable } from './WoodenCoffeeTable';
 import { WoodenEndTable } from './WoodenEndTable';
 import { SquareWoodenTable } from './SquareWoodenTable';
+import { CoffeeTableItems } from './CoffeeTableItems';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -58,12 +59,40 @@ export const DetectiveOfficeScene = ({
 
       {/* Filing Cabinets - Strategically placed for authentic office layout */}
 
-      {/* Classic Vertical Metal Cabinet - Right wall, near desk for active case files */}
-      <FilingCabinet
-        position={[8.5, 0, -5]}
-        rotation={[0, -Math.PI / 2, 0]}
-        variant="classic"
-      />
+      {/* Classic Vertical Metal Cabinets - Left wall, near desk - Deeper */}
+      <group scale={[1.15, 1, 1.5]}>
+        <FilingCabinet
+          position={[-7.5, 0, -6.5]}
+          rotation={[0, 0, 0]}
+          variant="classic"
+        />
+      </group>
+
+      <group scale={[1.15, 1, 1.5]}>
+        <FilingCabinet
+          position={[-8.5, 0, -5.9]}
+          rotation={[0, Math.PI / 2, 0]}
+          variant="classic"
+        />
+      </group>
+
+      <group scale={[1.15, 1, 1.5]}>
+        <FilingCabinet
+          position={[-8.5, 0, -4.9]}
+          rotation={[0, Math.PI / 2, 0]}
+          variant="classic"
+        />
+      </group>
+
+      {/* Card Catalog Cabinet - Left wall, near Art Deco bookshelf for case files */}
+      <group position={[-9.8, 0, -1.5]} scale={1.15}>
+        <FilingCabinet
+          position={[0, 0, 0]}
+          rotation={[0, Math.PI / 2, 0]}
+          variant="card-catalog"
+        />
+      </group>
+
 
       {/* Detective Desk - Executive style with drawers (1.7x scale) - Against left wall */}
       <group scale={1.7}>
@@ -165,28 +194,22 @@ export const DetectiveOfficeScene = ({
       {/* Left wall - Art Deco Bookshelf (1930s geometric with chrome and black frame) - Further along wall */}
       <ArtDecoBookshelf position={[-9.0, 0, 2]} rotation={[0, Math.PI / 2, 0]} variant={2} />
 
-      {/* Back wall - Library Ladder Bookshelf (tall vintage with ladder) */}
-      <LibraryLadderBookshelf position={[5, 0, 9.2]} rotation={[0, Math.PI, 0]} variant={3} />
-
       {/* Victorian Door on right wall */}
       <VictorianDoor position={[9.95, 0, 7.5]} rotation={[0, -Math.PI / 2, 0]} onInteraction={onInteraction} />
-
-      {/* Coat Rack near entrance */}
-      <CoatRack position={[8, 0, 8.5]} rotation={[0, 0, 0]} />
 
       {/* Wooden Tables - Practical furniture throughout the room */}
 
       {/* Large wooden coffee table in front of couch */}
       <WoodenCoffeeTable position={[0, 0, 3.8]} rotation={[0, 0, 0]} />
 
+      {/* Coffee table decorative items - whiskey set, ashtray, case files, etc. */}
+      <CoffeeTableItems position={[0, 0, 3.8]} rotation={[0, 0, 0]} />
+
       {/* Wooden end table near armchair */}
       <WoodenEndTable position={[-5.5, 0, 4.5]} rotation={[0, 0, 0]} />
 
-      {/* Wooden end table on right side of couch */}
-      <WoodenEndTable position={[3, 0, 2.5]} rotation={[0, Math.PI / 4, 0]} />
-
-      {/* Square wooden table - center display piece */}
-      <SquareWoodenTable position={[4, 0, -3]} rotation={[0, 0, 0]} />
+      {/* Wooden end table in gap between chair and couch */}
+      <WoodenEndTable position={[-3.3, 0, 2.5]} rotation={[0, Math.PI / 4, 0]} />
 
       {/* Victorian Chandelier - lowered 10% for smaller room */}
       <VictorianChandelier position={[0, 8.1, 2]} isLit={lampOn} />

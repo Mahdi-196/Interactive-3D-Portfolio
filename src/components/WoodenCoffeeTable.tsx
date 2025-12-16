@@ -17,7 +17,7 @@ export const WoodenCoffeeTable = ({
     <group position={position} rotation={rotation}>
       {/* Large rectangular tabletop */}
       <mesh position={[0, 0.45, 0]} castShadow receiveShadow>
-        <boxGeometry args={[2.4, 0.08, 1.4]} />
+        <boxGeometry args={[2.64, 0.08, 1.54]} />
         <meshStandardMaterial
           color={darkWood}
           roughness={0.6}
@@ -26,40 +26,40 @@ export const WoodenCoffeeTable = ({
       </mesh>
 
       {/* Top edge trim */}
-      <mesh position={[0, 0.43, 0.71]}>
-        <boxGeometry args={[2.42, 0.04, 0.04]} />
+      <mesh position={[0, 0.43, 0.78]}>
+        <boxGeometry args={[2.66, 0.04, 0.04]} />
         <meshStandardMaterial color={richWood} roughness={0.7} />
       </mesh>
-      <mesh position={[0, 0.43, -0.71]}>
-        <boxGeometry args={[2.42, 0.04, 0.04]} />
+      <mesh position={[0, 0.43, -0.78]}>
+        <boxGeometry args={[2.66, 0.04, 0.04]} />
         <meshStandardMaterial color={richWood} roughness={0.7} />
       </mesh>
 
       {/* Front drawer */}
-      <group position={[0, 0.32, -0.66]}>
+      <group position={[0, 0.32, -0.73]}>
         {/* Drawer front */}
         <mesh>
-          <boxGeometry args={[1.8, 0.18, 0.04]} />
+          <boxGeometry args={[2.0, 0.18, 0.04]} />
           <meshStandardMaterial color={darkWood} roughness={0.7} />
         </mesh>
 
         {/* Drawer panel inset */}
         <mesh position={[0, 0, 0.015]}>
-          <boxGeometry args={[1.7, 0.15, 0.01]} />
+          <boxGeometry args={[1.87, 0.15, 0.01]} />
           <meshStandardMaterial color={richWood} roughness={0.65} />
         </mesh>
 
         {/* Two brass drawer pulls */}
-        <mesh position={[-0.3, 0, -0.02]}>
-          <cylinderGeometry args={[0.015, 0.015, 0.05, 12]} rotation={[Math.PI / 2, 0, 0]} />
+        <mesh position={[-0.3, 0, -0.02]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.015, 0.015, 0.05, 12]} />
           <meshStandardMaterial
             color={brassColor}
             metalness={0.85}
             roughness={0.25}
           />
         </mesh>
-        <mesh position={[0.3, 0, -0.02]}>
-          <cylinderGeometry args={[0.015, 0.015, 0.05, 12]} rotation={[Math.PI / 2, 0, 0]} />
+        <mesh position={[0.3, 0, -0.02]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.015, 0.015, 0.05, 12]} />
           <meshStandardMaterial
             color={brassColor}
             metalness={0.85}
@@ -70,16 +70,16 @@ export const WoodenCoffeeTable = ({
 
       {/* Drawer frame/apron */}
       <mesh position={[0, 0.32, 0]}>
-        <boxGeometry args={[2.3, 0.22, 1.3]} />
+        <boxGeometry args={[2.53, 0.22, 1.43]} />
         <meshStandardMaterial color={richWood} roughness={0.65} />
       </mesh>
 
       {/* Four thick square legs */}
       {[
-        [-1.1, 0, -0.6],
-        [1.1, 0, -0.6],
-        [-1.1, 0, 0.6],
-        [1.1, 0, 0.6],
+        [-1.21, 0, -0.66],
+        [1.21, 0, -0.66],
+        [-1.21, 0, 0.66],
+        [1.21, 0, 0.66],
       ].map((pos, i) => (
         <group key={`leg-${i}`} position={pos as [number, number, number]}>
           {/* Main leg */}
@@ -98,17 +98,17 @@ export const WoodenCoffeeTable = ({
 
       {/* Lower shelf */}
       <mesh position={[0, 0.12, 0]} castShadow receiveShadow>
-        <boxGeometry args={[2.2, 0.04, 1.2]} />
+        <boxGeometry args={[2.42, 0.04, 1.32]} />
         <meshStandardMaterial color={richWood} roughness={0.65} />
       </mesh>
 
       {/* Shelf support rails */}
-      <mesh position={[0, 0.12, -0.62]}>
-        <boxGeometry args={[2.2, 0.03, 0.03]} />
+      <mesh position={[0, 0.12, -0.68]}>
+        <boxGeometry args={[2.42, 0.03, 0.03]} />
         <meshStandardMaterial color={darkWood} roughness={0.7} />
       </mesh>
-      <mesh position={[0, 0.12, 0.62]}>
-        <boxGeometry args={[2.2, 0.03, 0.03]} />
+      <mesh position={[0, 0.12, 0.68]}>
+        <boxGeometry args={[2.42, 0.03, 0.03]} />
         <meshStandardMaterial color={darkWood} roughness={0.7} />
       </mesh>
     </group>

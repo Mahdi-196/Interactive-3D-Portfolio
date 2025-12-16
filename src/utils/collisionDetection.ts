@@ -174,12 +174,12 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
   },
 
   // Wooden Coffee Table - in front of couch at [0, 0, 3.8]
-  // Large rectangular: 2.4 × 1.4 (with padding)
+  // Large rectangular: 2.64 × 1.54 (with padding)
   {
     id: 'wooden_coffee_table',
-    minX: -1.3, maxX: 1.3,
+    minX: -1.42, maxX: 1.42,
     minY: 0, maxY: 0.5,
-    minZ: 3.1, maxZ: 4.5,
+    minZ: 3.03, maxZ: 4.57,
     isStatic: true
   },
 

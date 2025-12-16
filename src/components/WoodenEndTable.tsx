@@ -14,7 +14,7 @@ export const WoodenEndTable = ({
   const brassColor = "#b8860b"; // Polished brass
 
   return (
-    <group position={position} rotation={rotation}>
+    <group position={position} rotation={rotation} scale={1.1}>
       {/* Rectangular tabletop */}
       <mesh position={[0, 0.6, 0]} castShadow receiveShadow>
         <boxGeometry args={[0.7, 0.05, 0.5]} />
