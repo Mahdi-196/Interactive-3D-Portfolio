@@ -2,6 +2,7 @@ import { CollisionBox, CollisionResult } from '@/types/three';
 
 /**
  * Collision world definition for the Detective Office scene
+ * REBUILT FROM SCRATCH - Only includes objects actually rendered in DetectiveOfficeScene.tsx
  * All measurements are in Three.js units based on actual object positions and dimensions
  */
 export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
@@ -35,7 +36,7 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     isStatic: true
   },
 
-  // Couch at [0, 0, 1.5], scaled 1.6x width (3.2 units wide × 1.3 deep)
+  // Couch at [0, 0, 1.5], scaled [1.6, 1, 1.3] = 3.2 units wide × 1.3 deep
   {
     id: 'couch',
     minX: -1.6, maxX: 1.6,
@@ -44,97 +45,103 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     isStatic: true
   },
 
-  // Detective Desk at [-8.84, 0, -4.25] rotated 270° (scaled 1.7x)
-  // Original dimensions: 2.4 (width) × 1.3 (depth) scaled to 4.08 × 2.21
-  // When rotated 270°: width becomes Z-axis (4.08), depth becomes X-axis (2.21)
-  // Positioned against left wall
-  {
-    id: 'detective_desk',
-    minX: -9.95, maxX: -7.73,
-    minY: 0, maxY: 1.53,
-    minZ: -6.29, maxZ: -2.21,
-    isStatic: true
-  },
-
-  // Detective Office Chair at [-6.46, 0, -4.25] rotated ~288° (scaled 1.7x)
-  // Dimensions: ~1.19 diameter (circular base, scaled from 0.7)
-  // Moved east and rotated more north
-  {
-    id: 'detective_chair',
-    minX: -7.06, maxX: -5.86,
-    minY: 0, maxY: 2.72,
-    minZ: -4.845, maxZ: -3.655,
-    isStatic: true
-  },
-
-  // Victorian armchair at [-3.5, 0, 3.5] rotated π/2
+  // Victorian armchair at [-4.0, 0, 3.5] rotated π/2 - π*0.30
   {
     id: 'armchair',
-    minX: -4.1, maxX: -2.9,
+    minX: -4.6, maxX: -3.4,
     minY: 0, maxY: 1.7,
     minZ: 2.9, maxZ: 4.1,
     isStatic: true
   },
 
-  // Bookshelf 1 - left wall at [-9.0, 0, -6] rotated 90° (with 10% padding)
-  // Original rotated: width 0.8 in X, depth 1.8 in Z
-  // 10% padding: 0.08 in X, 0.18 in Z on each side
+  // Detective Desk at [-5.2, 0, -2.5] scaled 1.7, rotated 3π/2
+  // Original ~2.4×1.3 scaled to ~4.08×2.21, rotated makes depth X-axis, width Z-axis
   {
-    id: 'bookshelf_1',
-    minX: -9.88, maxX: -8.12,
-    minY: 0, maxY: 5,
-    minZ: -7.08, maxZ: -4.92,
+    id: 'detective_desk',
+    minX: -9.95, maxX: -7.73,
+    minY: 0, maxY: 1.53,
+    minZ: -6.54, maxZ: -2.46,
     isStatic: true
   },
 
-  // Bookshelf 2 - left wall at [-9.0, 0, 6] rotated 90° (with 10% padding)
+  // Detective Office Chair at [-3.8, 0, -2.5] scaled 1.7, rotated 3π/2 + π/10
+  // Circular base ~0.7 diameter scaled to ~1.19
   {
-    id: 'bookshelf_2',
-    minX: -9.88, maxX: -8.12,
-    minY: 0, maxY: 5,
-    minZ: 4.92, maxZ: 7.08,
+    id: 'detective_chair',
+    minX: -7.26, maxX: -6.06,
+    minY: 0, maxY: 2.72,
+    minZ: -3.095, maxZ: -1.905,
     isStatic: true
   },
 
-  // Bookshelf 3 - right wall at [9.0, 0, -3] rotated -90° (with 10% padding)
+  // Filing Cabinet at [-7.5, 0, -6.5] scaled [1.15, 1, 1.5]
+  // Base ~0.5×0.6 scaled to ~0.575×0.9
   {
-    id: 'bookshelf_3',
-    minX: 8.12, maxX: 9.88,
-    minY: 0, maxY: 5,
-    minZ: -3.98, maxZ: -2.02,
+    id: 'filing_cabinet_1',
+    minX: -7.79, maxX: -7.21,
+    minY: 0, maxY: 1.5,
+    minZ: -6.95, maxZ: -6.05,
     isStatic: true
   },
 
-  // Bookshelf 4 - right wall at [9.0, 0, 0] rotated -90° (with 10% padding)
+  // Filing Cabinet at [-8.5, 0, -5.9] scaled [1.15, 1, 1.5] rotated π/2
+  // Rotated: depth becomes X, width becomes Z
   {
-    id: 'bookshelf_4',
-    minX: 8.12, maxX: 9.88,
-    minY: 0, maxY: 5,
-    minZ: -0.98, maxZ: 0.98,
+    id: 'filing_cabinet_2',
+    minX: -8.95, maxX: -8.05,
+    minY: 0, maxY: 1.5,
+    minZ: -6.19, maxZ: -5.61,
     isStatic: true
   },
 
-  // Bookshelf 5 - right wall at [9.0, 0, 3] rotated -90° (with 10% padding)
+  // Filing Cabinet at [-8.5, 0, -4.9] scaled [1.15, 1, 1.5] rotated π/2
   {
-    id: 'bookshelf_5',
-    minX: 8.12, maxX: 9.88,
-    minY: 0, maxY: 5,
-    minZ: 1.02, maxZ: 3.98,
+    id: 'filing_cabinet_3',
+    minX: -8.95, maxX: -8.05,
+    minY: 0, maxY: 1.5,
+    minZ: -5.19, maxZ: -4.61,
     isStatic: true
   },
 
-  // Bookshelf 6 - corner at [-8, 0, -9] no rotation (with 10% padding)
-  // Original: width 1.8 in X, depth 0.8 in Z
-  // 10% padding: 0.18 in X, 0.08 in Z on each side
+  // Filing Cabinet (card catalog) at [-9.8, 0, -1.5] scaled 1.15 rotated π/2
   {
-    id: 'bookshelf_6',
-    minX: -8.98, maxX: -7.02,
-    minY: 0, maxY: 5,
-    minZ: -9.88, maxZ: -8.12,
+    id: 'filing_cabinet_card',
+    minX: -10.15, maxX: -9.45,
+    minY: 0, maxY: 1.5,
+    minZ: -1.79, maxZ: -1.21,
     isStatic: true
   },
 
-  // Victorian door at [9.95, 0, 7.5] rotated -π/2
+  // Filing Cabinet (lateral) at [9.4, 0, 0] scaled [1, 1, 3] rotated -π/2
+  // Wide lateral cabinet stretched 3x along Z-axis
+  {
+    id: 'filing_cabinet_lateral',
+    minX: 8.95, maxX: 9.85,
+    minY: 0, maxY: 1.0,
+    minZ: -0.9, maxZ: 0.9,
+    isStatic: true
+  },
+
+  // MergedBookshelf at [9.0, 0, -3] rotated -π/2
+  // Width 1.8, depth 0.8 rotated = depth in X, width in Z
+  {
+    id: 'bookshelf_right_1',
+    minX: 8.2, maxX: 9.8,
+    minY: 0, maxY: 5,
+    minZ: -3.9, maxZ: -2.1,
+    isStatic: true
+  },
+
+  // MergedBookshelf at [9.0, 0, 3] rotated -π/2
+  {
+    id: 'bookshelf_right_2',
+    minX: 8.2, maxX: 9.8,
+    minY: 0, maxY: 5,
+    minZ: 2.1, maxZ: 3.9,
+    isStatic: true
+  },
+
+  // Victorian Door at [9.95, 0, 7.5] rotated -π/2
   {
     id: 'door',
     minX: 9.75, maxX: 10.15,
@@ -143,73 +150,33 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     isStatic: true
   },
 
-  // Coat rack near entrance at [8, 0, 8.5]
+  // Wooden Coffee Table at [0, 0, 3.8]
+  // Large rectangular: ~2.64 × 1.54
   {
-    id: 'coat_rack',
-    minX: 7.7, maxX: 8.3,
-    minY: 0, maxY: 2,
-    minZ: 8.2, maxZ: 8.8,
-    isStatic: true
-  },
-
-  // Art Deco Bookshelf - left wall at [-9.0, 0, 2] rotated π/2 (with 10% padding)
-  // Original: width 2.0 (becomes Z), depth 0.95 (becomes X) when rotated
-  // Moved further along the left wall
-  {
-    id: 'artdeco_bookshelf',
-    minX: -9.57, maxX: -8.43,
-    minY: 0, maxY: 5.5,
-    minZ: 0.9, maxZ: 3.1,
-    isStatic: true
-  },
-
-  // Library Ladder Bookshelf - back wall at [5, 0, 9.2] rotated π (with 10% padding)
-  // Original: width 2.2 in X, depth 1.0 in Z (180° rotation keeps same axes)
-  {
-    id: 'library_ladder_bookshelf',
-    minX: 3.79, maxX: 6.21,
-    minY: 0, maxY: 7.0,
-    minZ: 8.65, maxZ: 9.75,
-    isStatic: true
-  },
-
-  // Wooden Coffee Table - in front of couch at [0, 0, 3.8]
-  // Large rectangular: 2.64 × 1.54 (with padding)
-  {
-    id: 'wooden_coffee_table',
-    minX: -1.42, maxX: 1.42,
+    id: 'coffee_table',
+    minX: -1.32, maxX: 1.32,
     minY: 0, maxY: 0.5,
     minZ: 3.03, maxZ: 4.57,
     isStatic: true
   },
 
-  // Wooden End Table 1 - near armchair at [-5.5, 0, 4.5]
-  // Rectangular: 0.7 × 0.5
+  // Wooden End Table 1 at [-5.5, 0, 4.5]
+  // Rectangular: ~0.7 × 0.5
   {
-    id: 'wooden_end_table_1',
-    minX: -5.9, maxX: -5.1,
+    id: 'end_table_1',
+    minX: -5.85, maxX: -5.15,
     minY: 0, maxY: 0.65,
-    minZ: 4.2, maxZ: 4.8,
+    minZ: 4.25, maxZ: 4.75,
     isStatic: true
   },
 
-  // Wooden End Table 2 - on right of couch at [3, 0, 2.5] rotated 45°
-  // Rectangular: 0.7 × 0.5 (diagonal orientation, use larger box)
+  // Wooden End Table 2 at [-3.3, 0, 2.5] rotated π/4
+  // Diagonal orientation, use larger bounding box
   {
-    id: 'wooden_end_table_2',
-    minX: 2.55, maxX: 3.45,
+    id: 'end_table_2',
+    minX: -3.75, maxX: -2.85,
     minY: 0, maxY: 0.65,
     minZ: 2.05, maxZ: 2.95,
-    isStatic: true
-  },
-
-  // Square Wooden Table - center display at [4, 0, -3]
-  // Large square: 1.4 × 1.4
-  {
-    id: 'square_wooden_table',
-    minX: 3.2, maxX: 4.8,
-    minY: 0, maxY: 0.55,
-    minZ: -3.8, maxZ: -2.2,
     isStatic: true
   },
 ];
