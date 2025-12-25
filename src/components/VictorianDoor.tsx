@@ -1,4 +1,3 @@
-import { useState } from 'react';
 
 interface VictorianDoorProps {
   position: [number, number, number];
@@ -6,19 +5,13 @@ interface VictorianDoorProps {
   onInteraction?: (type: string, data?: unknown) => void;
 }
 
-export const VictorianDoor = ({ 
-  position, 
-  rotation = [0, 0, 0], 
-  onInteraction 
+export const VictorianDoor = ({
+  position,
+  rotation = [0, 0, 0],
+  onInteraction
 }: VictorianDoorProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleDoorClick = () => {
-    setIsOpen(!isOpen);
-    onInteraction?.('door', { isOpen: !isOpen });
-  };
-
-  const doorAngle = isOpen ? Math.PI / 2 : 0;
+  // Door is now non-interactive (always closed)
+  const doorAngle = 0;
 
   return (
     <group position={position} rotation={rotation}>
@@ -52,19 +45,8 @@ export const VictorianDoor = ({
       {/* Door Panel (pivots around left edge) */}
       <group position={[-1, 0, 0]} rotation={[0, doorAngle, 0]}>
         <group position={[1, 0, 0]}>
-          {/* Main Door Panel */}
-          <mesh 
-            position={[0, 2.5, 0]} 
-            onClick={handleDoorClick}
-            onPointerOver={(e) => {
-              e.stopPropagation();
-              document.body.style.cursor = 'pointer';
-            }}
-            onPointerOut={(e) => {
-              e.stopPropagation();
-              document.body.style.cursor = 'auto';
-            }}
-          >
+          {/* Main Door Panel - Non-interactive */}
+          <mesh position={[0, 2.5, 0]}>
             <boxGeometry args={[2, 4.8, 0.1]} />
             <meshStandardMaterial color="#654321" roughness={0.7} />
           </mesh>
