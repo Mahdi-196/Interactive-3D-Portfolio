@@ -30,9 +30,9 @@ interface DetectiveOfficeSceneProps {
   lampOn: boolean;
   cameraControlsRef: React.RefObject<any>;
   onBoardClick: () => void;
-  onCaseFileClick?: (caseFile: 'about' | 'education' | 'skills' | 'projects' | null) => void;
+  onCaseFileClick?: (caseFile: 'profile' | 'portfolio' | null) => void;
   showBoardContent?: boolean;
-  selectedCaseFile?: 'about' | 'education' | 'skills' | 'projects' | null;
+  selectedCaseFile?: 'profile' | 'portfolio' | null;
   overlayVisible?: boolean;
   onBoardContentClose?: () => void;
   isDetectiveMode?: boolean;

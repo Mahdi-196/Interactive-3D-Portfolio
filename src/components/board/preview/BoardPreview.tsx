@@ -129,37 +129,26 @@ export const BoardPreview = ({
           CASE FILE: MAHDI GHALEB
         </Text>
 
-        {/* Case File 1 - ABOUT ME (Left) */}
+        {/* Case File 1 - SUBJECT PROFILE (Left) */}
         <CaseFileCard
-          position={[-4, 0, 0.03]}
-          title="ABOUT ME"
+          position={[-3, 0, 0.03]}
+          title="SUBJECT PROFILE"
           fileNumber="#001"
-          items={['Full-Stack Dev', '3D Enthusiast', 'Problem Solver']}
+          items={['Personal Background', 'Technical Skills', 'Education & Training']}
           showContent={showContent}
           selectedCaseFile={selectedCaseFile}
-          onClick={() => onCaseFileClick?.('about')}
+          onClick={() => onCaseFileClick?.('profile')}
         />
 
-        {/* Case File 2 - PROJECTS (Center) */}
+        {/* Case File 2 - CASE PORTFOLIO (Right) */}
         <CaseFileCard
-          position={[0, 0, 0.03]}
-          title="PROJECTS"
+          position={[3, 0, 0.03]}
+          title="CASE PORTFOLIO"
           fileNumber="#002"
-          items={['MedeSense', 'RespawnRoom', 'ReFocused', 'VibeLink & More']}
+          items={['Development Projects', 'Technical Implementations', 'Professional Work']}
           showContent={showContent}
           selectedCaseFile={selectedCaseFile}
-          onClick={() => onCaseFileClick?.('projects')}
-        />
-
-        {/* Case File 3 - SKILLS & EDUCATION (Right) */}
-        <CaseFileCard
-          position={[4, 0, 0.03]}
-          title="SKILLS & EDUCATION"
-          fileNumber="#003"
-          items={['Computer Science', 'React • TypeScript • Three.js', 'Node.js • AWS • Docker']}
-          showContent={showContent}
-          selectedCaseFile={selectedCaseFile}
-          onClick={() => onCaseFileClick?.('skillseducation')}
+          onClick={() => onCaseFileClick?.('portfolio')}
         />
 
       </group>

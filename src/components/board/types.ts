@@ -2,7 +2,8 @@
  * Type definitions for the Interactive Detective Board
  */
 
-export type CaseFile = 'about' | 'skillseducation' | 'projects' | null;
+export type CaseFile = 'profile' | 'portfolio' | null;
+export type ProfileSection = 'about' | 'skills' | 'education' | null;
 export type ProjectDetail = 'refocused' | 'resilinet' | 'medesense' | 'respawnroom' | 'sideprojects' | null;
 export type SideProject = 'popuptrivia' | 'vibelink' | 'graphibooks' | null;
 export type ZoomedPaper = 'frontend' | 'backend' | 'ai' | null;
@@ -54,4 +55,20 @@ export interface ProjectsDetailProps extends DetailViewProps {
   onRespawnPaperZoom: (paper: RespawnPaper) => void;
   selectedSideProject: SideProject;
   onSideProjectSelect: (project: SideProject) => void;
+}
+
+/**
+ * Props for Subject Profile components
+ */
+export interface SubjectProfileDetailProps {
+  opacity: number;
+  onBack: () => void;
+  selectedSection: ProfileSection;
+  onSectionClick: (section: ProfileSection) => void;
+}
+
+export interface ProfileSectionWrapperProps {
+  opacity: number;
+  section: ProfileSection;
+  onBack: () => void;
 }

@@ -23,8 +23,8 @@ interface CameraControlsRef {
 
 interface DetectiveOfficeProps {
   onInteraction: (type: string, data?: unknown) => void;
-  onCaseFileClick?: (caseFile: 'about' | 'education' | 'skills' | 'projects' | null) => void;
-  selectedCaseFile?: 'about' | 'education' | 'skills' | 'projects' | null;
+  onCaseFileClick?: (caseFile: 'profile' | 'portfolio' | null) => void;
+  selectedCaseFile?: 'profile' | 'portfolio' | null;
   overlayVisible?: boolean;
 }
 
