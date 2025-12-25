@@ -36,9 +36,10 @@ export const MergedBookshelf = ({
       const bookGeometries: THREE.BufferGeometry[] = [];
 
       let currentX = -0.75;
-      // More varied book count per shelf: 14-30 books (averages to ~22 books = 80% full)
-      // Each shelf gets different fullness for realistic variation
-      const bookCount = 14 + Math.floor(seededRandom(variant * 100 + shelfIndex * 10) * 16);
+      // Varied book count per shelf: each row has different fullness
+      // Using shelfIndex as primary seed for consistency across bookshelves
+      // Ranges: 16-28 books per shelf, averaging to ~22 books (80% full)
+      const bookCount = 16 + Math.floor(seededRandom(shelfIndex * 137 + 42) * 12);
 
       for (let i = 0; i < bookCount; i++) {
         const seed = variant * 1000 + shelfIndex * 100 + i;
@@ -82,7 +83,41 @@ export const MergedBookshelf = ({
         coverGeo.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
         bookGeometries.push(coverGeo);
 
-        // Removed page edges, gold leaf, and ribbing to eliminate temporal aliasing during camera motion
+        // Add subtle spine accent (thick enough to avoid aliasing, ~20% of books)
+        if (rand(10) > 0.8) {
+          const spineGeo = new THREE.BoxGeometry(
+            0.012, // Thick enough to avoid flickering
+            clampedHeight * 0.2,
+            depth * 0.88
+          );
+          const spineMatrix = new THREE.Matrix4();
+          const spineRotationMatrix = new THREE.Matrix4().makeRotationY(Math.PI);
+          const spineLeanMatrix = new THREE.Matrix4().makeRotationZ(lean);
+          spineMatrix.multiplyMatrices(spineLeanMatrix, spineRotationMatrix);
+
+          const spineOffset = new THREE.Vector3(
+            -thickness / 2 * Math.cos(lean) - 0.006 * Math.cos(lean),
+            -thickness / 2 * Math.sin(lean) - 0.006 * Math.sin(lean) + clampedHeight * 0.25,
+            0
+          );
+          spineMatrix.setPosition(
+            xPos + spineOffset.x,
+            bookCenterY + spineOffset.y,
+            -0.2 + spineOffset.z
+          );
+          spineGeo.applyMatrix4(spineMatrix);
+
+          // Darker accent color
+          const accentColor = new THREE.Color(bookColors[colorIndex]).multiplyScalar(0.6);
+          const spineColorArray = new Float32Array(spineGeo.attributes.position.count * 3);
+          for (let j = 0; j < spineGeo.attributes.position.count; j++) {
+            spineColorArray[j * 3] = accentColor.r;
+            spineColorArray[j * 3 + 1] = accentColor.g;
+            spineColorArray[j * 3 + 2] = accentColor.b;
+          }
+          spineGeo.setAttribute('color', new THREE.BufferAttribute(spineColorArray, 3));
+          bookGeometries.push(spineGeo);
+        }
       }
 
       // Merge only book covers - simplified for clean motion rendering
