@@ -58,13 +58,13 @@ export const OfficeRoom = ({ onMapClick }: OfficeRoomProps) => {
 
       {/* Sherlock Holmes Map of Europe - Framed on Right Wall */}
       {/* Dark wooden frame */}
-      <mesh position={[9.9, 3, 0]} rotation={[0, -Math.PI / 2, 0]}>
+      <mesh position={[9.9, 3, -3]} rotation={[0, -Math.PI / 2, 0]}>
         <planeGeometry args={[3.2, 2.6]} />
         <meshStandardMaterial color="#1a0d00" roughness={0.4} />
       </mesh>
       {/* Map - Interactive */}
       <mesh
-        position={[9.85, 3, 0]}
+        position={[9.85, 3, -3]}
         rotation={[0, -Math.PI / 2, 0]}
         onClick={(e) => {
           e.stopPropagation();

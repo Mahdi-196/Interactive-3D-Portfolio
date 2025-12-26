@@ -122,7 +122,7 @@ export const DetectiveOfficeScene = ({
         raycast={() => null}
       >
         <FilingCabinet
-          position={[9.4, 0, 0]}
+          position={[9.6, 0, -1.0]}
           rotation={[0, -Math.PI / 2, 0]}
           variant="lateral"
         />
@@ -130,8 +130,8 @@ export const DetectiveOfficeScene = ({
 
       {/* Spotlight for map on right wall */}
       <spotLight
-        position={[6, 4, 0]}
-        target-position={[9.85, 3, 0]}
+        position={[6, 4, -3]}
+        target-position={[9.85, 3, -3]}
         intensity={2}
         angle={0.5}
         penumbra={0.3}
@@ -159,7 +159,7 @@ export const DetectiveOfficeScene = ({
 
           {/* Click-off plane for map - positioned behind map on right wall */}
           <mesh
-            position={[9.95, 4.5, 0]} // Just behind the map surface (right wall)
+            position={[9.95, 4.5, -3]} // Just behind the map surface (right wall)
             rotation={[0, -Math.PI / 2, 0]} // Face the camera from right wall
             onClick={(e) => {
               e.stopPropagation();
@@ -194,8 +194,8 @@ export const DetectiveOfficeScene = ({
       <PersianRug position={[0, 0.01, 0.5]} rotation={[0, Math.PI / 2, 0]} />
 
       {/* Right wall (2 brown bookshelves with gap) - Merged geometry optimization applied */}
-      <MergedBookshelf position={[9.0, 0, -3]} rotation={[0, -Math.PI / 2, 0]} variant={5} />
-      <MergedBookshelf position={[9.0, 0, 3]} rotation={[0, -Math.PI / 2, 0]} variant={6} />
+      <MergedBookshelf position={[9.0, 0, -6]} rotation={[0, -Math.PI / 2, 0]} variant={5} />
+      <MergedBookshelf position={[9.0, 0, 0]} rotation={[0, -Math.PI / 2, 0]} variant={6} />
 
       {/* Victorian Door on right wall */}
       <VictorianDoor position={[9.95, 0, 7.5]} rotation={[0, -Math.PI / 2, 0]} onInteraction={onInteraction} />
