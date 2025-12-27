@@ -10,6 +10,7 @@ import { VictorianDoor } from './VictorianDoor';
 import { VictorianChandelier } from './VictorianChandelier';
 import { VictorianCouch } from './VictorianCouch';
 import { VictorianArmchair } from './VictorianArmchair';
+import { MergedBookshelf } from './MergedBookshelf';
 import { FirstPersonDetectiveBody } from './FirstPersonDetectiveBody';
 import { DetectiveCharacter } from './DetectiveCharacter';
 import { FilingCabinet } from './FilingCabinet';
@@ -234,19 +235,9 @@ export const DetectiveOfficeScene = ({
       {/* Persian Rug - Vintage oriental rug anchoring the seating area */}
       <PersianRug position={[0, 0.01, 0.5]} rotation={[0, Math.PI / 2, 0]} />
 
-      {/* Right wall bookshelves - Dusty vintage bookshelves */}
-      <ModelLoader
-        modelPath="/models/dusty_bookshelf/scene.gltf"
-        position={[9.0, 0, -6]}
-        scale={2.0}
-        rotation={[0, Math.PI / 2, 0]}
-      />
-      <ModelLoader
-        modelPath="/models/dusty_bookshelf/scene.gltf"
-        position={[9.0, 0, 0]}
-        scale={2.0}
-        rotation={[0, Math.PI / 2, 0]}
-      />
+      {/* Right wall bookshelves - Merged geometry optimization (0MB vs 1.6MB) */}
+      <MergedBookshelf position={[9.0, 0, -6]} rotation={[0, -Math.PI / 2, 0]} variant={5} />
+      <MergedBookshelf position={[9.0, 0, 0]} rotation={[0, -Math.PI / 2, 0]} variant={6} />
 
       {/* Victorian Door on right wall */}
       <VictorianDoor position={[9.95, 0, 7.5]} rotation={[0, -Math.PI / 2, 0]} onInteraction={onInteraction} />
