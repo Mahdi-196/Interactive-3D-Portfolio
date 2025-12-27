@@ -8,6 +8,8 @@ import { VictorianChair } from './VictorianChair';
 import { InteractiveDetectiveBoard } from './board';
 import { VictorianDoor } from './VictorianDoor';
 import { VictorianChandelier } from './VictorianChandelier';
+import { VictorianCouch } from './VictorianCouch';
+import { VictorianArmchair } from './VictorianArmchair';
 import { FirstPersonDetectiveBody } from './FirstPersonDetectiveBody';
 import { DetectiveCharacter } from './DetectiveCharacter';
 import { FilingCabinet } from './FilingCabinet';
@@ -257,24 +259,21 @@ export const DetectiveOfficeScene = ({
       {/* Coffee table decorative items - whiskey set, ashtray, case files, etc. */}
       <CoffeeTableItems position={[0, 0, 3.8]} rotation={[0, 0, 0]} />
 
-      {/* Vintage Seating - Optimized imported models */}
+      {/* Victorian Seating - Lightweight programmatic furniture (0MB vs 8.3MB) */}
 
-      {/* Small vintage armchair - optimized */}
-      <ModelLoader
-        modelPath="/models/vintage_couch_small/scene.gltf"
-        position={[-2.0, 0.7, 3.5]}
-        scale={0.8}
+      {/* Victorian armchair - same burgundy velvet look, 0MB */}
+      <VictorianArmchair
+        position={[-4.0, 0, 3.5]}
         rotation={[0, Math.PI / 2 - Math.PI * 0.30, 0]}
       />
 
-      {/* Larger vintage couch - simplified scale for better performance */}
-      <ModelLoader
-        modelPath="/models/vintage_couch_large/scene.gltf"
-        position={[0, 0.5, 3.5]}
-        scale={2.0}
-        rotation={[0, 0, 0]}
-        hideMeshes={['P-2']}
-      />
+      {/* Victorian couch - same burgundy velvet look, 0MB, scaled to fit */}
+      <group scale={[1.6, 1, 1.3]}>
+        <VictorianCouch
+          position={[0, 0, 1.5]}
+          rotation={[0, 0, 0]}
+        />
+      </group>
 
       {/* Wooden end table near armchair */}
       <WoodenEndTable position={[-5.5, 0, 4.5]} rotation={[0, 0, 0]} />
