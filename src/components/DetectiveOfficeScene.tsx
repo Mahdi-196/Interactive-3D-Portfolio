@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { OfficeRoom } from './OfficeRoom';
 import { ExecutiveDesk } from './ExecutiveDesk';
 import { DetectiveDesk } from './DetectiveDesk';
@@ -5,25 +6,17 @@ import { DetectiveOfficeChair } from './DetectiveOfficeChair';
 import { OfficeWindow } from './OfficeWindow';
 import { VictorianChair } from './VictorianChair';
 import { InteractiveDetectiveBoard } from './board';
-import { Bookshelf } from './Bookshelf';
-import { VictorianBookshelf } from './VictorianBookshelf';
-import { ArtDecoBookshelf } from './ArtDecoBookshelf';
-import { LibraryLadderBookshelf } from './LibraryLadderBookshelf';
-import { InstancedBookshelf } from './InstancedBookshelf';
-import { MergedBookshelf } from './MergedBookshelf';
 import { VictorianDoor } from './VictorianDoor';
 import { VictorianChandelier } from './VictorianChandelier';
 import { FirstPersonDetectiveBody } from './FirstPersonDetectiveBody';
 import { DetectiveCharacter } from './DetectiveCharacter';
-import { VictorianCouch } from './VictorianCouch';
-import { VictorianArmchair } from './VictorianArmchair';
-import { CoatRack } from './CoatRack';
 import { FilingCabinet } from './FilingCabinet';
 import { WoodenCoffeeTable } from './WoodenCoffeeTable';
 import { WoodenEndTable } from './WoodenEndTable';
 import { SquareWoodenTable } from './SquareWoodenTable';
 import { CoffeeTableItems } from './CoffeeTableItems';
 import { PersianRug } from './PersianRug';
+import { ModelLoader } from './ModelLoader';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -54,6 +47,8 @@ export const DetectiveOfficeScene = ({
   showIntroDetective = false,
   playerCharacterRef
 }: DetectiveOfficeSceneProps) => {
+  const [deskLampOn, setDeskLampOn] = useState(false);
+
   return (
     <>
       {/* Office room structure (walls, floor, ceiling) */}
@@ -104,6 +99,56 @@ export const DetectiveOfficeScene = ({
           rotation={[0, Math.PI / 2 + Math.PI, 0]}
         />
       </group>
+
+      {/* Desk Items - Imported 3D models */}
+
+      {/* Desk Lamp - positioned on desk surface, clickable to turn on/off */}
+      <ModelLoader
+        modelPath="/models/desk_lamp/scene.gltf"
+        position={[-8.5, 1.65, -3.5]}
+        scale={0.25}
+        rotation={[0, -Math.PI / 2, 0]}
+        onClick={() => setDeskLampOn(!deskLampOn)}
+      />
+
+      {/* Desk lamp light - only visible when lamp is on */}
+      {deskLampOn && (
+        <>
+          <pointLight position={[-8.5, 1.95, -3.3]} intensity={1.5} color="#ffdb8c" distance={3} />
+          <spotLight
+            position={[-8.5, 1.95, -3.3]}
+            target-position={[-8.5, 1.3, -3.5]}
+            intensity={2}
+            angle={0.6}
+            penumbra={0.5}
+            color="#ffdb8c"
+          />
+        </>
+      )}
+
+      {/* Magnifying Glass - detective tool on desk */}
+      <ModelLoader
+        modelPath="/models/magnifying_glass/scene.gltf"
+        position={[-7.5, 1.65, -2.5]}
+        scale={1.5}
+        rotation={[0, Math.PI / 4, 0]}
+      />
+
+      {/* Antique Globe - decorative piece on desk */}
+      <ModelLoader
+        modelPath="/models/antique_globe/scene.gltf"
+        position={[-11.0, 2.12, -5.1]}
+        scale={2.08}
+        rotation={[0, Math.PI / 6, 0]}
+      />
+
+      {/* Smoking Pipe - classic detective accessory on desk */}
+      <ModelLoader
+        modelPath="/models/smoking_pipe/scene.gltf"
+        position={[-7.9, 1.60, -6.0]}
+        scale={0.0035}
+        rotation={[0, Math.PI / 3, 0]}
+      />
 
       {/* Detective Office Chair - Moved east and rotated more north (1.7x scale) */}
       <group scale={1.7}>
@@ -184,18 +229,22 @@ export const DetectiveOfficeScene = ({
         onContentClose={onBoardContentClose}
       />
 
-      {/* Victorian Seating - Main couch and side armchair */}
-      <group scale={[1.6, 1, 1.3]}>
-        <VictorianCouch position={[0, 0, 1.5]} rotation={[0, 0, 0]} />
-      </group>
-      <VictorianArmchair position={[-4.0, 0, 3.5]} rotation={[0, Math.PI / 2 - Math.PI * 0.30, 0]} />
-
       {/* Persian Rug - Vintage oriental rug anchoring the seating area */}
       <PersianRug position={[0, 0.01, 0.5]} rotation={[0, Math.PI / 2, 0]} />
 
-      {/* Right wall (2 brown bookshelves with gap) - Merged geometry optimization applied */}
-      <MergedBookshelf position={[9.0, 0, -6]} rotation={[0, -Math.PI / 2, 0]} variant={5} />
-      <MergedBookshelf position={[9.0, 0, 0]} rotation={[0, -Math.PI / 2, 0]} variant={6} />
+      {/* Right wall bookshelves - Dusty vintage bookshelves */}
+      <ModelLoader
+        modelPath="/models/dusty_bookshelf/scene.gltf"
+        position={[9.0, 0, -6]}
+        scale={2.0}
+        rotation={[0, Math.PI / 2, 0]}
+      />
+      <ModelLoader
+        modelPath="/models/dusty_bookshelf/scene.gltf"
+        position={[9.0, 0, 0]}
+        scale={2.0}
+        rotation={[0, Math.PI / 2, 0]}
+      />
 
       {/* Victorian Door on right wall */}
       <VictorianDoor position={[9.95, 0, 7.5]} rotation={[0, -Math.PI / 2, 0]} onInteraction={onInteraction} />
@@ -216,6 +265,26 @@ export const DetectiveOfficeScene = ({
 
       {/* Victorian Chandelier - lowered 10% for smaller room */}
       <VictorianChandelier position={[0, 8.1, 2]} isLit={lampOn} />
+
+      {/* Additional bright lighting for flying mode (non-detective mode) */}
+      {!isDetectiveMode && (
+        <>
+          {/* Bright ambient light for flying mode */}
+          <ambientLight intensity={1.5} color="#ffffff" />
+
+          {/* Additional hemisphere light for overall brightness */}
+          <hemisphereLight intensity={1.2} color="#ffffff" groundColor="#8b7355" />
+
+          {/* Corner fill lights */}
+          <pointLight position={[-8, 6, -8]} intensity={1.5} color="#fffaf0" distance={15} />
+          <pointLight position={[8, 6, -8]} intensity={1.5} color="#fffaf0" distance={15} />
+          <pointLight position={[-8, 6, 8]} intensity={1.5} color="#fffaf0" distance={15} />
+          <pointLight position={[8, 6, 8]} intensity={1.5} color="#fffaf0" distance={15} />
+
+          {/* Center ceiling light */}
+          <pointLight position={[0, 8, 0]} intensity={2} color="#ffffff" distance={20} />
+        </>
+      )}
 
       {/* Detective character visible during intro animation */}
       {showIntroDetective && (
