@@ -11,13 +11,14 @@ interface ModelLoaderProps {
   onPointerOver?: () => void;
   onPointerOut?: () => void;
   hideMeshes?: string[]; // Array of mesh names to hide (supports partial matching)
+  simplify?: boolean; // Simplify geometry for better performance (reduces polygon count)
 }
 
 /**
  * Generic model loader component for GLTF/GLB files
  * Usage: <ModelLoader modelPath="/models/desk-lamp.glb" position={[x, y, z]} />
  */
-const Model = ({ modelPath, position, rotation, scale, onClick, onPointerOver, onPointerOut, hideMeshes }: ModelLoaderProps) => {
+const Model = ({ modelPath, position, rotation, scale, onClick, onPointerOver, onPointerOut, hideMeshes, simplify = false }: ModelLoaderProps) => {
   const gltf = useGLTF(modelPath);
   const [hovered, setHovered] = useState(false);
 
@@ -40,8 +41,19 @@ const Model = ({ modelPath, position, rotation, scale, onClick, onPointerOver, o
           // Optimize geometry for better performance
           if (child.geometry) {
             child.geometry.computeVertexNormals(); // Recompute normals for smooth shading
+
             // Dispose of unnecessary data
             child.geometry.deleteAttribute('uv2');
+
+            // Aggressive simplification for desk items
+            if (simplify) {
+              // Remove vertex colors if present
+              child.geometry.deleteAttribute('color');
+              // Remove tangents if present
+              child.geometry.deleteAttribute('tangent');
+              // Reduce buffer precision
+              child.geometry.setAttribute('position', child.geometry.getAttribute('position').clone());
+            }
           }
 
           // Optimize materials

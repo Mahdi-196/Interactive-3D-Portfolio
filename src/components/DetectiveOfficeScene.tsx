@@ -112,14 +112,15 @@ export const DetectiveOfficeScene = ({
         scale={2.0}
         rotation={[0, Math.PI / 2 + Math.PI / 6 + Math.PI / 9, 0]}
         onClick={() => setDeskLampOn(!deskLampOn)}
+        simplify={true}
       />
 
       {/* Desk lamp light - only visible when lamp is on */}
       {deskLampOn && (
         <>
-          <pointLight position={[-9.5, 1.95, -2.3]} intensity={1.5} color="#ffdb8c" distance={3} />
+          <pointLight position={[-9.5, 2.3, -2.5]} intensity={1.5} color="#ffdb8c" distance={3} />
           <spotLight
-            position={[-9.5, 1.95, -2.3]}
+            position={[-9.5, 2.3, -2.5]}
             target-position={[-9.5, 1.3, -2.5]}
             intensity={2}
             angle={0.6}
@@ -143,6 +144,7 @@ export const DetectiveOfficeScene = ({
         position={[-11.0, 2.12, -5.1]}
         scale={2.08}
         rotation={[0, Math.PI / 6, 0]}
+        simplify={true}
       />
 
       {/* Smoking Pipe - classic detective accessory on desk */}
