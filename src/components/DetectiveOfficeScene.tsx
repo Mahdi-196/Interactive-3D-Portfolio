@@ -257,9 +257,9 @@ export const DetectiveOfficeScene = ({
       {/* Coffee table decorative items - whiskey set, ashtray, case files, etc. */}
       <CoffeeTableItems position={[0, 0, 3.8]} rotation={[0, 0, 0]} />
 
-      {/* Vintage Seating - Small and large vintage couches */}
+      {/* Vintage Seating - Optimized imported models */}
 
-      {/* Small vintage couch */}
+      {/* Small vintage armchair - optimized */}
       <ModelLoader
         modelPath="/models/vintage_couch_small/scene.gltf"
         position={[-2.0, 0.7, 3.5]}
@@ -267,11 +267,11 @@ export const DetectiveOfficeScene = ({
         rotation={[0, Math.PI / 2 - Math.PI * 0.30, 0]}
       />
 
-      {/* Larger vintage couch */}
+      {/* Larger vintage couch - simplified scale for better performance */}
       <ModelLoader
         modelPath="/models/vintage_couch_large/scene.gltf"
         position={[0, 0.5, 3.5]}
-        scale={[1.5, 2.5, 2.5]}
+        scale={2.0}
         rotation={[0, 0, 0]}
         hideMeshes={['P-2']}
       />

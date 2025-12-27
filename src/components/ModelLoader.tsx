@@ -36,31 +36,48 @@ const Model = ({ modelPath, position, rotation, scale, onClick, onPointerOver, o
       console.log('=========================');
 
       gltf.scene.traverse((child: any) => {
-        if (child.isMesh && child.material) {
-          child.material.side = 2; // THREE.DoubleSide - render both sides
-
-          // Fix materials that appear black by ensuring proper rendering
-          if (child.material.metalness !== undefined) {
-            child.material.metalness = Math.min(child.material.metalness, 0.5);
-          }
-          if (child.material.roughness !== undefined && child.material.roughness === 0) {
-            child.material.roughness = 0.4;
+        if (child.isMesh) {
+          // Optimize geometry for better performance
+          if (child.geometry) {
+            child.geometry.computeVertexNormals(); // Recompute normals for smooth shading
+            // Dispose of unnecessary data
+            child.geometry.deleteAttribute('uv2');
           }
 
-          child.material.needsUpdate = true;
-          child.castShadow = true;
-          child.receiveShadow = true;
+          // Optimize materials
+          if (child.material) {
+            child.material.side = 2; // THREE.DoubleSide - render both sides
 
-          // Hide meshes that match names in hideMeshes array
-          if (hideMeshes && child.name) {
-            const shouldHide = hideMeshes.some(hideName =>
-              child.name.toLowerCase().includes(hideName.toLowerCase())
-            );
-            if (shouldHide) {
-              child.visible = false;
-              console.log('Hiding mesh:', child.name);
+            // Fix materials that appear black by ensuring proper rendering
+            if (child.material.metalness !== undefined) {
+              child.material.metalness = Math.min(child.material.metalness, 0.5);
+            }
+            if (child.material.roughness !== undefined && child.material.roughness === 0) {
+              child.material.roughness = 0.4;
+            }
+
+            // Performance optimizations
+            child.material.precision = 'mediump'; // Use medium precision for better performance
+            child.material.needsUpdate = true;
+
+            // Enable shadows only when necessary (reduces performance impact)
+            child.castShadow = false; // Disable by default, enable if needed
+            child.receiveShadow = true;
+
+            // Hide meshes that match names in hideMeshes array
+            if (hideMeshes && child.name) {
+              const shouldHide = hideMeshes.some(hideName =>
+                child.name.toLowerCase().includes(hideName.toLowerCase())
+              );
+              if (shouldHide) {
+                child.visible = false;
+                console.log('Hiding mesh:', child.name);
+              }
             }
           }
+
+          // Frustum culling optimization
+          child.frustumCulled = true;
         }
       });
     }
