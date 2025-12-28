@@ -67,15 +67,15 @@ export const DetectiveDesk = ({
 
             {/* Brass drawer handle */}
             <mesh position={[0, 0, -0.02]} rotation={[0, 0, Math.PI / 2]} material={materials.brass}>
-              <cylinderGeometry args={[0.015, 0.015, 0.12]} />
+              <cylinderGeometry args={[0.015, 0.015, 0.12, 8]} />
             </mesh>
 
             {/* Handle decorative ends */}
             <mesh position={[-0.06, 0, -0.02]} material={materials.brass}>
-              <sphereGeometry args={[0.02, 12, 12]} />
+              <sphereGeometry args={[0.02, 8, 8]} />
             </mesh>
             <mesh position={[0.06, 0, -0.02]} material={materials.brass}>
-              <sphereGeometry args={[0.02, 12, 12]} />
+              <sphereGeometry args={[0.02, 8, 8]} />
             </mesh>
           </group>
         ))}
@@ -103,15 +103,15 @@ export const DetectiveDesk = ({
 
             {/* Brass drawer handle */}
             <mesh position={[0, 0, -0.02]} rotation={[0, 0, Math.PI / 2]} material={materials.brass}>
-              <cylinderGeometry args={[0.015, 0.015, 0.12]} />
+              <cylinderGeometry args={[0.015, 0.015, 0.12, 8]} />
             </mesh>
 
             {/* Handle decorative ends */}
             <mesh position={[-0.06, 0, -0.02]} material={materials.brass}>
-              <sphereGeometry args={[0.02, 12, 12]} />
+              <sphereGeometry args={[0.02, 8, 8]} />
             </mesh>
             <mesh position={[0.06, 0, -0.02]} material={materials.brass}>
-              <sphereGeometry args={[0.02, 12, 12]} />
+              <sphereGeometry args={[0.02, 8, 8]} />
             </mesh>
           </group>
         ))}
@@ -171,7 +171,7 @@ export const DetectiveDesk = ({
         [1.2, 0.89, -0.65],
       ].map((pos, i) => (
         <mesh key={`corner-${i}`} position={pos as [number, number, number]} material={materials.brass}>
-          <sphereGeometry args={[0.025, 12, 12]} />
+          <sphereGeometry args={[0.025, 8, 8]} />
         </mesh>
       ))}
 
