@@ -42,16 +42,19 @@ export const ProceduralGlobe = ({
   const baseHeight = 0.08 * scale;
   const standHeight = 0.15 * scale;
 
+  // Calculate total height from base to get proper positioning
+  const totalBaseAndStandHeight = baseHeight + standHeight;
+
   return (
     <group position={position} rotation={rotation}>
       {/* Globe sphere - main feature */}
-      <mesh position={[0, standHeight + globeRadius, 0]} material={materials.globe}>
+      <mesh position={[0, totalBaseAndStandHeight + globeRadius, 0]} material={materials.globe}>
         <sphereGeometry args={[globeRadius, 16, 16]} />
       </mesh>
 
       {/* Brass meridian ring (vertical ring around globe) */}
       <mesh
-        position={[0, standHeight + globeRadius, 0]}
+        position={[0, totalBaseAndStandHeight + globeRadius, 0]}
         rotation={[0, 0, Math.PI / 2]}
         material={materials.brass}
       >
@@ -60,7 +63,7 @@ export const ProceduralGlobe = ({
 
       {/* Brass mounting arm (connects globe to base) */}
       <mesh
-        position={[-globeRadius * 0.7, standHeight + globeRadius * 0.5, 0]}
+        position={[-globeRadius * 0.7, totalBaseAndStandHeight + globeRadius * 0.5, 0]}
         rotation={[0, 0, Math.PI / 4]}
         material={materials.brass}
       >
@@ -68,11 +71,11 @@ export const ProceduralGlobe = ({
       </mesh>
 
       {/* Wooden stand/pedestal */}
-      <mesh position={[0, standHeight / 2, 0]} material={materials.wood}>
+      <mesh position={[0, baseHeight + standHeight / 2, 0]} material={materials.wood}>
         <cylinderGeometry args={[0.08 * scale, 0.1 * scale, standHeight, 8]} />
       </mesh>
 
-      {/* Wooden base (circular platform) */}
+      {/* Wooden base (circular platform) - sits on desk surface */}
       <mesh position={[0, baseHeight / 2, 0]} material={materials.wood}>
         <cylinderGeometry args={[0.12 * scale, 0.12 * scale, baseHeight, 12]} />
       </mesh>
