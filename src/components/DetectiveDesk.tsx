@@ -65,17 +65,9 @@ export const DetectiveDesk = ({
               <boxGeometry args={[0.45, 0.18, 0.01]} />
             </mesh>
 
-            {/* Brass drawer handle */}
+            {/* Brass drawer handle - simplified for performance */}
             <mesh position={[0, 0, -0.02]} rotation={[0, 0, Math.PI / 2]} material={materials.brass}>
-              <cylinderGeometry args={[0.015, 0.015, 0.12, 8]} />
-            </mesh>
-
-            {/* Handle decorative ends */}
-            <mesh position={[-0.06, 0, -0.02]} material={materials.brass}>
-              <sphereGeometry args={[0.02, 8, 8]} />
-            </mesh>
-            <mesh position={[0.06, 0, -0.02]} material={materials.brass}>
-              <sphereGeometry args={[0.02, 8, 8]} />
+              <cylinderGeometry args={[0.02, 0.02, 0.14, 8]} />
             </mesh>
           </group>
         ))}
@@ -101,17 +93,9 @@ export const DetectiveDesk = ({
               <boxGeometry args={[0.45, 0.18, 0.01]} />
             </mesh>
 
-            {/* Brass drawer handle */}
+            {/* Brass drawer handle - simplified for performance */}
             <mesh position={[0, 0, -0.02]} rotation={[0, 0, Math.PI / 2]} material={materials.brass}>
-              <cylinderGeometry args={[0.015, 0.015, 0.12, 8]} />
-            </mesh>
-
-            {/* Handle decorative ends */}
-            <mesh position={[-0.06, 0, -0.02]} material={materials.brass}>
-              <sphereGeometry args={[0.02, 8, 8]} />
-            </mesh>
-            <mesh position={[0.06, 0, -0.02]} material={materials.brass}>
-              <sphereGeometry args={[0.02, 8, 8]} />
+              <cylinderGeometry args={[0.02, 0.02, 0.14, 8]} />
             </mesh>
           </group>
         ))}
@@ -152,28 +136,7 @@ export const DetectiveDesk = ({
         <boxGeometry args={[0.5, 0.7, 0.02]} />
       </mesh>
 
-      {/* Decorative vertical fluting on front corners */}
-      {[-1.1, 1.1].map((x, i) => (
-        <group key={`fluting-${i}`} position={[x, 0.4, 0.56]}>
-          {[0, 1, 2].map((j) => (
-            <mesh key={j} position={[j * 0.015 - 0.015, 0, 0]} material={materials.darkWood}>
-              <boxGeometry args={[0.01, 0.75, 0.025]} />
-            </mesh>
-          ))}
-        </group>
-      ))}
-
-      {/* Brass corner ornaments */}
-      {[
-        [-1.2, 0.89, 0.65],
-        [1.2, 0.89, 0.65],
-        [-1.2, 0.89, -0.65],
-        [1.2, 0.89, -0.65],
-      ].map((pos, i) => (
-        <mesh key={`corner-${i}`} position={pos as [number, number, number]} material={materials.brass}>
-          <sphereGeometry args={[0.025, 8, 8]} />
-        </mesh>
-      ))}
+      {/* Decorative fluting and brass ornaments removed for performance */}
 
       {/* Base trim molding */}
       <mesh position={[-0.85, 0.02, 0]} material={materials.darkWood}>

@@ -152,17 +152,7 @@ export const DetectiveOfficeChair = ({
         <boxGeometry args={[0.65, 0.12, 0.65]} />
       </mesh>
 
-      {/* Seat cushion tufting (button indents) */}
-      {[
-        [-0.15, 0.55, -0.15],
-        [0.15, 0.55, -0.15],
-        [-0.15, 0.55, 0.15],
-        [0.15, 0.55, 0.15],
-      ].map((pos, i) => (
-        <mesh key={`seat-tuft-${i}`} position={pos as [number, number, number]} material={materials.leatherDark}>
-          <sphereGeometry args={[0.025, 8, 8]} />
-        </mesh>
-      ))}
+      {/* Seat tufting removed for performance - use texture/normal map instead */}
 
       {/* High backrest - curved and padded */}
       <group position={[0, 1.1, -0.28]}>
@@ -171,42 +161,7 @@ export const DetectiveOfficeChair = ({
           <boxGeometry args={[0.7, 0.9, 0.15]} />
         </mesh>
 
-        {/* Backrest tufting - diamond pattern */}
-        {[
-          [0, 0.3, 0.08],
-          [-0.2, 0.15, 0.08],
-          [0.2, 0.15, 0.08],
-          [0, 0, 0.08],
-          [-0.2, -0.15, 0.08],
-          [0.2, -0.15, 0.08],
-          [0, -0.3, 0.08],
-        ].map((pos, i) => (
-          <mesh key={`back-tuft-${i}`} position={pos as [number, number, number]} material={materials.leatherDark}>
-            <sphereGeometry args={[0.02, 8, 8]} />
-          </mesh>
-        ))}
-
-        {/* Tufting creases (leather folds between buttons) */}
-        {[
-          { from: [0, 0.3, 0.08], to: [-0.2, 0.15, 0.08] },
-          { from: [0, 0.3, 0.08], to: [0.2, 0.15, 0.08] },
-          { from: [-0.2, 0.15, 0.08], to: [0, 0, 0.08] },
-          { from: [0.2, 0.15, 0.08], to: [0, 0, 0.08] },
-          { from: [0, 0, 0.08], to: [-0.2, -0.15, 0.08] },
-          { from: [0, 0, 0.08], to: [0.2, -0.15, 0.08] },
-          { from: [-0.2, -0.15, 0.08], to: [0, -0.3, 0.08] },
-          { from: [0.2, -0.15, 0.08], to: [0, -0.3, 0.08] },
-        ].map((line, i) => {
-          const midX = (line.from[0] + line.to[0]) / 2;
-          const midY = (line.from[1] + line.to[1]) / 2;
-          const midZ = (line.from[2] + line.to[2]) / 2;
-
-          return (
-            <mesh key={`crease-${i}`} position={[midX, midY, midZ]} material={materials.leatherDark}>
-              <boxGeometry args={[0.01, 0.15, 0.01]} />
-            </mesh>
-          );
-        })}
+        {/* Backrest tufting and creases removed for performance - use texture/normal map instead */}
 
         {/* Backrest wooden frame trim */}
         <mesh position={[0, 0.46, -0.08]} material={materials.wood}>
