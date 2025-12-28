@@ -131,11 +131,12 @@ export const DetectiveOfficeScene = ({
         </>
       )}
 
-      {/* Lightweight procedural globe - replaces heavy 447KB GLTF model */}
+      {/* Lightweight procedural globe - temporarily in center of room for testing */}
       <ProceduralGlobe
-        position={[-11.0, 1.5, -5.1]}
+        position={[0, 0, 0]}
         rotation={[0, Math.PI / 6, 0]}
         scale={2.08}
+        textureUrl="/textures/globe-map.jpg"  {/* Optional - will use solid color if not found */}
       />
 
       {/* Case file on desk - manila folder with realistic details */}

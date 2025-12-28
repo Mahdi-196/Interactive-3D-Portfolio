@@ -1,5 +1,36 @@
-import { useMemo } from 'react';
+import { useMemo, Suspense } from 'react';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
+
+/**
+ * Globe with texture - wrapped in Suspense for texture loading
+ */
+const GlobeWithTexture = ({
+  textureUrl,
+  position,
+  scale
+}: {
+  textureUrl: string;
+  position: [number, number, number];
+  scale: number;
+}) => {
+  const texture = useTexture(textureUrl);
+
+  const material = useMemo(() => {
+    return new THREE.MeshStandardMaterial({
+      map: texture,
+      color: "#d4c5a9",
+      roughness: 0.7,
+      metalness: 0.1
+    });
+  }, [texture]);
+
+  return (
+    <mesh position={position} material={material}>
+      <sphereGeometry args={[0.25 * scale, 32, 32]} />
+    </mesh>
+  );
+};
 
 /**
  * Procedural Antique Globe - Lightweight replacement for GLTF model
@@ -8,23 +39,20 @@ import * as THREE from 'three';
 export const ProceduralGlobe = ({
   position,
   rotation = [0, 0, 0],
-  scale = 1
+  scale = 1,
+  textureUrl
 }: {
   position: [number, number, number];
   rotation?: [number, number, number];
   scale?: number;
+  textureUrl?: string;
 }) => {
   // Shared materials for performance
   const materials = useMemo(() => ({
     globe: new THREE.MeshStandardMaterial({
-      color: "#d4c5a9", // Aged paper color
+      color: "#d4c5a9",
       roughness: 0.7,
       metalness: 0.1
-    }),
-    continents: new THREE.MeshStandardMaterial({
-      color: "#8b7355", // Sepia brown for land masses
-      roughness: 0.8,
-      metalness: 0.05
     }),
     brass: new THREE.MeshStandardMaterial({
       color: "#8b7355", // Aged brass
@@ -44,21 +72,44 @@ export const ProceduralGlobe = ({
 
   // Calculate total height from base to get proper positioning
   const totalBaseAndStandHeight = baseHeight + standHeight;
+  const globePosition: [number, number, number] = [0, totalBaseAndStandHeight + globeRadius, 0];
 
   return (
     <group position={position} rotation={rotation}>
-      {/* Globe sphere - main feature */}
-      <mesh position={[0, totalBaseAndStandHeight + globeRadius, 0]} material={materials.globe}>
-        <sphereGeometry args={[globeRadius, 16, 16]} />
-      </mesh>
+      {/* Globe sphere - main feature (with optional texture) */}
+      {textureUrl ? (
+        <Suspense fallback={
+          <mesh position={globePosition} material={materials.globe}>
+            <sphereGeometry args={[globeRadius, 16, 16]} />
+          </mesh>
+        }>
+          <GlobeWithTexture
+            textureUrl={textureUrl}
+            position={globePosition}
+            scale={scale}
+          />
+        </Suspense>
+      ) : (
+        <mesh position={globePosition} material={materials.globe}>
+          <sphereGeometry args={[globeRadius, 16, 16]} />
+        </mesh>
+      )}
 
-      {/* Brass meridian ring (vertical ring around globe) */}
+      {/* Brass meridian arc (partial C-shape from pole to pole) */}
       <mesh
-        position={[0, totalBaseAndStandHeight + globeRadius, 0]}
-        rotation={[0, 0, Math.PI / 2]}
+        position={globePosition}
+        rotation={[0, Math.PI / 6, Math.PI / 2]} // Tilted for classic globe look
         material={materials.brass}
       >
-        <torusGeometry args={[globeRadius + 0.01, 0.008, 8, 32]} />
+        <torusGeometry
+          args={[
+            globeRadius + 0.01,  // radius
+            0.008,               // tube thickness
+            8,                   // radial segments
+            32,                  // tubular segments
+            Math.PI * 1.2        // arc angle (216 degrees, not full circle)
+          ]}
+        />
       </mesh>
 
       {/* Brass mounting arm (connects globe to base) */}
