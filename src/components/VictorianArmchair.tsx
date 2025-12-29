@@ -54,16 +54,6 @@ export const VictorianArmchair = ({
         />
       </mesh>
 
-      {/* Cushion top rounded effect */}
-      <mesh position={[0, 1.0, 0.02]} scale={[0.95, 0.35, 0.85]}>
-        <capsuleGeometry args={[0.2, 0.7, 20, 32]} rotation={[0, 0, Math.PI / 2]} />
-        <meshStandardMaterial
-          color={cushionColor}
-          roughness={0.92}
-          metalness={0.0}
-        />
-      </mesh>
-
       {/* Backrest main body */}
       <mesh position={[0, 1.15, -0.4]}>
         <boxGeometry args={[1.0, 1.0, 0.25]} />
