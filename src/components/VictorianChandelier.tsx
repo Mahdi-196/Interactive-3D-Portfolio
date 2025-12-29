@@ -144,7 +144,7 @@ export const VictorianChandelier = ({
           <pointLight
             position={[0, -2.4, 0]}
             color="#ffcc77"
-            intensity={18.0}
+            intensity={22.5}
             distance={35}
             decay={1.5}
           />
