@@ -35,7 +35,7 @@ const GlobeWithTexture = ({
   }, [texture]);
 
   return (
-    <mesh position={position} material={material}>
+    <mesh position={position} rotation={[0, 1.74, 0]} material={material}>
       <sphereGeometry args={[0.25 * scale, 16, 16]} />
     </mesh>
   );
@@ -92,7 +92,7 @@ export const ProceduralGlobe = ({
       {/* Globe sphere - main feature (with optional texture) */}
       {textureUrl ? (
         <Suspense fallback={
-          <mesh position={globePosition} material={materials.globe}>
+          <mesh position={globePosition} rotation={[0, 1.74, 0]} material={materials.globe}>
             <sphereGeometry args={[globeRadius, 16, 16]} />
           </mesh>
         }>
@@ -103,7 +103,7 @@ export const ProceduralGlobe = ({
           />
         </Suspense>
       ) : (
-        <mesh position={globePosition} material={materials.globe}>
+        <mesh position={globePosition} rotation={[0, 1.74, 0]} material={materials.globe}>
           <sphereGeometry args={[globeRadius, 16, 16]} />
         </mesh>
       )}
