@@ -22,6 +22,7 @@ import { DetectiveFiles } from './DetectiveFiles';
 import { ProceduralGlobe } from './ProceduralGlobe';
 import { ProceduralMagnifyingGlass } from './ProceduralMagnifyingGlass';
 import { ProceduralBookStack } from './ProceduralBookStack';
+import { ProceduralBankersLamp } from './ProceduralBankersLamp';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -52,7 +53,7 @@ export const DetectiveOfficeScene = ({
   showIntroDetective = false,
   playerCharacterRef
 }: DetectiveOfficeSceneProps) => {
-  const [deskLampOn, setDeskLampOn] = useState(false);
+  const [deskLampOn, setDeskLampOn] = useState(true);
 
   return (
     <>
@@ -107,35 +108,42 @@ export const DetectiveOfficeScene = ({
 
       {/* Desk Items - Imported 3D models */}
 
-      {/* Desk Lamp - positioned on desk surface, clickable to turn on/off */}
-      <ModelLoader
-        modelPath="/models/bankers_lamp/scene.gltf"
-        position={[-9.5, 1.5, -2.5]}
-        scale={2.0}
-        rotation={[0, Math.PI / 2 + Math.PI / 6 + Math.PI / 9, 0]}
-        onClick={() => setDeskLampOn(!deskLampOn)}
-        simplify={true}
-      />
-
       {/* Desk lamp light - only visible when lamp is on */}
       {deskLampOn && (
         <>
-          <pointLight position={[-9.5, 2.3, -2.5]} intensity={6} color="#ffdb8c" distance={8} decay={2.5} />
+          {/* Main desk spotlight */}
           <spotLight
-            position={[-9.5, 2.3, -2.5]}
-            target-position={[-9.5, 1.5, -2.5]}
-            intensity={5}
-            angle={1.4}
-            penumbra={1.0}
+            position={[-9.62, 2.31, -2.17]}
+            target-position={[-8.5, 1.55, -4.0]}
+            intensity={35}
+            angle={1.8}
+            penumbra={0.5}
             color="#ffdb8c"
-            distance={8}
+            distance={3.5}
+            decay={1.5}
+          />
+          {/* Ambient point light for desk glow */}
+          <pointLight
+            position={[-9.62, 2.31, -2.17]}
+            intensity={12}
+            color="#ffdb8c"
+            distance={3}
+            decay={1.8}
           />
         </>
       )}
 
+      {/* Procedural Banker's Lamp - lightweight replacement */}
+      <ProceduralBankersLamp
+        position={[-9.5, 1.5, -2.5]}
+        scale={1.4}
+        rotation={[0, Math.PI / 2 + Math.PI / 6 + Math.PI / 9 - 0.52, 0]}
+        onClick={() => setDeskLampOn(!deskLampOn)}
+      />
+
       {/* Magnifying Glass - detective tool on desk */}
       <ProceduralMagnifyingGlass
-        position={[-8.3, 1.56, -5.0]}
+        position={[-8.3, 1.56, -3.0]}
         rotation={[Math.PI / 2, 0, Math.PI / 4]}
         scale={0.816}
       />
