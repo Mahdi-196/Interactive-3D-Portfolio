@@ -17,16 +17,22 @@ const GlobeWithTexture = ({
   const texture = useTexture(textureUrl);
 
   const material = useMemo(() => {
+    // Enhanced contrast and vibrancy
+    texture.colorSpace = THREE.SRGBColorSpace;
+
     return new THREE.MeshStandardMaterial({
       map: texture,
-      color: "#d4c5a9",
-      roughness: 0.7,
-      metalness: 0.1
+      color: "#ffffff", // No color tint - show true map colors
+      roughness: 0.3,    // Smoother surface for better light reflection
+      metalness: 0.0,    // Non-metallic for paper-like appearance
+      emissive: "#1a1510", // Subtle warm glow for depth
+      emissiveIntensity: 0.15,
+      envMapIntensity: 1.2 // Enhanced environment reflections
     });
   }, [texture]);
 
   return (
-    <mesh position={position} material={material}>
+    <mesh position={position} material={material} castShadow receiveShadow>
       <sphereGeometry args={[0.25 * scale, 32, 32]} />
     </mesh>
   );
@@ -47,7 +53,7 @@ export const ProceduralGlobe = ({
   scale?: number;
   textureUrl?: string;
 }) => {
-  // Shared materials for performance
+  // Shared materials for performance - enhanced contrast
   const materials = useMemo(() => ({
     globe: new THREE.MeshStandardMaterial({
       color: "#d4c5a9",
@@ -55,14 +61,18 @@ export const ProceduralGlobe = ({
       metalness: 0.1
     }),
     brass: new THREE.MeshStandardMaterial({
-      color: "#8b7355", // Aged brass
-      roughness: 0.4,
-      metalness: 0.6
+      color: "#b8860b", // Rich golden brass
+      roughness: 0.25,   // Shinier for more reflections
+      metalness: 0.85,   // More metallic for better highlights
+      emissive: "#4a3820", // Warm metallic glow
+      emissiveIntensity: 0.1
     }),
     wood: new THREE.MeshStandardMaterial({
-      color: "#3d2817", // Dark wood base
-      roughness: 0.7,
-      metalness: 0.1
+      color: "#2d1b0e", // Deeper mahogany wood
+      roughness: 0.8,
+      metalness: 0.05,
+      emissive: "#1a0f08", // Subtle warmth
+      emissiveIntensity: 0.08
     })
   }), []);
 
@@ -110,15 +120,6 @@ export const ProceduralGlobe = ({
             Math.PI * 1.2        // arc angle (216 degrees, not full circle)
           ]}
         />
-      </mesh>
-
-      {/* Brass mounting arm (connects globe to base) */}
-      <mesh
-        position={[-globeRadius * 0.7, totalBaseAndStandHeight + globeRadius * 0.5, 0]}
-        rotation={[0, 0, Math.PI / 4]}
-        material={materials.brass}
-      >
-        <cylinderGeometry args={[0.012, 0.012, globeRadius * 1.4, 6]} />
       </mesh>
 
       {/* Wooden stand/pedestal */}

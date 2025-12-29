@@ -20,6 +20,7 @@ import { PersianRug } from './PersianRug';
 import { ModelLoader } from './ModelLoader';
 import { DetectiveFiles } from './DetectiveFiles';
 import { ProceduralGlobe } from './ProceduralGlobe';
+import { ProceduralMagnifyingGlass } from './ProceduralMagnifyingGlass';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -131,12 +132,48 @@ export const DetectiveOfficeScene = ({
         </>
       )}
 
-      {/* Lightweight procedural globe - temporarily in center of room for testing */}
+      {/* Magnifying Glass - detective tool on desk */}
+      <ProceduralMagnifyingGlass
+        position={[-8.3, 1.56, -5.0]}
+        rotation={[Math.PI / 2, 0, Math.PI / 4]}
+        scale={0.816}
+      />
+
+      {/* Smoking Pipe - classic detective accessory on desk */}
+      <ModelLoader
+        modelPath="/models/smoking_pipe/scene.gltf"
+        position={[-7.9, 1.60, -2.8]}
+        scale={0.0035}
+        rotation={[0, Math.PI / 3, 0]}
+        simplify={true}
+      />
+
+      {/* Book stack on desk */}
+      <ModelLoader
+        modelPath="/models/book_stack/scene.gltf"
+        position={[-9.5, 1.68, -4.5]}
+        scale={0.5}
+        rotation={[0, 0, 0]}
+        simplify={true}
+      />
+
+      {/* Procedural globe - decorative piece on desk */}
       <ProceduralGlobe
-        position={[0, 0, 0]}
-        rotation={[0, Math.PI / 6, 0]}
-        scale={2.08}
-        textureUrl="/textures/globe-map.jpg"  {/* Optional - will use solid color if not found */}
+        position={[-9.6, 1.5, -6.0]}
+        rotation={[0, Math.PI / 6 + Math.PI, 0]}
+        scale={1.664}
+        textureUrl="/textures/globe-map.jpg"
+      />
+
+      {/* Dedicated spotlight for globe - enhances colors and contrast */}
+      <spotLight
+        position={[-8, 4, -5]}
+        target-position={[-9.6, 2.2, -6.0]}
+        intensity={8}
+        angle={0.6}
+        penumbra={0.4}
+        color="#fff5e6"
+        castShadow
       />
 
       {/* Case file on desk - manila folder with realistic details */}

@@ -368,11 +368,11 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       // Calculate intended position before collision detection
       const intendedPosition = camera.position.clone().add(direction);
 
-      // Apply collision detection (only if actually moving)
+      // Apply collision detection (only in detective mode and when actually moving)
       let finalX = intendedPosition.x;
       let finalZ = intendedPosition.z;
 
-      if (direction.length() > 0) {
+      if (direction.length() > 0 && isDetectiveMode) {
         const collisionResult = checkCollision(
           camera.position.x,
           camera.position.z,
