@@ -21,6 +21,7 @@ import { ModelLoader } from './ModelLoader';
 import { DetectiveFiles } from './DetectiveFiles';
 import { ProceduralGlobe } from './ProceduralGlobe';
 import { ProceduralMagnifyingGlass } from './ProceduralMagnifyingGlass';
+import { ProceduralBookStack } from './ProceduralBookStack';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -139,22 +140,11 @@ export const DetectiveOfficeScene = ({
         scale={0.816}
       />
 
-      {/* Smoking Pipe - classic detective accessory on desk */}
-      <ModelLoader
-        modelPath="/models/smoking_pipe/scene.gltf"
-        position={[-7.9, 1.60, -2.8]}
-        scale={0.0035}
-        rotation={[0, Math.PI / 3, 0]}
-        simplify={true}
-      />
-
-      {/* Book stack on desk */}
-      <ModelLoader
-        modelPath="/models/book_stack/scene.gltf"
-        position={[-9.5, 1.68, -4.5]}
-        scale={0.5}
+      {/* Procedural Book Stack - lightweight replacement */}
+      <ProceduralBookStack
+        position={[-9.5, 1.5, -4.5]}
         rotation={[0, 0, 0]}
-        simplify={true}
+        scale={4.0}
       />
 
       {/* Procedural globe - decorative piece on desk */}
