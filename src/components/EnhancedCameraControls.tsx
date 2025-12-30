@@ -110,10 +110,10 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       if (isTransitioning || showBoardContent) return;
 
       // Set initial camera position and rotation only once on mount
-      // Moved back to match character position
+      // Spawn exactly at character position, facing the board
       if (!hasInitialized.current) {
-        camera.position.set(0, 2.3, -6);
-        camera.rotation.set(0, Math.PI, 0);
+        camera.position.set(0, 2.3, -6.5);
+        camera.rotation.set(0, 0, 0);
         hasInitialized.current = true;
       }
       
