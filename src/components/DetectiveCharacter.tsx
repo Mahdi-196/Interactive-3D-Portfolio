@@ -168,7 +168,7 @@ export const DetectiveCharacter = forwardRef<THREE.Group, DetectiveCharacterProp
   }, [autoRotate]);
 
   return (
-    <group 
+    <group
       ref={ref || groupRef}
       position={position}
       rotation={[0, rotationY, 0]}
@@ -177,6 +177,56 @@ export const DetectiveCharacter = forwardRef<THREE.Group, DetectiveCharacterProp
       onPointerOver={(e) => { document.body.style.cursor = 'pointer'; }}
       onPointerOut={(e) => { document.body.style.cursor = 'auto'; }}
     >
+      {/* CHARACTER OUTLINE/BORDER - Rendered behind character as silhouette */}
+      <group scale={1.08}>
+        {/* Outline Body */}
+        <mesh position={[0, 1, 0]} renderOrder={-1}>
+          <boxGeometry args={[0.7, 1.4, 0.35]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        {/* Outline Head */}
+        <mesh position={[0, 1.9, 0]} scale={[0.9, 1.1, 0.95]} renderOrder={-1}>
+          <sphereGeometry args={[0.22, 32, 32]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        {/* Outline Hat */}
+        <mesh position={[0, 2.1, 0]} renderOrder={-1}>
+          <cylinderGeometry args={[0.20, 0.18, 0.18]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        <mesh position={[0, 2.02, 0]} renderOrder={-1}>
+          <cylinderGeometry args={[0.30, 0.30, 0.02]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        {/* Outline Arms */}
+        <mesh position={[-0.45, 1.2, 0]} renderOrder={-1}>
+          <boxGeometry args={[0.18, 0.9, 0.18]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        <mesh position={[0.45, 1.2, 0]} renderOrder={-1}>
+          <boxGeometry args={[0.18, 0.9, 0.18]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        {/* Outline Legs */}
+        <mesh position={[-0.18, 0.3, 0]} renderOrder={-1}>
+          <boxGeometry args={[0.16, 0.9, 0.16]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        <mesh position={[0.18, 0.3, 0]} renderOrder={-1}>
+          <boxGeometry args={[0.16, 0.9, 0.16]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        {/* Outline Shoes */}
+        <mesh position={[-0.18, -0.1, 0.12]} renderOrder={-1}>
+          <boxGeometry args={[0.2, 0.12, 0.35]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+        <mesh position={[0.18, -0.1, 0.12]} renderOrder={-1}>
+          <boxGeometry args={[0.2, 0.12, 0.35]} />
+          <meshBasicMaterial color="#00ffff" side={THREE.BackSide} depthTest={false} />
+        </mesh>
+      </group>
+
       {/* Detective Body - Long Coat */}
       <mesh position={[0, 1, 0]}>
         <boxGeometry args={[0.7, 1.4, 0.35]} />

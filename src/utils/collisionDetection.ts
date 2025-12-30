@@ -2,8 +2,8 @@ import { CollisionBox, CollisionResult } from '@/types/three';
 
 /**
  * Collision world definition for the Detective Office scene
- * REBUILT FROM SCRATCH - Only includes objects actually rendered in DetectiveOfficeScene.tsx
- * All measurements are in Three.js units based on actual object positions and dimensions
+ * CHARACTER HAS COLLISION RADIUS - Objects act as static boundaries
+ * Player radius: 0.75 units (cylinder around character)
  */
 export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
   // Room walls (with collision buffer)
@@ -36,12 +36,14 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     isStatic: true
   },
 
-  // Couch at [0, 0, 1.5], scaled [1.6, 1, 1.3] = 3.2 units wide × 1.3 deep
+  // Couch at [0, 0, 1.5] (local) in group with scale [1.6, 1, 1.3]
+  // World position: [0, 0, 1.95]
+  // Base width 3.2 * 1.6 = 5.12, depth 1.1 * 1.3 = 1.43
   {
     id: 'couch',
-    minX: -1.6, maxX: 1.6,
+    minX: -2.56, maxX: 2.56,
     minY: 0, maxY: 1.7,
-    minZ: 0.85, maxZ: 2.15,
+    minZ: 1.235, maxZ: 2.665,
     isStatic: true
   },
 
@@ -54,23 +56,25 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     isStatic: true
   },
 
-  // Detective Desk at [-5.2, 0, -2.5] scaled 1.7, rotated 3π/2
+  // Detective Desk at [-5.2, 0, -2.5] (local) in group with scale 1.7
+  // World position: [-8.84, 0, -4.25]
   // Original ~2.4×1.3 scaled to ~4.08×2.21, rotated makes depth X-axis, width Z-axis
   {
     id: 'detective_desk',
     minX: -9.95, maxX: -7.73,
     minY: 0, maxY: 1.53,
-    minZ: -6.54, maxZ: -2.46,
+    minZ: -6.29, maxZ: -2.21,
     isStatic: true
   },
 
-  // Detective Office Chair at [-3.8, 0, -2.5] scaled 1.7, rotated 3π/2 + π/10
-  // Circular base ~0.7 diameter scaled to ~1.19
+  // Detective Office Chair at [-3.8, 0, -2.5] (local) in group with scale 1.7
+  // World position: [-6.46, 0, -4.25]
+  // Circular base ~0.7 diameter scaled to ~1.19, radius ~0.595
   {
     id: 'detective_chair',
-    minX: -7.26, maxX: -6.06,
+    minX: -7.055, maxX: -5.865,
     minY: 0, maxY: 2.72,
-    minZ: -3.095, maxZ: -1.905,
+    minZ: -4.845, maxZ: -3.655,
     isStatic: true
   },
 
@@ -122,22 +126,23 @@ export const DETECTIVE_OFFICE_COLLISIONS: CollisionBox[] = [
     isStatic: true
   },
 
-  // MergedBookshelf at [9.0, 0, -3] rotated -π/2
+  // MergedBookshelf at [9.0, 0, -6] rotated -π/2
   // Width 1.8, depth 0.8 rotated = depth in X, width in Z
   {
     id: 'bookshelf_right_1',
-    minX: 8.2, maxX: 9.8,
+    minX: 8.6, maxX: 9.4,
     minY: 0, maxY: 5,
-    minZ: -3.9, maxZ: -2.1,
+    minZ: -6.9, maxZ: -5.1,
     isStatic: true
   },
 
-  // MergedBookshelf at [9.0, 0, 3] rotated -π/2
+  // MergedBookshelf at [9.0, 0, 0] rotated -π/2
+  // Width 1.8, depth 0.8 rotated = depth in X, width in Z
   {
     id: 'bookshelf_right_2',
-    minX: 8.2, maxX: 9.8,
+    minX: 8.6, maxX: 9.4,
     minY: 0, maxY: 5,
-    minZ: 2.1, maxZ: 3.9,
+    minZ: -0.9, maxZ: 0.9,
     isStatic: true
   },
 
