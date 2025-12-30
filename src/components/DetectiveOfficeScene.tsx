@@ -23,6 +23,8 @@ import { ProceduralGlobe } from './ProceduralGlobe';
 import { ProceduralMagnifyingGlass } from './ProceduralMagnifyingGlass';
 import { ProceduralBookStack } from './ProceduralBookStack';
 import { ProceduralBankersLamp } from './ProceduralBankersLamp';
+import { FramedPainting } from './FramedPainting';
+import { CircularPortrait } from './CircularPortrait';
 
 interface DetectiveOfficeSceneProps {
   onInteraction: (type: string, data?: unknown) => void;
@@ -289,6 +291,41 @@ export const DetectiveOfficeScene = ({
         onContentClose={onBoardContentClose}
       />
 
+      {/* Circular Portrait - Above painting on west wall */}
+      <CircularPortrait
+        position={[-9.4, 4.5, 5]}
+        rotation={[0, Math.PI / 2, 0]}
+        scale={1.2}
+        textureUrl="/Gordan.png"
+      />
+
+      {/* Framed Painting - Atmospheric street scene near door on east wall */}
+      <FramedPainting
+        position={[9.7, 3.0, 3.6]}
+        rotation={[0, -Math.PI / 2, 0]}
+        scale={0.575}
+      />
+
+      {/* Spotlight for portrait */}
+      <spotLight
+        position={[-7, 6.5, 5]}
+        target-position={[-9.4, 5.0, 5]}
+        intensity={2.5}
+        angle={0.5}
+        penumbra={0.3}
+        color="#fff5e6"
+      />
+
+      {/* Spotlight for painting */}
+      <spotLight
+        position={[7, 5, 3.6]}
+        target-position={[9.7, 3.0, 3.6]}
+        intensity={2.5}
+        angle={0.5}
+        penumbra={0.3}
+        color="#fff5e6"
+      />
+
       {/* Persian Rug - Vintage oriental rug anchoring the seating area */}
       <PersianRug position={[0, 0.01, 0.5]} rotation={[0, Math.PI / 2, 0]} />
 
@@ -302,7 +339,7 @@ export const DetectiveOfficeScene = ({
       {/* Wooden Tables - Practical furniture throughout the room */}
 
       {/* Large wooden coffee table in front of couch */}
-      <WoodenCoffeeTable position={[0, 0, 3.8]} rotation={[0, 0, 0]} />
+      <WoodenCoffeeTable position={[0, 0, 3.8]} rotation={[0, Math.PI, 0]} />
 
       {/* Coffee table decorative items - whiskey set, ashtray, case files, etc. */}
       <CoffeeTableItems position={[0, 0, 3.8]} rotation={[0, 0, 0]} />
@@ -323,11 +360,8 @@ export const DetectiveOfficeScene = ({
         />
       </group>
 
-      {/* Wooden end table near armchair */}
-      <WoodenEndTable position={[-5.5, 0, 4.5]} rotation={[0, 0, 0]} />
-
       {/* Wooden end table in gap between chair and couch */}
-      <WoodenEndTable position={[-3.3, 0, 2.5]} rotation={[0, Math.PI / 4, 0]} />
+      <WoodenEndTable position={[-3.3, 0, 2.5]} rotation={[0, Math.PI / 4 + Math.PI, 0]} />
 
       {/* Victorian Chandelier - lowered 10% for smaller room */}
       <VictorianChandelier position={[0, 8.1, 2]} isLit={lampOn} />

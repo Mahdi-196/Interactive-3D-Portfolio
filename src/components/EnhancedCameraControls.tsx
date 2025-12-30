@@ -29,7 +29,7 @@ interface CameraControlsRef {
 
 export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCameraControlsProps>(
   ({ isTransitioning, showBoardContent = false, isDetectiveMode = false, isViewingMap = false, introComplete = false, playerCharacterRef, touchMovementRef, touchLookRef }, ref) => {
-    const { camera, gl } = useThree();
+    const { camera, gl, pointer, raycaster } = useThree();
     const moveState = useRef({
       forward: false,
       backward: false,
@@ -207,41 +207,27 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
         }
       };
 
+      // Capturing phase handler - intercept ALL pointer events when locked
+      const handlePointerEventCapture = (event: PointerEvent) => {
+        // If pointer is locked, modify the event coordinates to center of screen
+        if (document.pointerLockElement === gl.domElement) {
+          const rect = gl.domElement.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+
+          // Override the event coordinates to center
+          Object.defineProperty(event, 'clientX', { value: centerX, configurable: true });
+          Object.defineProperty(event, 'clientY', { value: centerY, configurable: true });
+          Object.defineProperty(event, 'offsetX', { value: rect.width / 2, configurable: true });
+          Object.defineProperty(event, 'offsetY', { value: rect.height / 2, configurable: true });
+        }
+      };
+
       const handleClick = (event: MouseEvent) => {
         if (isTransitioning) return;
-        
-        // Check if click is near the board area - don't lock pointer if so
-        const boardArea = {
-          minX: -7, maxX: 7,
-          minZ: 8, maxZ: 10,
-          minY: 1, maxY: 8
-        };
-        
-        // Get click position in 3D space
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        const rect = gl.domElement.getBoundingClientRect();
-        
-        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-        
-        raycaster.setFromCamera(mouse, camera);
-        
-        // Check if raycast hits board area
-        const boardPlane = new THREE.Plane(new THREE.Vector3(0, 0, -1), -9.9);
-        const intersectionPoint = new THREE.Vector3();
-        
-        if (raycaster.ray.intersectPlane(boardPlane, intersectionPoint)) {
-          if (intersectionPoint.x >= boardArea.minX && intersectionPoint.x <= boardArea.maxX &&
-              intersectionPoint.y >= boardArea.minY && intersectionPoint.y <= boardArea.maxY) {
-            return; // Don't lock pointer, let board handle the click
-          }
-        }
-        
-        // Lock pointer when clicking in the scene
+
+        // Lock pointer when clicking in the scene (if not already locked)
         if (!isMouseLocked.current) {
-          event.stopPropagation();
-          event.preventDefault();
           gl.domElement.requestPointerLock();
         }
       };
@@ -275,6 +261,10 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       window.addEventListener('keydown', handleKeyDown);
       window.addEventListener('keyup', handleKeyUp);
       gl.domElement.addEventListener('mousemove', handleMouseMove);
+      // CRITICAL: Intercept pointer events in capture phase BEFORE R3F processes them
+      gl.domElement.addEventListener('pointerdown', handlePointerEventCapture, true);
+      gl.domElement.addEventListener('pointerup', handlePointerEventCapture, true);
+      gl.domElement.addEventListener('click', handlePointerEventCapture, true);
       gl.domElement.addEventListener('click', handleClick);
       document.addEventListener('pointerlockchange', handlePointerLockChange);
 
@@ -282,10 +272,13 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
         window.removeEventListener('keydown', handleKeyDown);
         window.removeEventListener('keyup', handleKeyUp);
         gl.domElement.removeEventListener('mousemove', handleMouseMove);
+        gl.domElement.removeEventListener('pointerdown', handlePointerEventCapture, true);
+        gl.domElement.removeEventListener('pointerup', handlePointerEventCapture, true);
+        gl.domElement.removeEventListener('click', handlePointerEventCapture, true);
         gl.domElement.removeEventListener('click', handleClick);
         document.removeEventListener('pointerlockchange', handlePointerLockChange);
       };
-    }, [camera, gl, isTransitioning, isDetectiveMode, introComplete, showBoardContent]);
+    }, [camera, gl, pointer, raycaster, isTransitioning, isDetectiveMode, introComplete, showBoardContent]);
 
     // Clear movement state when board/map opens or transitions start
     useEffect(() => {
@@ -305,6 +298,13 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       if (isTransitioning) return;
       if (showBoardContent) return; // Block all movement when viewing map or board
 
+      // CRITICAL FIX: Force raycaster to use center of screen when pointer is locked
+      // This ensures all click interactions work at camera center, not where mouse was initially
+      if (document.pointerLockElement === gl.domElement) {
+        pointer.set(0, 0);
+        raycaster.setFromCamera(pointer, camera);
+      }
+
       // NOTE: Removed character following mode as it bypassed collision detection
       // Camera now uses direct movement with collision detection
 
@@ -323,8 +323,8 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
         touchLookRef.current.deltaY = 0;
       }
 
-      const keyboardSpeed = 0.1;
-      const touchSpeed = 0.1125; // 1.5x faster than 0.075
+      const keyboardSpeed = 0.08;
+      const touchSpeed = 0.09; // 1.5x faster for touch
       const direction = new THREE.Vector3();
 
       // Keyboard movement

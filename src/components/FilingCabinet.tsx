@@ -1,5 +1,5 @@
 // Filing Cabinet Component - Three 1930s vintage styles
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import * as THREE from 'three';
 
 interface FilingCabinetProps {
@@ -42,7 +42,7 @@ export const FilingCabinet = ({
     return (
       <group position={position} rotation={rotation} {...commonProps}>
         {/* Main cabinet body */}
-        <mesh position={[0, 1.4, 0]} material={materials.darkMetal} frustumCulled {...commonProps}>
+        <mesh position={[0, 1.4, 0]} material={materials.darkMetal} frustumCulled>
           <boxGeometry args={[0.55, 2.8, 0.7]} />
         </mesh>
 
@@ -87,7 +87,7 @@ export const FilingCabinet = ({
     return (
       <group position={position} rotation={rotation} {...commonProps}>
         {/* Main cabinet body - wider and shorter */}
-        <mesh position={[0, 0.7, 0]} material={materials.mediumWood} frustumCulled {...commonProps}>
+        <mesh position={[0, 0.7, 0]} material={materials.mediumWood} frustumCulled>
           <boxGeometry args={[1.2, 1.4, 0.6]} />
         </mesh>
 
@@ -124,14 +124,14 @@ export const FilingCabinet = ({
 
         {/* Decorative corner brackets - Art Deco style */}
         {[-0.55, 0.55].map((x) => (
-          <>
-            <mesh key={`bracket-top-${x}`} position={[x, 1.35, 0.28]} material={materials.brassTrim} frustumCulled>
+          <group key={`bracket-${x}`}>
+            <mesh position={[x, 1.35, 0.28]} material={materials.brassTrim} frustumCulled>
               <boxGeometry args={[0.04, 0.08, 0.02]} />
             </mesh>
-            <mesh key={`bracket-bot-${x}`} position={[x, 0.05, 0.28]} material={materials.brassTrim} frustumCulled>
+            <mesh position={[x, 0.05, 0.28]} material={materials.brassTrim} frustumCulled>
               <boxGeometry args={[0.04, 0.08, 0.02]} />
             </mesh>
-          </>
+          </group>
         ))}
       </group>
     );
@@ -142,7 +142,7 @@ export const FilingCabinet = ({
     return (
       <group position={position} rotation={rotation} {...commonProps}>
         {/* Main cabinet frame - rich dark wood */}
-        <mesh position={[0, 1.2, 0]} material={materials.darkWood} frustumCulled {...commonProps}>
+        <mesh position={[0, 1.2, 0]} material={materials.darkWood} frustumCulled>
           <boxGeometry args={[0.9, 2.4, 0.5]} />
         </mesh>
 
@@ -152,9 +152,8 @@ export const FilingCabinet = ({
         </mesh>
 
         {/* Grid of small drawers - 3 columns × 8 rows = 24 small drawers */}
-        {Array.from({ length: 8 }).map((_, row) => (
-          <React.Fragment key={`row-${row}`}>
-            {Array.from({ length: 3 }).map((_, col) => {
+        {Array.from({ length: 8 }).flatMap((_, row) =>
+          Array.from({ length: 3 }).map((_, col) => {
             const xPos = -0.28 + col * 0.28;
             const yPos = 0.3 + row * 0.28;
 
@@ -181,9 +180,8 @@ export const FilingCabinet = ({
                 </mesh>
               </group>
             );
-          })}
-          </React.Fragment>
-        ))}
+          })
+        )}
 
         {/* Decorative vertical dividers between columns */}
         {[-0.14, 0.14].map((x) => (
@@ -194,14 +192,14 @@ export const FilingCabinet = ({
 
         {/* Victorian style brass corner protectors */}
         {[-0.42, 0.42].map((x) => (
-          <>
-            <mesh key={`corner-top-${x}`} position={[x, 2.3, 0.23]} material={materials.brassTrim} frustumCulled>
+          <group key={`corner-${x}`}>
+            <mesh position={[x, 2.3, 0.23]} material={materials.brassTrim} frustumCulled>
               <boxGeometry args={[0.03, 0.12, 0.02]} />
             </mesh>
-            <mesh key={`corner-bot-${x}`} position={[x, 0.1, 0.23]} material={materials.brassTrim} frustumCulled>
+            <mesh position={[x, 0.1, 0.23]} material={materials.brassTrim} frustumCulled>
               <boxGeometry args={[0.03, 0.12, 0.02]} />
             </mesh>
-          </>
+          </group>
         ))}
       </group>
     );
