@@ -249,10 +249,10 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
           target: currentTarget
         });
 
-        // Snap camera to detective position
+        // Snap camera to detective position facing the board
         await cameraControlsRef.current.setLookAt(
           detectivePosition.x, detectivePosition.y, detectivePosition.z,
-          detectivePosition.x, detectivePosition.y, detectivePosition.z - 1,
+          detectivePosition.x, detectivePosition.y, detectivePosition.z + 10,
           true // smooth transition
         );
       }
