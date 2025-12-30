@@ -14,7 +14,10 @@ export const IntroOverlay = ({ onComplete, isManualTrigger = false }: IntroOverl
   const [lineExpanded, setLineExpanded] = useState(false);
   const [showText, setShowText] = useState(false);
 
+  console.log('IntroOverlay rendering - phase:', phase, 'lineExpanded:', lineExpanded, 'showText:', showText);
+
   useEffect(() => {
+    console.log('IntroOverlay mounted - isManualTrigger:', isManualTrigger);
     if (isManualTrigger) {
       // Manual trigger - show immediately and stay until skip
       setPhase('show');
@@ -39,6 +42,7 @@ export const IntroOverlay = ({ onComplete, isManualTrigger = false }: IntroOverl
     }, 4000);
 
     const completeTimer = setTimeout(() => {
+      console.log('IntroOverlay completing and calling onComplete');
       onComplete();
     }, 5000);
 

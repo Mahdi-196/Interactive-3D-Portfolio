@@ -8,15 +8,9 @@ const Index = () => {
   const [activeOverlay, setActiveOverlay] = useState<string | null>(null);
   const [selectedCaseFile, setSelectedCaseFile] = useState<'about' | 'education' | 'skills' | 'projects' | null>(null);
   const detectiveOfficeRef = useRef<DetectiveOfficeRef>(null);
-  const [showIntro, setShowIntro] = useState(false);
+  const [showIntro, setShowIntro] = useState(true); // Show intro immediately on every page load
   const [isManualTrigger, setIsManualTrigger] = useState(false);
   const keyPressTimesRef = useRef<number[]>([]);
-
-  // Show intro on every page load
-  useEffect(() => {
-    setShowIntro(true);
-    setIsManualTrigger(false);
-  }, []);
 
   // Listen for triple '9' press to trigger intro
   useEffect(() => {
