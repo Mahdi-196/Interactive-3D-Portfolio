@@ -1,9 +1,31 @@
 import * as THREE from 'three';
+import { WindowRainEffect } from './WindowRainEffect';
+import { WindowRainParticles } from './WindowRainParticles';
 
 // Enhanced Window - Centered on back wall
 export const OfficeWindow = () => {
   return (
     <group position={[0, 3.5, -9.9]}> {/* Centered on back wall, flush with wall like whiteboard */}
+      {/* Rain Effect - Choose ONE of the two options below */}
+
+      {/* Option 1: Shader-based rain (smoother, more artistic) */}
+      <WindowRainEffect
+        position={[0, 0, -2]}
+        width={16}
+        height={7}
+        intensity={1.2}
+      />
+
+      {/* Option 2: Particle-based rain (more realistic individual drops) */}
+      {/* Uncomment to use this instead of shader rain */}
+      {/* <WindowRainParticles
+        position={[0, 0, -1.5]}
+        count={400}
+        width={16}
+        height={7}
+        depth={2}
+        speed={4}
+      /> */}
       {/* Large Window Frame - 80% of wall width, shorter height */}
       <mesh position={[-7.8, 0, 0]}>
         <boxGeometry args={[0.3, 6, 0.4]} />

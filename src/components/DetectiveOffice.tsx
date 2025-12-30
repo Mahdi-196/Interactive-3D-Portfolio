@@ -9,6 +9,7 @@ import { TouchLookControls } from './mobile/TouchLookControls';
 import { MobileControlButtons } from './mobile/MobileControlButtons';
 import { LandscapeLock } from './mobile/LandscapeLock';
 import { isMobileDevice } from '@/utils/detectMobile';
+import { NoirAudioManager } from './NoirAudioManager';
 
 interface CameraControlsRef {
   camera: THREE.Camera;
@@ -60,6 +61,10 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
   const touchMovementRef = useRef({ x: 0, y: 0 });
   const touchLookRef = useRef({ deltaX: 0, deltaY: 0 });
   const keyPressTimesRef = useRef<number[]>([]);
+
+  // Audio state
+  const [audioEnabled, setAudioEnabled] = useState(true);
+  const [audioVolume, setAudioVolume] = useState(0.3);
 
   // Expose zoomOutFromBoard method to parent via ref
   useImperativeHandle(ref, () => ({
@@ -459,6 +464,7 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
           touchLookRef={isMobile ? touchLookRef : undefined}
         />
         <Lighting lampOn={lampOn} />
+        <NoirAudioManager enabled={audioEnabled} masterVolume={audioVolume} />
         <DetectiveOfficeScene
           onInteraction={handleInteraction}
           lampOn={lampOn}
@@ -481,6 +487,15 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
           DETECTIVE MODE
         </div>
       )}
+
+      {/* Audio Control Toggle */}
+      <button
+        onClick={() => setAudioEnabled(!audioEnabled)}
+        className="absolute top-4 right-4 bg-noir-shadow/80 border border-detective-paper/30 text-detective-paper px-4 py-2 rounded hover:bg-noir-shadow hover:border-detective-glow/50 transition-all duration-200 flex items-center gap-2"
+        title={audioEnabled ? 'Mute Audio' : 'Enable Audio'}
+      >
+        {audioEnabled ? '🔊' : '🔇'} {audioEnabled ? 'Audio ON' : 'Audio OFF'}
+      </button>
 
       {/* Enhanced Controls Hint - Hide on mobile */}
       {!isMobile && (
