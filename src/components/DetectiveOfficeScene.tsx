@@ -366,20 +366,6 @@ export const DetectiveOfficeScene = ({
       {/* Victorian Chandelier - lowered 10% for smaller room */}
       <VictorianChandelier position={[0, 8.1, 2]} isLit={lampOn} />
 
-      {/* Additional bright lighting for flying mode (non-detective mode) */}
-      {!isDetectiveMode && (
-        <>
-          {/* Bright ambient light for flying mode */}
-          <ambientLight intensity={1.5} color="#ffffff" />
-
-          {/* Additional hemisphere light for overall brightness */}
-          <hemisphereLight intensity={1.2} color="#ffffff" groundColor="#8b7355" />
-
-          {/* Single center ceiling light */}
-          <pointLight position={[0, 8, 2]} intensity={4} color="#ffffff" distance={25} />
-        </>
-      )}
-
       {/* Detective character visible during intro animation */}
       {/* 20% larger and moved back for better visibility */}
       {showIntroDetective && (

@@ -25,6 +25,7 @@ interface CameraControlsRef {
   getTarget: (target: THREE.Vector3) => void;
   lock: () => void;
   resetMapZoom: () => void;
+  setYawPitch: (newYaw: number, newPitch: number) => void;
 }
 
 export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCameraControlsProps>(
@@ -34,9 +35,7 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       forward: false,
       backward: false,
       left: false,
-      right: false,
-      up: false,
-      down: false
+      right: false
     });
     
     const yaw = useRef(0); // Start facing north, will flip to south after intro
@@ -60,6 +59,10 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       },
       resetMapZoom: () => {
         // No longer needed but keep for compatibility
+      },
+      setYawPitch: (newYaw: number, newPitch: number) => {
+        yaw.current = newYaw;
+        pitch.current = newPitch;
       },
       camera,
       setLookAt: async (posX: number, posY: number, posZ: number, targetX: number, targetY: number, targetZ: number, enableTransition?: boolean) => {
@@ -148,19 +151,6 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
             moveState.current.right = true;
             requestPointerLockOnMovement();
             break;
-          case 'Space':
-            event.preventDefault();
-            if (!isDetectiveMode) {
-              moveState.current.up = true;
-              requestPointerLockOnMovement();
-            }
-            break;
-          case 'ShiftLeft':
-            if (!isDetectiveMode) {
-              moveState.current.down = true;
-              requestPointerLockOnMovement();
-            }
-            break;
         }
       };
 
@@ -177,12 +167,6 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
             break;
           case 'KeyD':
             moveState.current.right = false;
-            break;
-          case 'Space':
-            moveState.current.up = false;
-            break;
-          case 'ShiftLeft':
-            moveState.current.down = false;
             break;
         }
       };
@@ -250,9 +234,7 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
             forward: false,
             backward: false,
             left: false,
-            right: false,
-            up: false,
-            down: false
+            right: false
           };
         }
       };
@@ -288,9 +270,7 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
           forward: false,
           backward: false,
           left: false,
-          right: false,
-          up: false,
-          down: false
+          right: false
         };
       }
     }, [showBoardContent, isTransitioning]);
@@ -341,12 +321,6 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       if (moveState.current.right) {
         direction.x += keyboardSpeed;
       }
-      if (moveState.current.up && !isDetectiveMode) {
-        direction.y += keyboardSpeed;
-      }
-      if (moveState.current.down && !isDetectiveMode) {
-        direction.y -= keyboardSpeed;
-      }
 
       // Touch movement (joystick) - only apply if not zero
       if (touchMovementRef) {
@@ -369,11 +343,11 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       // Calculate intended position before collision detection
       const intendedPosition = camera.position.clone().add(direction);
 
-      // Apply collision detection (only in detective mode and when actually moving)
+      // Apply collision detection when moving
       let finalX = intendedPosition.x;
       let finalZ = intendedPosition.z;
 
-      if (direction.length() > 0 && isDetectiveMode) {
+      if (direction.length() > 0) {
         const collisionResult = checkCollision(
           camera.position.x,
           camera.position.z,
@@ -390,12 +364,8 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       newPosition.x = finalX;
       newPosition.z = finalZ;
 
-      // In detective mode, lock Y to eye level height
-      if (isDetectiveMode) {
-        newPosition.y = 2.645;
-      } else {
-        newPosition.y = Math.max(0.5, Math.min(10, intendedPosition.y));
-      }
+      // Always lock Y to eye level height (detective mode only)
+      newPosition.y = 2.645;
 
       // Only update position if values are valid (prevent NaN issues)
       if (!isNaN(newPosition.x) && !isNaN(newPosition.y) && !isNaN(newPosition.z)) {

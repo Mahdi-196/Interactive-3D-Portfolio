@@ -27,7 +27,7 @@ export const IntroOverlay = ({ onComplete, isManualTrigger = false }: IntroOverl
       return;
     }
 
-    // Auto trigger - show immediately with animations, then auto-close after 4 seconds
+    // Auto trigger - show immediately with animations, then auto-close after 6 seconds
     // Start animations immediately
     const lineTimer = setTimeout(() => {
       setLineExpanded(true);
@@ -39,12 +39,12 @@ export const IntroOverlay = ({ onComplete, isManualTrigger = false }: IntroOverl
 
     const fadeOutTimer = setTimeout(() => {
       setPhase('fadeOut');
-    }, 4000);
+    }, 5000);
 
     const completeTimer = setTimeout(() => {
       console.log('IntroOverlay completing and calling onComplete');
       onComplete();
-    }, 5000);
+    }, 6000);
 
     return () => {
       clearTimeout(lineTimer);
@@ -53,11 +53,6 @@ export const IntroOverlay = ({ onComplete, isManualTrigger = false }: IntroOverl
       clearTimeout(completeTimer);
     };
   }, [onComplete, isManualTrigger]);
-
-  const handleSkip = () => {
-    setPhase('fadeOut');
-    setTimeout(onComplete, 500);
-  };
 
   if (phase === 'hidden') return null;
 
@@ -77,13 +72,6 @@ export const IntroOverlay = ({ onComplete, isManualTrigger = false }: IntroOverl
 
       {/* Main content container */}
       <div className="relative z-10 text-center px-8 max-w-4xl">
-        {/* Top decorative border */}
-        <div className="mb-12 flex items-center justify-center gap-6">
-          <div className={`h-px bg-gradient-to-r from-transparent via-detective-glow to-detective-glow transition-all duration-1000 ${lineExpanded ? 'w-32' : 'w-0'}`} />
-          <div className={`w-4 h-4 rotate-45 border-2 border-detective-glow transition-all duration-700 ${lineExpanded ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} />
-          <div className={`h-px bg-gradient-to-l from-transparent via-detective-glow to-detective-glow transition-all duration-1000 ${lineExpanded ? 'w-32' : 'w-0'}`} />
-        </div>
-
         {/* Main title with staggered animation */}
         <div className={`space-y-6 transition-all duration-1000 ${showText ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="space-y-4">
@@ -107,29 +95,10 @@ export const IntroOverlay = ({ onComplete, isManualTrigger = false }: IntroOverl
           {/* Instructions with typewriter effect */}
           <div className="space-y-4 text-detective-paper/90 text-2xl font-light max-w-2xl mx-auto">
             <p className="drop-shadow-[0_0_10px_rgba(245,222,179,0.2)]" style={{ animation: 'fadeIn 0.8s ease-out 0.5s both' }}>
-              Click around and explore
-            </p>
-            <p className="drop-shadow-[0_0_10px_rgba(245,222,179,0.2)]" style={{ animation: 'fadeIn 0.8s ease-out 1s both' }}>
-              Everything on the detective board is clickable
+              WASD to move • Click R for board
             </p>
           </div>
         </div>
-
-        {/* Bottom decorative border */}
-        <div className={`mt-16 flex items-center justify-center gap-6 transition-all duration-1000 delay-500 ${showText ? 'opacity-100' : 'opacity-0'}`}>
-          <div className={`h-px bg-gradient-to-r from-transparent via-detective-glow to-detective-glow transition-all duration-1000 ${lineExpanded ? 'w-32' : 'w-0'}`} />
-          <div className={`w-4 h-4 rotate-45 border-2 border-detective-glow transition-all duration-700 ${lineExpanded ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} />
-          <div className={`h-px bg-gradient-to-l from-transparent via-detective-glow to-detective-glow transition-all duration-1000 ${lineExpanded ? 'w-32' : 'w-0'}`} />
-        </div>
-
-        {/* Skip button with glow effect */}
-        <button
-          onClick={handleSkip}
-          className={`mt-12 px-8 py-3 text-detective-paper/70 hover:text-detective-glow hover:drop-shadow-[0_0_15px_rgba(218,165,32,0.5)] transition-all duration-300 text-lg tracking-widest border border-detective-paper/30 hover:border-detective-glow/50 rounded backdrop-blur-sm ${showText ? 'opacity-100' : 'opacity-0'}`}
-          style={{ transitionDelay: '1s' }}
-        >
-          SKIP →
-        </button>
       </div>
 
       {/* Film grain overlay */}
