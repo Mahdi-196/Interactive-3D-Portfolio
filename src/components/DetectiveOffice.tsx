@@ -41,6 +41,10 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
   const isDetectiveMode = true; // Always in detective mode - flying mode removed
   const [isViewingMap, setIsViewingMap] = useState(false);
   const [wasPointerLocked, setWasPointerLocked] = useState(false);
+  const [originalCameraState, setOriginalCameraState] = useState<{
+    position: THREE.Vector3;
+    target: THREE.Vector3;
+  } | null>(null);
 
   // Intro animation states
   const [introComplete, setIntroComplete] = useState(false);
@@ -72,6 +76,13 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
   // Board transition functions
   const handleBoardClick = async () => {
     console.log('handleBoardClick called!');
+
+    // Don't allow board clicks during intro
+    if (!introComplete) {
+      console.log('Intro not complete, ignoring board click');
+      return;
+    }
+
     if (isTransitioning) {
       console.log('Already transitioning, returning...');
       return;
@@ -166,6 +177,9 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
   };
 
   const handleMapClick = async () => {
+    // Don't allow map clicks during intro
+    if (!introComplete) return;
+
     if (isTransitioning) return;
 
     setWasPointerLocked(!!document.pointerLockElement);
@@ -215,6 +229,12 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
   };
 
   const handleInteraction = (type: string, data?: unknown) => {
+    // Don't allow any interactions during intro
+    if (!introComplete) {
+      console.log('Intro not complete, ignoring interaction:', type);
+      return;
+    }
+
     if (type === 'lamp') {
       setLampOn(prev => !prev);
       console.log('Lamp toggled:', !lampOn);

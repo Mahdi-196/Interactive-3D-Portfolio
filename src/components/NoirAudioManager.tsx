@@ -1,6 +1,6 @@
 /**
  * Noir Audio Manager - Atmospheric 1930s detective office soundscape
- * Layers rain, jazz, and occasional thunder for immersive atmosphere
+ * Jazz background music with occasional thunder for immersive atmosphere
  */
 import { useEffect, useRef, useState } from 'react';
 import { useThree } from '@react-three/fiber';
@@ -17,7 +17,6 @@ export const NoirAudioManager = ({
 }: NoirAudioManagerProps) => {
   const { camera } = useThree();
   const listenerRef = useRef<THREE.AudioListener | null>(null);
-  const rainSoundRef = useRef<THREE.Audio | null>(null);
   const jazzSoundRef = useRef<THREE.Audio | null>(null);
   const thunderSoundRef = useRef<THREE.Audio | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,20 +30,31 @@ export const NoirAudioManager = ({
     camera.add(listener);
     listenerRef.current = listener;
 
+    // Resume audio context on user interaction (browser autoplay policy)
+    const resumeAudio = () => {
+      if (listener.context.state === 'suspended') {
+        listener.context.resume().then(() => {
+          console.log('🎵 Audio context resumed - music should now be audible');
+        });
+      }
+    };
+
+    // Listen for any user interaction to resume audio
+    window.addEventListener('click', resumeAudio, { once: true });
+    window.addEventListener('keydown', resumeAudio, { once: true });
+
     // Create audio loader
     const audioLoader = new THREE.AudioLoader();
 
-    // Create all audio objects
-    const rainSound = new THREE.Audio(listener);
+    // Create audio objects
     const jazzSound = new THREE.Audio(listener);
     const thunderSound = new THREE.Audio(listener);
 
-    rainSoundRef.current = rainSound;
     jazzSoundRef.current = jazzSound;
     thunderSoundRef.current = thunderSound;
 
     let loadedCount = 0;
-    const totalSounds = 3;
+    const totalSounds = 2; // Jazz + Thunder
 
     const checkAllLoaded = () => {
       loadedCount++;
@@ -54,29 +64,15 @@ export const NoirAudioManager = ({
       }
     };
 
-    // Load heavy rain ambience (primary layer - most prominent)
-    audioLoader.load(
-      '/276908__lwdickens__outdoor-ambience-rain-heavy-umbrella-fabric-traffic.wav',
-      (buffer) => {
-        rainSound.setBuffer(buffer);
-        rainSound.setLoop(true);
-        rainSound.setVolume(masterVolume * 0.5); // 50% of master - main ambience
-        rainSound.play();
-        checkAllLoaded();
-      },
-      undefined,
-      (error) => console.error('Failed to load rain audio:', error)
-    );
-
-    // Load jazz loop (background music - very subtle)
+    // Load jazz loop (background music - main ambience)
     audioLoader.load(
       '/564001__migfus20__jazz-background-music-loop.mp3',
       (buffer) => {
         jazzSound.setBuffer(buffer);
         jazzSound.setLoop(true);
-        jazzSound.setVolume(masterVolume * 0.15); // 15% of master - barely noticeable ambience
-        // Start after rain settles in
-        setTimeout(() => jazzSound.play(), 2000);
+        jazzSound.setVolume(masterVolume * 0.6); // Start at full volume
+        jazzSound.play(); // Start playing immediately
+        console.log('🎵 Jazz started playing');
         checkAllLoaded();
       },
       undefined,
@@ -124,7 +120,9 @@ export const NoirAudioManager = ({
         clearTimeout(thunderTimeoutRef.current);
       }
 
-      rainSound.stop();
+      window.removeEventListener('click', resumeAudio);
+      window.removeEventListener('keydown', resumeAudio);
+
       jazzSound.stop();
       thunderSound.stop();
 
@@ -134,22 +132,7 @@ export const NoirAudioManager = ({
     };
   }, [camera, enabled, masterVolume]);
 
-  // Add subtle volume variations to prevent monotony
-  useEffect(() => {
-    if (!isLoaded || !enabled) return;
-
-    const interval = setInterval(() => {
-      // Subtle rain volume variation (±8%)
-      if (rainSoundRef.current) {
-        const rainVariation = 0.92 + Math.random() * 0.16;
-        rainSoundRef.current.setVolume(masterVolume * 0.5 * rainVariation);
-      }
-
-      // Jazz stays consistent (no variation for music)
-    }, 8000 + Math.random() * 4000); // Every 8-12 seconds
-
-    return () => clearInterval(interval);
-  }, [isLoaded, enabled, masterVolume]);
+  // Jazz stays consistent (no volume variation needed for music)
 
   // This component doesn't render anything visual
   return null;
