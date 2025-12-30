@@ -68,7 +68,7 @@ export const IntroOverlay = ({ onComplete, isManualTrigger = false }: IntroOverl
   };
 
   return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-noir-shadow transition-opacity duration-1000 ${getOverlayOpacity()}`}>
+    <div className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 transition-opacity duration-1000 ${getOverlayOpacity()}`} style={{ pointerEvents: 'auto' }}>
       {/* Animated vignette effect */}
       <div className="absolute inset-0 bg-gradient-radial from-transparent via-noir-shadow/70 to-black animate-pulse" style={{ animationDuration: '4s' }} />
 
