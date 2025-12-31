@@ -247,19 +247,19 @@ export const ProjectsList = ({ onProjectSelect }: ProjectsListProps) => {
           Film Noir Resume
         </Text>
         <Text position={[0, -1.9, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-          1930s detective-themed
+          Built with Claude Code
         </Text>
         <Text position={[0, -2.03, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-          interactive 3D portfolio
+          AI-assisted development
         </Text>
         <Text position={[0, -2.16, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-          with first-person view
+          showcase
         </Text>
         <Text position={[0, -2.4, 0.05]} fontSize={0.075 * textScale} color={COLORS.brownText} anchorX="center" anchorY="middle">
-          React Three Fiber • R3F
+          Claude Code • AI/ML
         </Text>
         <Text position={[0, -2.53, 0.05]} fontSize={0.075 * textScale} color={COLORS.brownText} anchorX="center" anchorY="middle">
-          Three.js • TypeScript • Vite
+          React Three Fiber • R3F
         </Text>
         <PushPin position={[0, -1.3, 0.07]} radius={0.07} />
       </group>

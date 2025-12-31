@@ -68,7 +68,7 @@ export const FilmNoirResumeProject = ({ zoomedPaper, onPaperZoom }: FilmNoirResu
         anchorY="middle"
         letterSpacing={0.02}
       >
-        Immersive 1930s Detective-Themed 3D Portfolio
+        AI-Powered Development Showcase
       </Text>
 
       {/* Decorative divider */}
@@ -83,7 +83,7 @@ export const FilmNoirResumeProject = ({ zoomedPaper, onPaperZoom }: FilmNoirResu
         anchorY="middle"
         maxWidth={9.5}
       >
-        An interactive first-person 3D portfolio experience set in a Film Noir detective
+        Built with Claude Code to demonstrate AI collaboration skills—acting as technical
       </Text>
       <Text
         position={[0, 1.58, 0.032]}
@@ -93,7 +93,7 @@ export const FilmNoirResumeProject = ({ zoomedPaper, onPaperZoom }: FilmNoirResu
         anchorY="middle"
         maxWidth={9.5}
       >
-        office, built with React Three Fiber and programmatic geometry.
+        advisor, reading documentation, and directing AI development workflow.
       </Text>
 
       {/* Bottom divider */}
@@ -143,45 +143,45 @@ export const FilmNoirResumeProject = ({ zoomedPaper, onPaperZoom }: FilmNoirResu
 
         {/* Tech stack */}
         <Text position={[0, 0.95, 0.002]} fontSize={0.13 * textScale} color={COLORS.primaryText} anchorX="center" anchorY="middle" letterSpacing={0.02}>
-          React Three Fiber • Three.js • TypeScript
+          Claude Code • React Three Fiber • TypeScript
         </Text>
 
         {/* Content */}
         <Text position={[0, 0.72, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          • Built immersive first-person 3D environment with React
+          • Directed Claude Code to build immersive 3D environment
         </Text>
         <Text position={[0, 0.59, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          Three Fiber and programmatic Three.js geometry
+          with React Three Fiber and programmatic geometry
         </Text>
         <Text position={[0, 0.41, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          • Implemented smooth camera transitions and interactive
+          • Researched R3F documentation and provided technical
         </Text>
         <Text position={[0, 0.28, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          detective board with nested navigation hierarchy
+          guidance for camera controls and state management
         </Text>
         <Text position={[0, 0.10, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          • Designed Film Noir aesthetic with period-accurate
+          • Defined Film Noir aesthetic requirements and iteratively
         </Text>
         <Text position={[0, -0.03, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          lighting, materials, and vintage paper textures
+          refined lighting, materials, and vintage textures
         </Text>
         <Text position={[0, -0.21, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          • Created WASD first-person controls with pointer lock
+          • Specified first-person control requirements and debugged
         </Text>
         <Text position={[0, -0.34, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          and collision detection for realistic movement
+          pointer lock and collision detection issues
         </Text>
         <Text position={[0, -0.52, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          • Optimized performance with shared materials and
+          • Reviewed AI-generated code for performance patterns
         </Text>
         <Text position={[0, -0.65, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          efficient rendering for smooth 60fps experience
+          and optimized rendering for smooth 60fps target
         </Text>
         <Text position={[0, -0.83, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          • Developed mobile-responsive with virtual joystick and
+          • Architected mobile-responsive design with virtual
         </Text>
         <Text position={[0, -0.96, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          touch controls for cross-platform compatibility
+          joystick and touch controls for cross-platform use
         </Text>
 
         <PushPin position={[-1.95, 1.55, 0.01]} color="#CD853F" radius={0.1} />
