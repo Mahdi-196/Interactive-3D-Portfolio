@@ -3,10 +3,13 @@
  */
 
 export type CaseFile = 'profile' | 'portfolio' | null;
-export type ProjectDetail = 'refocused' | 'resilinet' | 'medesense' | 'respawnroom' | 'sideprojects' | null;
+export type ProjectDetail = 'refocused' | 'resilinet' | 'medesense' | 'respawnroom' | 'filmnoir' | 'sideprojects' | null;
 export type SideProject = 'popuptrivia' | 'vibelink' | 'graphibooks' | null;
 export type ZoomedPaper = 'frontend' | 'backend' | 'ai' | null;
 export type RespawnPaper = 'frontend' | 'backend' | null;
+export type MedesensePaper = 'medesense' | null;
+export type ResiliNetPaper = 'resilinet' | null;
+export type FilmNoirPaper = 'filmnoir' | null;
 
 /**
  * Props for the main InteractiveDetectiveBoard component
@@ -52,6 +55,12 @@ export interface ProjectsDetailProps extends DetailViewProps {
   onPaperZoom: (paper: ZoomedPaper) => void;
   respawnPaper: RespawnPaper;
   onRespawnPaperZoom: (paper: RespawnPaper) => void;
+  medesensePaper: MedesensePaper;
+  onMedesensePaperZoom: (paper: MedesensePaper) => void;
+  resilinetPaper: ResiliNetPaper;
+  onResilinetPaperZoom: (paper: ResiliNetPaper) => void;
+  filmnoirPaper: FilmNoirPaper;
+  onFilmnoirPaperZoom: (paper: FilmNoirPaper) => void;
   selectedSideProject: SideProject;
   onSideProjectSelect: (project: SideProject) => void;
 }

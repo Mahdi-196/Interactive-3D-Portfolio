@@ -4,7 +4,7 @@ import { SubjectProfileDetail } from './details/SubjectProfileDetail';
 import { ProjectsDetail } from './details/ProjectsDetail';
 import { useFadeAnimation } from './hooks/useFadeAnimation';
 import { BOARD_CONFIG } from './constants';
-import type { InteractiveDetectiveBoardProps, ProjectDetail, ZoomedPaper, RespawnPaper, SideProject } from './types';
+import type { InteractiveDetectiveBoardProps, ProjectDetail, ZoomedPaper, RespawnPaper, MedesensePaper, ResiliNetPaper, FilmNoirPaper, SideProject } from './types';
 
 /**
  * Main Interactive Detective Board component
@@ -27,6 +27,15 @@ export const InteractiveDetectiveBoard = ({
 
   // Track which paper is zoomed for RespawnRoom (frontend or backend)
   const [respawnPaper, setRespawnPaper] = useState<RespawnPaper>(null);
+
+  // Track which paper is zoomed for MedeSense
+  const [medesensePaper, setMedesensePaper] = useState<MedesensePaper>(null);
+
+  // Track which paper is zoomed for ResiliNet
+  const [resilinetPaper, setResilinetPaper] = useState<ResiliNetPaper>(null);
+
+  // Track which paper is zoomed for Film Noir Resume
+  const [filmnoirPaper, setFilmnoirPaper] = useState<FilmNoirPaper>(null);
 
   // Track which side project is selected
   const [selectedSideProject, setSelectedSideProject] = useState<SideProject>(null);
@@ -81,6 +90,12 @@ export const InteractiveDetectiveBoard = ({
               onPaperZoom={(paper) => showContent && setZoomedPaper(paper)}
               respawnPaper={respawnPaper}
               onRespawnPaperZoom={(paper) => showContent && setRespawnPaper(paper)}
+              medesensePaper={medesensePaper}
+              onMedesensePaperZoom={(paper) => showContent && setMedesensePaper(paper)}
+              resilinetPaper={resilinetPaper}
+              onResilinetPaperZoom={(paper) => showContent && setResilinetPaper(paper)}
+              filmnoirPaper={filmnoirPaper}
+              onFilmnoirPaperZoom={(paper) => showContent && setFilmnoirPaper(paper)}
               selectedSideProject={selectedSideProject}
               onSideProjectSelect={(project) => showContent && setSelectedSideProject(project)}
             />

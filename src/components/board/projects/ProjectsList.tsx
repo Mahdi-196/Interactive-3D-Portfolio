@@ -7,7 +7,7 @@ import { getTextScale } from '@/utils/detectMobile';
  * Projects list view - displays 5 project cards in a grid layout
  */
 interface ProjectsListProps {
-  onProjectSelect: (project: 'refocused' | 'resilinet' | 'medesense' | 'respawnroom' | 'sideprojects' | null) => void;
+  onProjectSelect: (project: 'refocused' | 'resilinet' | 'medesense' | 'respawnroom' | 'filmnoir' | 'sideprojects' | null) => void;
 }
 
 export const ProjectsList = ({ onProjectSelect }: ProjectsListProps) => {
@@ -215,41 +215,54 @@ export const ProjectsList = ({ onProjectSelect }: ProjectsListProps) => {
         <PushPin position={[-4, -1.3, 0.07]} radius={0.07} />
       </group>
 
-      {/* Project 5 - 3D Resume (Bottom Middle - Smaller) */}
-      <mesh position={[0, -2.1, 0.03]}>
-        <boxGeometry args={[2.5, 1.6, 0.03]} />
-        <meshStandardMaterial color={COLORS.manila} roughness={0.9} />
-      </mesh>
-      <mesh position={[0, -1.3, 0.045]}>
-        <boxGeometry args={[2.5, 0.18, 0.025]} />
-        <meshStandardMaterial color={COLORS.manilaTab} roughness={0.9} />
-      </mesh>
-      <mesh position={[-1.025, -1.3, 0.06]}>
-        <planeGeometry args={[0.45, 0.25]} />
-        <meshStandardMaterial color={COLORS.darkRed} />
-      </mesh>
-      <Text position={[-1.025, -1.3, 0.07]} fontSize={0.13 * textScale} color="#FFFFFF" anchorX="center" anchorY="middle">
-        #005
-      </Text>
-      <Text position={[0, -1.65, 0.05]} fontSize={0.16 * textScale} color={COLORS.darkBrown} anchorX="center" anchorY="middle">
-        3D Resume
-      </Text>
-      <Text position={[0, -1.9, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-        Interactive detective
-      </Text>
-      <Text position={[0, -2.03, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-        themed 3D portfolio
-      </Text>
-      <Text position={[0, -2.16, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-          experience
-      </Text>
-      <Text position={[0, -2.4, 0.05]} fontSize={0.075 * textScale} color={COLORS.brownText} anchorX="center" anchorY="middle">
-        React Three Fiber
-      </Text>
-      <Text position={[0, -2.53, 0.05]} fontSize={0.075 * textScale} color={COLORS.brownText} anchorX="center" anchorY="middle">
-        Three.js • TypeScript
-      </Text>
-      <PushPin position={[0, -1.3, 0.07]} radius={0.07} />
+      {/* Project 5 - Film Noir Resume (Bottom Middle - Smaller, Clickable) */}
+      <group
+        onClick={(e) => {
+          e.stopPropagation();
+          onProjectSelect('filmnoir');
+        }}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'auto';
+        }}
+      >
+        <mesh position={[0, -2.1, 0.03]}>
+          <boxGeometry args={[2.5, 1.6, 0.03]} />
+          <primitive object={SHARED_MATERIALS.manila} attach="material" />
+        </mesh>
+        <mesh position={[0, -1.3, 0.045]}>
+          <boxGeometry args={[2.5, 0.18, 0.025]} />
+          <primitive object={SHARED_MATERIALS.manilaTab} attach="material" />
+        </mesh>
+        <mesh position={[-1.025, -1.3, 0.06]}>
+          <planeGeometry args={[0.45, 0.25]} />
+          <primitive object={SHARED_MATERIALS.darkRed} attach="material" />
+        </mesh>
+        <Text position={[-1.025, -1.3, 0.07]} fontSize={0.13 * textScale} color="#FFFFFF" anchorX="center" anchorY="middle">
+          #005
+        </Text>
+        <Text position={[0, -1.65, 0.05]} fontSize={0.16 * textScale} color={COLORS.darkBrown} anchorX="center" anchorY="middle">
+          Film Noir Resume
+        </Text>
+        <Text position={[0, -1.9, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
+          1930s detective-themed
+        </Text>
+        <Text position={[0, -2.03, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
+          interactive 3D portfolio
+        </Text>
+        <Text position={[0, -2.16, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
+          with first-person view
+        </Text>
+        <Text position={[0, -2.4, 0.05]} fontSize={0.075 * textScale} color={COLORS.brownText} anchorX="center" anchorY="middle">
+          React Three Fiber • R3F
+        </Text>
+        <Text position={[0, -2.53, 0.05]} fontSize={0.075 * textScale} color={COLORS.brownText} anchorX="center" anchorY="middle">
+          Three.js • TypeScript • Vite
+        </Text>
+        <PushPin position={[0, -1.3, 0.07]} radius={0.07} />
+      </group>
 
       {/* Project 6 - Side Projects (Bottom Right - Smaller, Clickable) */}
       <group

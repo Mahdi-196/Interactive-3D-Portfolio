@@ -6,6 +6,7 @@ import { ReFocusedProject } from '../projects/ReFocusedProject';
 import { ResiliNetProject } from '../projects/ResiliNetProject';
 import { MedeSenseProject } from '../projects/MedeSenseProject';
 import { RespawnRoomProject } from '../projects/RespawnRoomProject';
+import { FilmNoirResumeProject } from '../projects/FilmNoirResumeProject';
 import { SideProjectsWrapper } from '../projects/SideProjectsWrapper';
 import { COLORS, SHARED_MATERIALS } from '../constants';
 import type { ProjectsDetailProps } from '../types';
@@ -24,6 +25,12 @@ export const ProjectsDetail = ({
   onPaperZoom,
   respawnPaper,
   onRespawnPaperZoom,
+  medesensePaper,
+  onMedesensePaperZoom,
+  resilinetPaper,
+  onResilinetPaperZoom,
+  filmnoirPaper,
+  onFilmnoirPaperZoom,
   selectedSideProject,
   onSideProjectSelect
 }: ProjectsDetailProps) => {
@@ -37,8 +44,16 @@ export const ProjectsDetail = ({
     if (selectedProject !== 'respawnroom') {
       onRespawnPaperZoom(null);
     }
-    // ResiliNet and MedeSense don't have zoomed papers, so no need to reset
-  }, [selectedProject, onPaperZoom, onRespawnPaperZoom]);
+    if (selectedProject !== 'medesense') {
+      onMedesensePaperZoom(null);
+    }
+    if (selectedProject !== 'resilinet') {
+      onResilinetPaperZoom(null);
+    }
+    if (selectedProject !== 'filmnoir') {
+      onFilmnoirPaperZoom(null);
+    }
+  }, [selectedProject, onPaperZoom, onRespawnPaperZoom, onMedesensePaperZoom, onResilinetPaperZoom, onFilmnoirPaperZoom]);
 
   return (
     <>
@@ -77,11 +92,13 @@ export const ProjectsDetail = ({
       ) : selectedProject === 'refocused' ? (
         <ReFocusedProject zoomedPaper={zoomedPaper} onPaperZoom={onPaperZoom} />
       ) : selectedProject === 'resilinet' ? (
-        <ResiliNetProject />
+        <ResiliNetProject zoomedPaper={resilinetPaper} onPaperZoom={onResilinetPaperZoom} />
       ) : selectedProject === 'medesense' ? (
-        <MedeSenseProject />
+        <MedeSenseProject zoomedPaper={medesensePaper} onPaperZoom={onMedesensePaperZoom} />
       ) : selectedProject === 'respawnroom' ? (
         <RespawnRoomProject zoomedPaper={respawnPaper} onPaperZoom={onRespawnPaperZoom} />
+      ) : selectedProject === 'filmnoir' ? (
+        <FilmNoirResumeProject zoomedPaper={filmnoirPaper} onPaperZoom={onFilmnoirPaperZoom} />
       ) : selectedProject === 'sideprojects' ? (
         <SideProjectsWrapper
           selectedSideProject={selectedSideProject}
