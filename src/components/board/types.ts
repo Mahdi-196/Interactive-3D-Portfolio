@@ -3,8 +3,7 @@
  */
 
 export type CaseFile = 'profile' | 'portfolio' | null;
-export type ProjectDetail = 'refocused' | 'resilinet' | 'medesense' | 'respawnroom' | 'filmnoir' | 'sideprojects' | null;
-export type SideProject = 'popuptrivia' | 'vibelink' | 'graphibooks' | null;
+export type ProjectDetail = 'refocused' | 'resilinet' | 'medesense' | 'respawnroom' | 'filmnoir' | null;
 export type ZoomedPaper = 'frontend' | 'backend' | 'ai' | null;
 export type RespawnPaper = 'frontend' | 'backend' | null;
 export type MedesensePaper = 'medesense' | null;

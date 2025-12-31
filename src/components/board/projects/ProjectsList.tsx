@@ -264,54 +264,6 @@ export const ProjectsList = ({ onProjectSelect }: ProjectsListProps) => {
         <PushPin position={[0, -1.3, 0.07]} radius={0.07} />
       </group>
 
-      {/* Project 6 - Side Projects (Bottom Right - Smaller, Clickable) */}
-      <group
-        onClick={(e) => {
-          e.stopPropagation();
-          onProjectSelect('sideprojects');
-        }}
-        onPointerEnter={() => {
-          document.body.style.cursor = 'pointer';
-        }}
-        onPointerLeave={() => {
-          document.body.style.cursor = 'auto';
-        }}
-      >
-        <mesh position={[4, -2.1, 0.03]}>
-          <boxGeometry args={[2.5, 1.6, 0.03]} />
-          <primitive object={SHARED_MATERIALS.manila} attach="material" />
-        </mesh>
-        <mesh position={[4, -1.3, 0.045]}>
-          <boxGeometry args={[2.5, 0.18, 0.025]} />
-          <primitive object={SHARED_MATERIALS.manilaTab} attach="material" />
-        </mesh>
-        <mesh position={[2.975, -1.3, 0.06]}>
-          <planeGeometry args={[0.45, 0.25]} />
-          <primitive object={SHARED_MATERIALS.darkRed} attach="material" />
-        </mesh>
-        <Text position={[2.975, -1.3, 0.07]} fontSize={0.13 * textScale} color="#FFFFFF" anchorX="center" anchorY="middle">
-          #006
-        </Text>
-        <Text position={[4, -1.65, 0.05]} fontSize={0.16 * textScale} color={COLORS.darkBrown} anchorX="center" anchorY="middle">
-          Side Projects
-        </Text>
-        <Text position={[4, -1.9, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-          Various experimental
-        </Text>
-        <Text position={[4, -2.03, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-          projects and open-
-        </Text>
-        <Text position={[4, -2.16, 0.05]} fontSize={0.08 * textScale} color={COLORS.tertiaryText} anchorX="center" anchorY="middle" maxWidth={2.3}>
-          source contributions
-        </Text>
-        <Text position={[4, -2.4, 0.05]} fontSize={0.075 * textScale} color={COLORS.brownText} anchorX="center" anchorY="middle">
-          Multiple Technologies
-        </Text>
-        <Text position={[4, -2.53, 0.05]} fontSize={0.075 * textScale} color={COLORS.brownText} anchorX="center" anchorY="middle">
-          GitHub Repositories
-        </Text>
-        <PushPin position={[4, -1.3, 0.07]} radius={0.07} />
-      </group>
     </>
   );
 };
