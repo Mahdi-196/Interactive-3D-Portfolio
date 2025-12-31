@@ -55,6 +55,7 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
   const cameraControlsRef = useRef<CameraControlsRef>(null);
   const playerCharacterRef = useRef<THREE.Group>(null);
   const detectivePosition = new THREE.Vector3(0, 2.645, -6.5); // Detective eye height position at character spawn
+  const pointerLockRestoreTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Mobile controls state
   const [isMobile, setIsMobile] = useState(isMobileDevice());
@@ -86,6 +87,12 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
     if (isTransitioning) {
       console.log('Already transitioning, returning...');
       return;
+    }
+
+    // Cancel any pending pointer lock restoration
+    if (pointerLockRestoreTimeoutRef.current) {
+      clearTimeout(pointerLockRestoreTimeoutRef.current);
+      pointerLockRestoreTimeoutRef.current = null;
     }
 
     setWasPointerLocked(!!document.pointerLockElement);
@@ -168,10 +175,12 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
     setOriginalCameraState(null);
 
     // Re-engage pointer lock after a short delay
+    // Store timeout ID so it can be cancelled if board is opened again quickly
     if (wasPointerLocked) {
-      setTimeout(() => {
+      pointerLockRestoreTimeoutRef.current = setTimeout(() => {
         cameraControlsRef.current?.lock();
-        setWasPointerLocked(false); // Reset the flag
+        setWasPointerLocked(false);
+        pointerLockRestoreTimeoutRef.current = null;
       }, 100);
     }
   };
@@ -181,6 +190,12 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
     if (!introComplete) return;
 
     if (isTransitioning) return;
+
+    // Cancel any pending pointer lock restoration
+    if (pointerLockRestoreTimeoutRef.current) {
+      clearTimeout(pointerLockRestoreTimeoutRef.current);
+      pointerLockRestoreTimeoutRef.current = null;
+    }
 
     setWasPointerLocked(!!document.pointerLockElement);
 
@@ -394,6 +409,15 @@ export const DetectiveOffice = forwardRef<DetectiveOfficeRef, DetectiveOfficePro
       window.removeEventListener('keydown', handleKeyPress);
     };
   }, [showBoardContent, isTransitioning, introComplete, startCameraAnimation]);
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (pointerLockRestoreTimeoutRef.current) {
+        clearTimeout(pointerLockRestoreTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="w-full h-full bg-noir-shadow" style={{

@@ -211,8 +211,8 @@ export const EnhancedCameraControls = forwardRef<CameraControlsRef, EnhancedCame
       const handleClick = (event: MouseEvent) => {
         if (isTransitioning) return;
 
-        // Lock pointer when clicking in the scene (if not already locked)
-        if (!isMouseLocked.current) {
+        // Lock pointer when clicking in the scene (if not already locked and not viewing board)
+        if (!isMouseLocked.current && !showBoardContent) {
           gl.domElement.requestPointerLock();
         }
       };
