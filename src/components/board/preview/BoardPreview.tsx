@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Text } from '@react-three/drei';
 import { CaseFileCard } from './CaseFileCard';
 import { PushPin } from '../shared/PushPin';
-import { BOARD_CONFIG, COLORS, CASE_FILE_POSITIONS, SHARED_MATERIALS } from '../constants';
+import { BOARD_CONFIG, COLORS, CASE_FILE_POSITIONS, SHARED_MATERIALS, TEXT_CONFIG } from '../constants';
 import type { CaseFile, ProjectDetail } from '../types';
 import { getTextScale } from '@/utils/detectMobile';
 
@@ -125,7 +125,16 @@ export const BoardPreview = ({
           <planeGeometry args={[11, 0.7]} />
           <primitive object={SHARED_MATERIALS.darkBrown} attach="material" />
         </mesh>
-        <Text position={[0, 2.8, 0.04]} fontSize={0.32 * textScale} color={COLORS.gold} anchorX="center" anchorY="middle">
+        <Text
+          position={[0, 2.8, 0.04]}
+          fontSize={0.32 * textScale}
+          color={COLORS.gold}
+          anchorX="center"
+          anchorY="middle"
+          material-depthWrite={false}
+          material-toneMapped={false}
+          renderOrder={1}
+        >
           CASE FILE: MAHDI GHALEB
         </Text>
 
@@ -134,7 +143,7 @@ export const BoardPreview = ({
           position={[-3, 0, 0.03]}
           title="SUBJECT PROFILE"
           fileNumber="#001"
-          items={['Personal Background', 'Technical Skills', 'Education & Training']}
+          items={['About Me', 'Education and Certifications', 'Contact']}
           showContent={showContent}
           selectedCaseFile={selectedCaseFile}
           onClick={() => onCaseFileClick?.('profile')}
@@ -145,7 +154,7 @@ export const BoardPreview = ({
           position={[3, 0, 0.03]}
           title="CASE PORTFOLIO"
           fileNumber="#002"
-          items={['Development Projects', 'Technical Implementations', 'Professional Work']}
+          items={['Live Apps', 'Projects', 'Technical Implementations']}
           showContent={showContent}
           selectedCaseFile={selectedCaseFile}
           onClick={() => onCaseFileClick?.('portfolio')}

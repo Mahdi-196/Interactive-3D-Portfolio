@@ -2,7 +2,7 @@ import { Text } from '@react-three/drei';
 import { BackButton } from '../shared/BackButton';
 import { LinkWithProgress } from '../shared/LinkWithProgress';
 import { CopyEmailButton } from '../shared/CopyEmailButton';
-import { COLORS, SHARED_MATERIALS } from '../constants';
+import { COLORS, SHARED_MATERIALS, TEXT_CONFIG } from '../constants';
 import { DetailViewProps } from '../types';
 import { getTextScale, isMobileDevice } from '@/utils/detectMobile';
 
@@ -31,6 +31,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         anchorY="middle"
         letterSpacing={0.05}
         fontWeight="bold"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         SUBJECT PROFILE
       </Text>
@@ -44,6 +47,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         anchorY="middle"
         letterSpacing={0.03}
         fontWeight="bold"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         ABOUT ME
       </Text>
@@ -56,6 +62,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         maxWidth={isMobile ? 9.5 : 10.5}
         lineHeight={1.6}
         textAlign="center"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         I'm a problem solver who happens to love infrastructure. With my AWS Solutions Architect certification and practical experience managing live production systems, I've found my sweet spot at the intersection of development and operations.
 
@@ -74,6 +83,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         anchorX="center"
         anchorY="middle"
         fontWeight="bold"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         CERTIFICATIONS
       </Text>
@@ -85,6 +97,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         color={COLORS.darkBrown}
         anchorX="center"
         anchorY="middle"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         Solutions Architect - Associate
       </Text>
@@ -94,6 +109,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         color={COLORS.darkBrown}
         anchorX="center"
         anchorY="middle"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         Amazon Web Services
       </Text>
@@ -111,6 +129,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
           color="#5A1F01"
           anchorX="center"
           anchorY="middle"
+          material-depthWrite={false}
+          material-toneMapped={false}
+          renderOrder={1}
         >
           🔗 View Certificate
         </Text>
@@ -123,6 +144,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         color={COLORS.darkBrown}
         anchorX="center"
         anchorY="middle"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         Certificate of Software Engineering
       </Text>
@@ -132,6 +156,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         color={COLORS.darkBrown}
         anchorX="center"
         anchorY="middle"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         Arizona State University
       </Text>
@@ -149,6 +176,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
           color="#5A1F01"
           anchorX="center"
           anchorY="middle"
+          material-depthWrite={false}
+          material-toneMapped={false}
+          renderOrder={1}
         >
           🔗 View Certificate
         </Text>
@@ -162,6 +192,9 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         anchorX="center"
         anchorY="middle"
         fontWeight="bold"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         CONTACT INFORMATION
       </Text>

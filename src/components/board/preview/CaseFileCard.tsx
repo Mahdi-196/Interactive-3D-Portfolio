@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Text } from '@react-three/drei';
 import { PushPin } from '../shared/PushPin';
-import { COLORS, SHARED_MATERIALS } from '../constants';
+import { COLORS, SHARED_MATERIALS, TEXT_CONFIG } from '../constants';
 import type { CaseFileCardProps } from '../types';
 import { getTextScale } from '@/utils/detectMobile';
 
@@ -62,6 +62,9 @@ export const CaseFileCard = memo(({
         color="#FFFFFF"
         anchorX="center"
         anchorY="middle"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         {fileNumber}
       </Text>
@@ -73,6 +76,9 @@ export const CaseFileCard = memo(({
         color={COLORS.darkBrown}
         anchorX="center"
         anchorY="middle"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
       >
         {title}
       </Text>
@@ -87,6 +93,9 @@ export const CaseFileCard = memo(({
           anchorX="center"
           anchorY="middle"
           maxWidth={2.8}
+          material-depthWrite={false}
+          material-toneMapped={false}
+          renderOrder={1}
         >
           {item}
         </Text>

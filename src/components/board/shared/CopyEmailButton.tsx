@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Text } from '@react-three/drei';
-import { COLORS } from '../constants';
+import { COLORS, TEXT_CONFIG } from '../constants';
 import { getTextScale } from '@/utils/detectMobile';
 
 /**
@@ -81,6 +81,9 @@ export const CopyEmailButton = ({
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.01}
+          material-depthWrite={false}
+          material-toneMapped={false}
+          renderOrder={1}
         >
           {showCopied ? 'Copied!' : email}
         </Text>

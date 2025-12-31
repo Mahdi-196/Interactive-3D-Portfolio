@@ -1,6 +1,6 @@
 import { memo, useRef } from 'react';
 import { Text } from '@react-three/drei';
-import { COLORS, SHARED_MATERIALS } from '../constants';
+import { COLORS, SHARED_MATERIALS, TEXT_CONFIG } from '../constants';
 import { getTextScale, isMobileDevice } from '@/utils/detectMobile';
 
 /**
@@ -45,7 +45,16 @@ export const BackButton = memo(({ onClick, position = [-5.5, 2.8, 0.04] }: BackB
         <planeGeometry args={isMobile ? [1.5, 0.5] : [1.2, 0.4]} />
         <primitive object={SHARED_MATERIALS.darkBrown} attach="material" />
       </mesh>
-      <Text position={[0, 0, 0.01]} fontSize={isMobile ? 0.13 : 0.15} color={COLORS.gold} anchorX="center" anchorY="middle">
+      <Text
+        position={[0, 0, 0.01]}
+        fontSize={isMobile ? 0.13 : 0.15}
+        color={COLORS.gold}
+        anchorX="center"
+        anchorY="middle"
+        material-depthWrite={false}
+        material-toneMapped={false}
+        renderOrder={1}
+      >
         ← BACK
       </Text>
     </group>

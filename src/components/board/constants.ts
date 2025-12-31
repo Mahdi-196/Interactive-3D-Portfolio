@@ -126,3 +126,11 @@ export const SHARED_MATERIALS = {
 
 // Text size multiplier for mobile
 export const MOBILE_TEXT_SCALE = 1.5; // 50% larger text on mobile
+
+// Text material configuration for consistent rendering
+// Prevents lighting-based highlighting and ensures text is always clearly visible
+export const TEXT_CONFIG = {
+  depthWrite: false,        // Prevents depth fighting with background
+  toneMapped: false,        // Prevents brightness variations from tone mapping
+  renderOrder: 1,           // Ensures text renders on top
+}
