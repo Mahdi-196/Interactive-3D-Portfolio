@@ -2,11 +2,11 @@
 
 ## The Concept
 
-This project is a personal resume and portfolio reimagined as an immersive 3D experience, heavily inspired by the atmospheric world of Sherlock Holmes and 1930s film style. Instead of scrolling through a standard document, visitors step into a Victorian-era detective office complete with vintage furniture, dramatic lighting, and jazz ambiance. The centerpiece is an interactive investigation board where my professional projects and skills are displayed as evidence and case files, turning the act of reviewing a resume into an investigation itself.
+This project is a personal resume and portfolio reimagined as an immersive 3D experience, heavily inspired by the atmospheric world of Sherlock Holmes and 1930s film style. Instead of scrolling through a standard document, visitors step into a Victorian era detective office complete with vintage furniture, dramatic lighting, and jazz ambiance. The centerpiece is an interactive investigation board where my professional projects and skills are displayed as evidence and case files, turning the act of reviewing a resume into an investigation itself.
 
 ## Under the Hood
 
-Inside the codebase, you will find a modern React application built with TypeScript and Vite, leveraging React Three Fiber to render the 3D environment. A key technical feature of this project is that almost every object in the room—from the filing cabinets to the desk lamps—is generated programmatically using Three.js primitives rather than imported as heavy 3D models. This approach keeps the application lightweight and performant while demonstrating code-centric 3D design. The application also manages complex state for camera transitions, first-person movement controls, and collision detection to ensure a smooth user experience across devices.
+Inside the codebase, you will find a modern React application built with TypeScript and Vite, leveraging React Three Fiber to render the 3D environment. A key technical feature of this project is that almost every object in the room—from the filing cabinets to the desk lamps is generated programmatically using Three.js primitives rather than imported as heavy 3D models. This approach keeps the application lightweight and performant while demonstrating code centric 3D design. The application also manages complex state for camera transitions, first person movement controls, and collision detection to ensure a smooth user experience across devices.
 
 ## AI Driven Development
 
