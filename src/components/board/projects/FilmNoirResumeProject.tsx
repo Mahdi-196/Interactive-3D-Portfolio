@@ -148,37 +148,37 @@ export const FilmNoirResumeProject = ({ zoomedPaper, onPaperZoom }: FilmNoirResu
 
         {/* Content */}
         <Text position={[0, 0.72, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          Directed Claude Code to build immersive 3D environment
+          • Directed Claude Code to build immersive 3D environment
         </Text>
         <Text position={[0, 0.59, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
           with React Three Fiber and programmatic geometry
         </Text>
         <Text position={[0, 0.41, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          Researched R3F documentation and provided technical
+          • Researched R3F documentation and provided technical
         </Text>
         <Text position={[0, 0.28, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
           guidance for camera controls and state management
         </Text>
         <Text position={[0, 0.10, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          Defined Film Noir aesthetic requirements and iteratively
+          • Defined Film Noir aesthetic requirements and iteratively
         </Text>
         <Text position={[0, -0.03, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
           refined lighting, materials, and vintage textures
         </Text>
         <Text position={[0, -0.21, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          Specified first-person control requirements and debugged
+          • Specified first-person control requirements and debugged
         </Text>
         <Text position={[0, -0.34, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
           pointer lock and collision detection issues
         </Text>
         <Text position={[0, -0.52, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          Reviewed AI-generated code for performance patterns
+          • Reviewed AI-generated code for performance patterns
         </Text>
         <Text position={[0, -0.65, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
           and optimized rendering for smooth 60fps target
         </Text>
         <Text position={[0, -0.83, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
-          Architected mobile-responsive design with virtual
+          • Architected mobile-responsive design with virtual
         </Text>
         <Text position={[0, -0.96, 0.002]} fontSize={0.11 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.8}>
           joystick and touch controls for cross-platform use
