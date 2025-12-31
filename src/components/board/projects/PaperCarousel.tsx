@@ -73,43 +73,50 @@ export const PaperCarousel = ({ zoomedPaper, onPaperZoom }: PaperCarouselProps) 
 
         {/* Tech stack */}
         <Text position={[0, 0.98, 0.002]} fontSize={0.11 * textScale} color={COLORS.primaryText} anchorX="center" anchorY="middle" letterSpacing={0.02}>
-          Amplify • App Runner • Lambda • VPC
+          VPC • App Runner • Lambda • RDS • ElastiCache
         </Text>
 
-        {/* Content */}
-        <Text position={[0, 0.65, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Engineered high-availability hybrid serverless
+        {/* Content - AWS Architecture Details */}
+        <Text position={[0, 0.73, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • Architected Hub and Spoke Network Topology
         </Text>
-        <Text position={[0, 0.5, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          and container architecture hosted on AWS
-        </Text>
-
-        <Text position={[0, 0.25, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Frontend on AWS Amplify with Route 53;
-        </Text>
-        <Text position={[0, 0.1, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          backend on App Runner sourcing images from ECR
+        <Text position={[0, 0.61, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          with custom VPC isolating RDS & ElastiCache
         </Text>
 
-        <Text position={[0, -0.15, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Refocused-VPC isolates PostgreSQL RDS +
+        <Text position={[0, 0.43, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • Implemented Hybrid Compute: App Runner for
         </Text>
-        <Text position={[0, -0.3, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          ElastiCache behind NAT/IGW for private layers
-        </Text>
-
-        <Text position={[0, -0.55, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • Serverless microservices (Lambda + Gateway)
-        </Text>
-        <Text position={[0, -0.7, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          drive email, feedback, and AI inference flows
+        <Text position={[0, 0.31, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          auto-scaling APIs, Lambda for event-driven tasks
         </Text>
 
-        <Text position={[0, -0.95, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          • AI handler loads models from S3/ECR and
+        <Text position={[0, 0.13, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • Engineered EC2 NAT Instance for outbound
         </Text>
-        <Text position={[0, -1.1, 0.002]} fontSize={0.095 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
-          persists prompts/history in DynamoDB
+        <Text position={[0, 0.01, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          traffic, optimizing costs vs. managed gateways
+        </Text>
+
+        <Text position={[0, -0.17, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • Orchestrated SNS + API Gateway patterns for
+        </Text>
+        <Text position={[0, -0.29, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          async processing (SES email, AI voting queues)
+        </Text>
+
+        <Text position={[0, -0.47, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • Frontend on Amplify with Route 53 DNS; backend
+        </Text>
+        <Text position={[0, -0.59, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          containers sourced from ECR with auto-scaling
+        </Text>
+
+        <Text position={[0, -0.77, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          • AI inference Lambda loads models from S3,
+        </Text>
+        <Text position={[0, -0.89, 0.002]} fontSize={0.088 * textScale} color={COLORS.secondaryText} anchorX="center" anchorY="middle" maxWidth={3.2}>
+          persists history in DynamoDB for high velocity
         </Text>
 
         {/* GitHub Link */}

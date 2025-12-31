@@ -28,14 +28,19 @@ export const COLORS = {
   offWhite: '#FFFEF0',
   creamPaper: '#F5F5DC',
   antiquePaper: '#FAF0E6',
-  gold: '#FFD700',
-  brass: '#B8860B',
+
+  // Metallic accents (aged copper/bronze theme)
+  copper: '#B87333',        // Rich copper for primary accents
+  bronze: '#CD7F32',        // Classic bronze for borders and lines
+  darkCopper: '#8B4513',    // Aged copper/saddle brown for text
+  brass: '#CD7F32',         // Mapped to bronze for backwards compatibility
+  gold: '#B87333',          // Mapped to copper for backwards compatibility
 
   // Accent colors
   darkRed: '#8B0000',
   deepRed: '#cc0000',
   darkGreen: '#006400',
-  yellow: '#FFEB3B',
+  yellow: '#FFEB3B',        // Kept for reference (not actively used)
   tan: '#C19A6B',
 
   // Text colors
