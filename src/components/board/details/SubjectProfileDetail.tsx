@@ -37,8 +37,8 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
 
       {/* About Section */}
       <Text
-        position={[0, 1.8, 0.04]}
-        fontSize={isMobile ? 0.18 : 0.15}
+        position={[0, 1.9, 0.04]}
+        fontSize={isMobile ? 0.18 : 0.16}
         color={COLORS.copper}
         anchorX="center"
         anchorY="middle"
@@ -48,12 +48,12 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         ABOUT ME
       </Text>
       <Text
-        position={[0, 1.45, 0.04]}
-        fontSize={isMobile ? 0.13 : 0.11}
+        position={[0, 1.5, 0.04]}
+        fontSize={isMobile ? 0.14 : 0.13}
         color={COLORS.darkBrown}
         anchorX="center"
         anchorY="top"
-        maxWidth={isMobile ? 9 : 10}
+        maxWidth={isMobile ? 9.5 : 10.5}
         lineHeight={1.6}
         textAlign="center"
       >
@@ -66,69 +66,39 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
         I'm someone who figures things out. If I don't know how to build something, I learn. This entire interactive 3D portfolio website is my favorite example of that.
       </Text>
 
-      {/* Location */}
+      {/* Certifications Header - Centered */}
       <Text
-        position={[-5, -0.2, 0.04]}
+        position={[0, -0.7, 0.04]}
         fontSize={isMobile ? 0.18 : 0.15}
         color={COLORS.copper}
-        anchorX="left"
-        anchorY="middle"
-        fontWeight="bold"
-      >
-        LOCATION
-      </Text>
-      <Text
-        position={[-5, -0.45, 0.04]}
-        fontSize={isMobile ? 0.13 : 0.11}
-        color={COLORS.darkBrown}
-        anchorX="left"
-        anchorY="middle"
-      >
-        Phoenix, Arizona
-      </Text>
-      <Text
-        position={[-5, -0.65, 0.04]}
-        fontSize={isMobile ? 0.13 : 0.11}
-        color={COLORS.darkBrown}
-        anchorX="left"
-        anchorY="middle"
-      >
-        United States
-      </Text>
-
-      {/* Certifications */}
-      <Text
-        position={[5, -0.2, 0.04]}
-        fontSize={isMobile ? 0.18 : 0.15}
-        color={COLORS.copper}
-        anchorX="right"
+        anchorX="center"
         anchorY="middle"
         fontWeight="bold"
       >
         CERTIFICATIONS
       </Text>
 
-      {/* AWS Certification */}
+      {/* AWS Certification - Left Side */}
       <Text
-        position={[5, -0.5, 0.04]}
-        fontSize={isMobile ? 0.13 : 0.11}
+        position={[-1.8, -1.1, 0.04]}
+        fontSize={isMobile ? 0.12 : 0.11}
         color={COLORS.darkBrown}
-        anchorX="right"
+        anchorX="center"
         anchorY="middle"
       >
-        AWS Solutions Architect - Associate
+        Solutions Architect - Associate
       </Text>
       <Text
-        position={[5, -0.7, 0.04]}
-        fontSize={isMobile ? 0.11 : 0.11}
+        position={[-1.8, -1.3, 0.04]}
+        fontSize={isMobile ? 0.1 : 0.09}
         color={COLORS.darkBrown}
-        anchorX="right"
+        anchorX="center"
         anchorY="middle"
       >
-        Amazon Web Services | Dec 2025 - Dec 2028
+        Amazon Web Services
       </Text>
       <group
-        position={[5, -0.9, 0.04]}
+        position={[-1.8, -1.5, 0.04]}
         onClick={(e) => {
           e.stopPropagation();
           window.open('https://www.credly.com/badges/db71c311-6332-4930-aba1-0f48d8549bc6/public_url', '_blank');
@@ -138,44 +108,35 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
       >
         <Text
           fontSize={isMobile ? 0.11 : 0.1}
-          color="#742B03"
-          anchorX="right"
+          color="#5A1F01"
+          anchorX="center"
           anchorY="middle"
         >
           🔗 View Certificate
         </Text>
       </group>
 
-      {/* ASU Software Engineering */}
+      {/* ASU Software Engineering - Right Side */}
       <Text
-        position={[5, -1.2, 0.04]}
-        fontSize={isMobile ? 0.13 : 0.11}
+        position={[1.8, -1.1, 0.04]}
+        fontSize={isMobile ? 0.12 : 0.11}
         color={COLORS.darkBrown}
-        anchorX="right"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Certificate of Software Engineering
+      </Text>
+      <Text
+        position={[1.8, -1.3, 0.04]}
+        fontSize={isMobile ? 0.1 : 0.09}
+        color={COLORS.darkBrown}
+        anchorX="center"
         anchorY="middle"
       >
         Arizona State University
       </Text>
-      <Text
-        position={[5, -1.4, 0.04]}
-        fontSize={isMobile ? 0.11 : 0.11}
-        color={COLORS.darkBrown}
-        anchorX="right"
-        anchorY="middle"
-      >
-        Software Engineering Certificate
-      </Text>
-      <Text
-        position={[5, -1.6, 0.04]}
-        fontSize={isMobile ? 0.11 : 0.11}
-        color={COLORS.darkBrown}
-        anchorX="right"
-        anchorY="middle"
-      >
-        Nov 2024 - May 2025
-      </Text>
       <group
-        position={[5, -1.8, 0.04]}
+        position={[1.8, -1.5, 0.04]}
         onClick={(e) => {
           e.stopPropagation();
           window.open('https://badges.parchment.com/public/assertions/YSBgKFxISay3enxxD8Oxfw?identity__email=mahdighaleb196@gmail.com', '_blank');
@@ -185,8 +146,8 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
       >
         <Text
           fontSize={isMobile ? 0.11 : 0.1}
-          color="#742B03"
-          anchorX="right"
+          color="#5A1F01"
+          anchorX="center"
           anchorY="middle"
         >
           🔗 View Certificate
@@ -195,7 +156,7 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
 
       {/* Contact Information */}
       <Text
-        position={[0, -2.3, 0.04]}
+        position={[0, -2.1, 0.04]}
         fontSize={isMobile ? 0.18 : 0.15}
         color={COLORS.copper}
         anchorX="center"
@@ -207,16 +168,16 @@ export const SubjectProfileDetail = ({ onBack }: DetailViewProps) => {
 
       {/* Contact Links */}
       <LinkWithProgress
-        position={[-3.5, -2.7, 0.04]}
+        position={[-3.5, -2.5, 0.04]}
         url="https://linkedin.com/in/mahdighaleb"
         label="💼 LinkedIn"
       />
       <CopyEmailButton
-        position={[0, -2.7, 0.04]}
+        position={[0, -2.5, 0.04]}
         email="mahdighaleb196@gmail.com"
       />
       <LinkWithProgress
-        position={[3.5, -2.7, 0.04]}
+        position={[3.5, -2.5, 0.04]}
         url="https://github.com/Mahdi-196"
         label="💻 GitHub"
       />

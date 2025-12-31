@@ -1,39 +1,7 @@
-# Resume Game - 1930s Film Noir Detective Office Portfolio
+# Interactive 3D Portfolio
 
-An interactive 3D detective office resume/portfolio built as a 1930s Film Noir experience. Explore a Victorian-era detective office and interact with objects to view resume information displayed on an investigation board.
+This project serves as my personal resume and portfolio, created to showcase my projects in an immersive 3D environment. Rather than relying on a traditional static website, I wanted to build an experience that reflects my technical capabilities and creativity.
 
-## Tech Stack
+The development process itself was a major learning journey in leveraging AI for software engineering. I built this application using Claude Code, which required me to dive deep into documentation and learn how to effectively direct AI agents. I used the AI to conduct research, locate specific library documentation, and break down complex features into executable steps.
 
-- **React** + **TypeScript** + **Vite**
-- **React Three Fiber** (R3F) - 3D rendering
-- **Three.js** - 3D graphics engine
-- **Tailwind CSS** + **shadcn/ui** - Styling and UI components
-
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server (runs on localhost:8080)
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-## Features
-
-- Interactive 3D detective office environment
-- First-person camera controls (WASD + mouse look)
-- Click-to-move detective character
-- Interactive resume board with smooth camera transitions
-- Film noir aesthetic with vintage lighting effects
-- Fully responsive 3D scene
-
-## Development
-
-See [CLAUDE.md](./CLAUDE.md) for detailed development documentation.
+My workflow relied heavily on iteration and testing. I often tasked multiple agents with the same problem to see different approaches, then tested each solution to see which performed best. By taking the strongest elements from each iteration and combining them, I was able to build a robust application that handles complex 3D rendering and state management efficiently. This project represents not just my coding skills, but my ability to use AI agents as force multipliers in the development process.
